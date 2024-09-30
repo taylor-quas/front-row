@@ -7,20 +7,22 @@
       </div>
       <div class="form-input-group">
         <label for="username">Username</label>
-        <input type="email" id="username" v-model="user.username" required autofocus @input="validateEmail" />
+        <input type="email" id="username" v-model="user.username" required autofocus @blur="validateEmail" />
         <span v-if="!isValidEmail">Invalid email format</span>
       </div>
 
       <div class="form-input-group">
         <label for="password">Password</label>
-        <input type="password" id="password" v-model="user.password" required @input="validatePassword" />
-        <span v-if="!isValidPassword">Password must contain one capital letter, one lowercase letter,one number, and a minimum of 8 characters.</span>
+        <input type="password" id="password" v-model="user.password" @focus="validatePassword" @input="validatePassword" />
+        <span v-if="!isValidPassword">
+          Password must contain one capital letter, one lowercase letter, one number, and a minimum of 8 characters.
+        </span>
       </div>
       <div class="form-input-group">
         <label for="confirmPassword">Confirm Password</label>
         <input type="password" id="confirmPassword" v-model="user.confirmPassword" required />
       </div>
-      <button type="submit">Create Account</button>
+      <button type="submit" disabled="!isValidPassword || !isValidEmail">Create Account</button>
       <p><router-link v-bind:to="{ name: 'login' }">Already have an account? Log in.</router-link></p>
     </form>
   </div>
@@ -38,9 +40,9 @@ export default {
         confirmPassword: '',
         role: 'user',
       },
-
-      isValidPassword: '',
-      isValidEmail: '',
+      
+      isValidPassword: true,
+      isValidEmail: true,
       registrationErrors: false,
       registrationErrorMsg: 'There were problems registering this user.',
     };
