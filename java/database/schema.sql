@@ -10,13 +10,29 @@ CREATE TABLE users (
 	CONSTRAINT PK_user PRIMARY KEY (user_id)
 );
 
+CREATE TABLE emails (
+    email_id SERIAL,
+    email varchar(50) NOT NULL UNIQUE,
+    email_user int NOT NULL,
+    CONSTRAINT FK_users FOREIGN KEY (email_user) REFERENCES users(user_id)
+)
+
+CREATE TABLE user_band (
+    user_id int NOT NULL,
+    band_id int NOT NULL,
+    CONSTRAINT FK_users FOREIGN KEY (user_id) REFERENCES users(user_id),
+    CONSTRAINT FK_bands FOREIGN KEY (band_id) REFERENCES bands(band_id)
+)
+
 CREATE TABLE bands (
     band_id SERIAL,
     band_name varchar(50) NOT NULL UNIQUE,
     band_description varchar(200) NOT NULL,
     band_manager_id int NOT NULL,
+    band_hero_image_id int NOT NULL,
     CONSTRAINT PK_band PRIMARY KEY (band_id),
-    CONSTRAINT FK_users FOREIGN KEY (band_manager_id) REFERENCES users(user_id)
+    CONSTRAINT FK_users FOREIGN KEY (band_manager_id) REFERENCES users(user_id),
+    CONSTRAINT FK_images FOREIGN KEY (band_hero_image_id) REFERENCES images(image_id)
 );
 
 CREATE TABLE images (
