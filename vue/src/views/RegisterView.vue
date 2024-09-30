@@ -7,7 +7,7 @@
       </div>
       <div class="form-input-group">
         <label for="username">Username</label>
-        <input type="email" id="username" v-model="user.username" required autofocus @blur="validateEmail" />
+        <input type="email" id="username" v-model="user.username" required autofocus @blur="validateEmail" @input="validateEmail"/>
         <span v-if="!isValidEmail">Invalid email format</span>
       </div>
 
@@ -17,8 +17,6 @@
         <span v-if="!isValidPassword">
           Password must contain one capital letter, one lowercase letter, one number, and a minimum of 8 characters.
         </span>
-        <input type="password" id="password" v-model="user.password" required @focus="validatePassword" @input="validatePassword"/>
-        <span v-if="!isValidPassword">Password must contain one capital letter, one lowercase letter,one number, and a minimum of 8 characters.</span>
       </div>
       <div class="form-input-group">
         <label for="confirmPassword">Confirm Password</label>
