@@ -7,7 +7,7 @@
       </div>
       <div class="form-input-group">
         <label for="username">Username</label>
-        <input type="email" id="username" v-model="user.username" required autofocus @blur="validateEmail" @input="validateEmail" />
+        <input type="email" id="username" v-model="user.username" required autofocus @blur="validateEmail" @input="validateEmail"/>
         <span v-if="!isValidEmail">Invalid email format</span>
       </div>
 
