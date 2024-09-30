@@ -6,6 +6,7 @@ import HomeView from '../views/HomeView.vue';
 import LoginView from '../views/LoginView.vue';
 import LogoutView from '../views/LogoutView.vue';
 import RegisterView from '../views/RegisterView.vue';
+import AnonymousView from '../views/AnonymousView.vue';
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -22,6 +23,14 @@ const routes = [
     component: HomeView,
     meta: {
       requiresAuth: true
+    }
+  },
+  {
+    path: '/fbc',
+    name: 'anonymous-view',
+    component: AnonymousView,
+    meta: {
+      requiresAuth: false
     }
   },
   {
