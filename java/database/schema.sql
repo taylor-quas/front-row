@@ -12,25 +12,25 @@ DROP TABLE IF EXISTS events;
 
 CREATE TABLE users (
 	user_id SERIAL,
-	username varchar(50) NOT NULL UNIQUE,
+	email varchar(50) NOT NULL UNIQUE,
 	password_hash varchar(200) NOT NULL,
 	role varchar(50) NOT NULL,
 	CONSTRAINT PK_user PRIMARY KEY (user_id)
 );
 
-CREATE TABLE emails (
-    email_id SERIAL,
-    email varchar(50) NOT NULL UNIQUE,
-    email_user int NOT NULL,
-    CONSTRAINT FK_email_user FOREIGN KEY (email_user) REFERENCES users(user_id)
-);
+--CREATE TABLE emails (
+--    email_id SERIAL,
+--    email varchar(50) NOT NULL UNIQUE,
+--    email_user int NOT NULL,
+--    CONSTRAINT FK_email_user FOREIGN KEY (email_user) REFERENCES users(user_id)
+--);
 
 CREATE TABLE bands (
     band_id SERIAL,
     band_name varchar(50) NOT NULL UNIQUE,
-    band_description varchar(200) NOT NULL,
+    band_description varchar(10000) NOT NULL,
     band_manager_id int NOT NULL,
-    band_hero_image varchar(200) NOT NULL,
+    band_hero_image varchar(500) NOT NULL,
     CONSTRAINT PK_band PRIMARY KEY (band_id),
     CONSTRAINT FK_band_manager FOREIGN KEY (band_manager_id) REFERENCES users(user_id)
 );
@@ -38,7 +38,7 @@ CREATE TABLE bands (
 CREATE TABLE images (
     image_id SERIAL,
     band_id int NOT NULL,
-    image_link VARCHAR(200) NOT NULL,
+    image_link VARCHAR(500) NOT NULL,
     CONSTRAINT PK_image PRIMARY KEY (image_id),
     CONSTRAINT FK_image_band FOREIGN KEY (band_id) REFERENCES bands(band_id)
 );
