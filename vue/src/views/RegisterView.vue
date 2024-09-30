@@ -38,11 +38,17 @@ export default {
         confirmPassword: '',
         role: 'user',
       },
+      isValidEmail: '',
       registrationErrors: false,
       registrationErrorMsg: 'There were problems registering this user.',
     };
   },
   methods: {
+    validateEmail(){
+      if(/^[^@]+@\w+(\.\w+)+\w$/.test(this.user.username)){
+        this.isValidEmail = true;
+      }
+    },
     register() {
       if (this.user.password != this.user.confirmPassword) {
         this.registrationErrors = true;
@@ -66,14 +72,6 @@ export default {
             }
           });
       }
-    },
-    validatePassword() {
-      const hasUppercase = /[A-Z]/.test(this.user.password);
-      const hasLowercase = /[a-z]/.test(this.user.password);
-      const hasNumber = /\d/.test(this.user.password);
-      const isValidLength = this.user.password.length >= 8;
-
-      return hasUppercase && hasLowercase && hasNumber && isValidLength;
     },
     clearErrors() {
       this.registrationErrors = false;
