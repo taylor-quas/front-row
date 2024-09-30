@@ -59,6 +59,7 @@ const routes = [
   }
 ];
 
+
 // Create the router
 const router = createRouter({
   history: createWebHistory(),
@@ -73,9 +74,9 @@ router.beforeEach((to) => {
   // Determine if the route requires Authentication
   const requiresAuth = to.matched.some(x => x.meta.requiresAuth);
 
-  // If it does and they are not logged in, send the user to "/login"
+  // If it does and they are not logged in, send the user to "/fbc" Send the user to the anonymous view
   if (requiresAuth && store.state.token === '') {
-    return {name: "login"};
+    return {name: "anonymous-view"};
   }
   // Otherwise, do nothing and they'll go to their next destination
 });
