@@ -40,11 +40,17 @@ export default {
       },
 
       isValidPassword: '',
+      isValidEmail: '',
       registrationErrors: false,
       registrationErrorMsg: 'There were problems registering this user.',
     };
   },
   methods: {
+    validateEmail(){
+      if(/^[^@]+@\w+(\.\w+)+\w$/.test(this.user.username)){
+        this.isValidEmail = true;
+      }
+    },
     register() {
       if (this.user.password != this.user.confirmPassword) {
         this.registrationErrors = true;
