@@ -7,3 +7,10 @@
     <router-view />
   </div>
 </template>
+
+<style>
+  #capstone-app{
+    background-color: rgb(165, 165, 255);
+    min-height: 100vh;
+  }
+</style>

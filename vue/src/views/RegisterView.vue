@@ -17,6 +17,8 @@
         <span v-if="!isValidPassword">
           Password must contain one capital letter, one lowercase letter, one number, and a minimum of 8 characters.
         </span>
+        <input type="password" id="password" v-model="user.password" required @focus="validatePassword" @input="validatePassword"/>
+        <span v-if="!isValidPassword">Password must contain one capital letter, one lowercase letter,one number, and a minimum of 8 characters.</span>
       </div>
       <div class="form-input-group">
         <label for="confirmPassword">Confirm Password</label>
@@ -40,7 +42,6 @@ export default {
         confirmPassword: '',
         role: 'user',
       },
-      
       isValidPassword: true,
       isValidEmail: true,
       registrationErrors: false,
@@ -50,8 +51,10 @@ export default {
   methods: {
     validateEmail(){
       if(/^[^@]+@\w+(\.\w+)+\w$/.test(this.user.username)){
+        console.log(this.isValidEmail)
         this.isValidEmail = true;
       }
+      else this.isValidEmail = false;
     },
     register() {
       if (this.user.password != this.user.confirmPassword) {
@@ -72,7 +75,7 @@ export default {
             const response = error.response;
             this.registrationErrors = true;
             if (response.status === 400) {
-              this.registrationErrorMsg = 'Bad Request: Validation Errors';
+              this.registrationErrorMsg = 'A user with this email already exists.';
             }
           });
       }
@@ -83,7 +86,7 @@ export default {
       const hasNumber = /\d/.test(this.user.password);
       const isValidLength = this.user.password.length >= 8;
 
-      this.isValidPassword =  hasUppercase && hasLowercase && hasNumber && isValidLength;
+      this.isValidPassword = hasUppercase && hasLowercase && hasNumber && isValidLength;
     },
     clearErrors() {
       this.registrationErrors = false;
