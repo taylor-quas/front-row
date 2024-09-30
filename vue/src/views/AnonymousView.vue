@@ -1,8 +1,8 @@
 <template>
   <div id="bg-image">
     <!-- Your content here -->
-    <div class="home">
-      <h1>Here's what you would see if you were not logged in.</h1>
+    <div class="splash">
+      <h1 id="page-title">FRONT ROW</h1>
     </div>
     <div>
       <h2>
@@ -27,8 +27,22 @@ export default {
 
 <style scoped>
   #bg-image {
+
+    height: 100%;
     background-image: url('src/assets/BR.png');
     background-size: cover;
     background-position: center;
+    display: flex; 
+    flex-direction: column;
+    height: 100vh;
+  }
+
+  .splash{
+    padding-top: 100px;
+  }
+
+  #page-title{
+    color: white;
+    justify-content: center;
   }
 </style>
