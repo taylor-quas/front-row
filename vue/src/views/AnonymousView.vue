@@ -27,7 +27,6 @@ export default {
 
 <style scoped>
   #bg-image {
-
     height: 100%;
     background-image: url('src/assets/BR.png');
     background-size: cover;
@@ -35,6 +34,7 @@ export default {
     display: flex; 
     flex-direction: column;
     height: 100vh;
+    align-items: center;
   }
 
   .splash{
@@ -43,6 +43,5 @@ export default {
 
   #page-title{
     color: white;
-    justify-content: center;
   }
 </style>

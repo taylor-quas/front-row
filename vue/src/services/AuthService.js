@@ -12,6 +12,12 @@ export default {
 
   register(user) {
     return http.post('/register', user)
-  }
+  },
+
+  search(searchTerm) {
+    return http.post(`/search/${searchTerm}`)
+  },
+
+  
 
 }
