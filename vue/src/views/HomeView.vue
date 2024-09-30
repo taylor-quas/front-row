@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <h1>Home</h1>
     <p>You must be authenticated to see this</p>
   </div>
 </template>
@@ -11,8 +10,8 @@ export default {
 </script>
 
 <style>
-  #home {
-    padding-top: 100px;
+  .home {
+    padding-top: 12vh;
   }
 
   

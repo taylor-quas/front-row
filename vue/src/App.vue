@@ -1,8 +1,15 @@
 <template>
   <div id="capstone-app">
     <div id="nav">
-      <router-link v-bind:to="{ name: 'home' }" id="home-button">Home</router-link>
-      <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''" id="logout-button">Logout</router-link>
+      <div class="nav-item">
+        <router-link v-bind:to="{ name: 'home' }" id="home-button">Home</router-link>
+      </div>
+      <div class="nav-item">
+          <input type="text" placeholder="SEARCH">
+      </div>
+      <div class="nav-item">
+        <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''" id="logout-button">Logout</router-link>
+      </div>
     </div>
     <router-view />
   </div>
@@ -16,12 +23,20 @@
 
   #nav{
     position: fixed;
+    
     display: flex;
     flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+
     background-color: white;
     width: 100%;
     height: 6vh;
     padding-left: 20px;
+  }
+
+  .nav-item {
+    display: flex;
   }
 
   #home-button{
