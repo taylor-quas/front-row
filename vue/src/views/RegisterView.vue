@@ -7,11 +7,14 @@
       </div>
       <div class="form-input-group">
         <label for="username">Username</label>
-        <input type="text" id="username" v-model="user.username" required autofocus />
+        <input type="email" id="username" v-model="user.username" required autofocus @input="validateEmail" />
+        <span v-if="!isValidEmail">Invalid email format</span>
       </div>
+
       <div class="form-input-group">
         <label for="password">Password</label>
-        <input type="password" id="password" v-model="user.password" required />
+        <input type="password" id="password" v-model="user.password" required @input="validatePassword" />
+        <span v-if="!isValidPassword">Password must contain one capital letter, one lowercase letter,one number, and a minimum of 8 characters.</span>
       </div>
       <div class="form-input-group">
         <label for="confirmPassword">Confirm Password</label>
@@ -35,11 +38,19 @@ export default {
         confirmPassword: '',
         role: 'user',
       },
+
+      isValidPassword: '',
+      isValidEmail: '',
       registrationErrors: false,
       registrationErrorMsg: 'There were problems registering this user.',
     };
   },
   methods: {
+    validateEmail(){
+      if(/^[^@]+@\w+(\.\w+)+\w$/.test(this.user.username)){
+        this.isValidEmail = true;
+      }
+    },
     register() {
       if (this.user.password != this.user.confirmPassword) {
         this.registrationErrors = true;
@@ -63,6 +74,14 @@ export default {
             }
           });
       }
+    },
+    validatePassword() {
+      const hasUppercase = /[A-Z]/.test(this.user.password);
+      const hasLowercase = /[a-z]/.test(this.user.password);
+      const hasNumber = /\d/.test(this.user.password);
+      const isValidLength = this.user.password.length >= 8;
+
+      this.isValidPassword =  hasUppercase && hasLowercase && hasNumber && isValidLength;
     },
     clearErrors() {
       this.registrationErrors = false;
