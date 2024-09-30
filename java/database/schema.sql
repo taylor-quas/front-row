@@ -12,7 +12,7 @@ DROP TABLE IF EXISTS events;
 
 CREATE TABLE users (
 	user_id SERIAL,
-	email varchar(50) NOT NULL UNIQUE,
+	username varchar(50) NOT NULL UNIQUE,
 	password_hash varchar(200) NOT NULL,
 	role varchar(50) NOT NULL,
 	CONSTRAINT PK_user PRIMARY KEY (user_id)
@@ -66,7 +66,8 @@ CREATE TABLE band_genre (
 CREATE TABLE messages (
     message_id SERIAL,
     message_content varchar(200) NOT NULL,
-    message_time timestamp NOT NULL,
+    message_time_sent timestamp NOT NULL,
+    message_time_expiration timestamp NOT NULL,
     message_sender int NOT NULL,
     CONSTRAINT FK_message_sender FOREIGN KEY (message_sender) REFERENCES bands(band_id)
 );

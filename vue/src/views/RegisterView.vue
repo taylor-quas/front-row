@@ -7,8 +7,10 @@
       </div>
       <div class="form-input-group">
         <label for="username">Username</label>
-        <input type="text" id="username" v-model="user.username" required autofocus />
+        <input type="email" id="username" v-model="user.username" required autofocus @input="validateEmail" />
+        <span v-if="!isValidEmail">Invalid email format</span>
       </div>
+
       <div class="form-input-group">
         <label for="password">Password</label>
         <input type="password" id="password" v-model="user.password" required @input="validatePassword" />
