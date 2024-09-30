@@ -9,3 +9,11 @@
 export default {
 };
 </script>
+
+<style>
+  #home {
+    padding-top: 100px;
+  }
+
+  
+</style>
