@@ -13,6 +13,8 @@ INSERT INTO bands (band_name, band_description, band_manager_id, band_hero_image
 INSERT INTO bands (band_name, band_description, band_manager_id, band_hero_image) VALUES ('Taylor Swift', 'Taylor Alison Swift (born December 13, 1989) is an American singer-songwriter. Known for her autobiographical songwriting, artistic reinventions, and cultural impact, Swift is a leading figure in popular music and the subject of widespread public interest.', 6, 'https://res.cloudinary.com/dfxvcpj23/image/upload/v1727716174/taylor-swift-red-carpet_hqtg3z.jpg');
 INSERT INTO bands (band_name, band_description, band_manager_id, band_hero_image) VALUES ('Morgan Wallen', 'Morgan Cole Wallen (born May 13, 1993) is an American country pop singer. He competed in the sixth season of The Voice, originally as a member of Ushers team, but later as a member of Adam Levines team. After being eliminated in the playoffs of that season, he signed to Panacea Records, releasing his debut EP, Stand Alone, in 2015.', 6, 'https://res.cloudinary.com/dfxvcpj23/image/upload/v1727716353/2203-morgan-wallen.990x660_jk8vmj.jpg');
 
+INSERT INTO user_band (user_id, band_id) VALUES (1, 3), (1, 5), (1, 1);
+
 INSERT INTO genres (genre_name) VALUES ('blues'), ('classical'), ('country'), ('electronic'), ('folk'), ('hip-hop'), ('jazz'), ('latin'), ('new age'), ('pop'), ('r&b'), ('reggae'), ('rock');
 
 INSERT INTO band_genre (band_id, genre_id) VALUES (1, 6), (2, 6), (2, 10), (3, 5), (3, 10), (3, 13), (4, 3), (4, 5), (4, 10), (5, 3);
