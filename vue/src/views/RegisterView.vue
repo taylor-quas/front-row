@@ -11,7 +11,8 @@
       </div>
       <div class="form-input-group">
         <label for="password">Password</label>
-        <input type="password" id="password" v-model="user.password" required />
+        <input type="password" id="password" v-model="user.password" required @input="validatePassword" />
+        <span v-if="!validatePassword">Password must contain one capital letter, one lowercase letter,one number, and a minimum of 8 characters.</span>
       </div>
       <div class="form-input-group">
         <label for="confirmPassword">Confirm Password</label>
@@ -63,6 +64,14 @@ export default {
             }
           });
       }
+    },
+    validatePassword() {
+      const hasUppercase = /[A-Z]/.test(this.user.password);
+      const hasLowercase = /[a-z]/.test(this.user.password);
+      const hasNumber = /\d/.test(this.user.password);
+      const isValidLength = this.user.password.length >= 8;
+
+      return hasUppercase && hasLowercase && hasNumber && isValidLength;
     },
     clearErrors() {
       this.registrationErrors = false;
