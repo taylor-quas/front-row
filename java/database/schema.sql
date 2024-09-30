@@ -66,7 +66,8 @@ CREATE TABLE band_genre (
 CREATE TABLE messages (
     message_id SERIAL,
     message_content varchar(200) NOT NULL,
-    message_time timestamp NOT NULL,
+    message_time_sent timestamp NOT NULL,
+    message_time_expiration timestamp NOT NULL,
     message_sender int NOT NULL,
     CONSTRAINT FK_message_sender FOREIGN KEY (message_sender) REFERENCES bands(band_id)
 );
