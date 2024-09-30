@@ -12,7 +12,7 @@ public class Band {
         return bandId;
     }
 
-    public void setBandId(int bandId) {
+    public void setBandId(long bandId) {
         this.bandId = bandId;
     }
 
@@ -36,7 +36,7 @@ public class Band {
         return bandManagerId;
     }
 
-    public void setBandManagerId(int bandManagerId) {
+    public void setBandManagerId(long bandManagerId) {
         this.bandManagerId = bandManagerId;
     }
 
