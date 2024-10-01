@@ -96,6 +96,7 @@ public class JdbcBandDao implements BandDao {
         return bands;
     }
 
+    //TODO: Check functionality of getBandsByGenres
     @Override
     public List<Band> getBandsByGenres(List<Genre> genres) {
         List<Band> bands = new ArrayList<>();
@@ -110,12 +111,24 @@ public class JdbcBandDao implements BandDao {
                 sql += "band_genre.genre_id = ? OR";
             }
 
-            sql += "band_genre.genre_id = ?;";
+            sql += " band_genre.genre_id = ?;";
 
         }
 
-        //TODO: Finish out this method
-        return null;
+        try {
+            SqlRowSet results = template.queryForRowSet(sql, genres);
+            while (results.next()) {
+                bands.add(mapRowToBand(results));
+
+            }
+
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("Problem connecting");
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("Data problems" + e.getMessage());
+        }
+
+        return bands;
 
     }
 
@@ -140,10 +153,30 @@ public class JdbcBandDao implements BandDao {
         }
 
     }
-    //TODO: implement createBand method
+
+    //TODO: Check functionality of createBand
+    @Override
     public Band createBand(Band newBand) {
-        return null;
+
+        String sql = "INSERT INTO bands (band_name,band_description,band_manager_id,band_hero_image) VALUES (?,?,?,?) RETURNING band_id;";
+
+        long newBandId = -1;
+
+        try {
+            newBandId = template.queryForObject(sql, Long.class,
+                    newBand.getBandName(),
+                    newBand.getBandDescription(),
+                    newBand.getBandManagerId(),
+                    newBand.getBandHeroImage(), 1);
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("Problem connecting");
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("Data problems");
+        }
+
+        return getBandByBandId(newBandId);
     }
+
 
 
 // Private methods below
