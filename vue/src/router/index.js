@@ -74,6 +74,14 @@ const routes = [
     meta: {
       requiresAuth: false
     }
+  },
+  {
+    path: "/bands",
+    name: "bands",
+    component: SearchView,
+    meta: {
+      requiresAuth: false
+    }
   }
 ];
 

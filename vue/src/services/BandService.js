@@ -14,7 +14,7 @@ export default {
     return http.get('/genres');
   },
 
-  getBands(id) {
+  getBands() {
     return http.get(`/bands`);
   },
 
