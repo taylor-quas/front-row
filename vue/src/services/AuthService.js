@@ -14,6 +14,4 @@ export default {
     return http.post('/register', user)
   },
 
-  
-
 }
