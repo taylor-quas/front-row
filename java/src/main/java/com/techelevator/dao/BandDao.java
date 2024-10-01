@@ -1,6 +1,7 @@
 package com.techelevator.dao;
 
 import com.techelevator.model.Band;
+import com.techelevator.model.BandGenreDto;
 import com.techelevator.model.Genre;
 
 import java.security.Principal;
@@ -12,12 +13,14 @@ public interface BandDao {
 
     Band getBandByBandId(long bandId);
 
-    List<Band> getBandsBySearchTerm(String searchTerm);
+    List<Band> getAllBands();
 
-    List<Band> getBandsByGenres(List<Genre> genres);
+    List<Band> getBandsBySearchTerm(String searchTerm, List<Long> genreIds);
 
     void updateBand(Band updatedBand);
 
-    Band createBand(Band newBand);
+    void createBand(Band newBand);
+
+    List<BandGenreDto> searchBandGenre(String searchTerm);
 
 }
