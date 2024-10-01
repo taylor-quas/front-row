@@ -6,7 +6,7 @@ public class BandGenreDto {
 
     private String bandName;
     private String bandHeroImage;
-//    private List<String> genreNames;
+    private List<String> genreNames;
 
     public String getBandName() {
         return bandName;
@@ -24,11 +24,11 @@ public class BandGenreDto {
         this.bandHeroImage = bandHeroImage;
     }
 
-//    public List<String> getGenreNames() {
-//        return genreNames;
-//    }
-//
-//    public void setGenreNames(List<String> genreNames) {
-//        this.genreNames = genreNames;
-//    }
+    public List<String> getGenreNames() {
+        return genreNames;
+    }
+
+    public void setGenreNames(List<String> genreNames) {
+        this.genreNames = genreNames;
+    }
 }

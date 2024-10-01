@@ -186,9 +186,12 @@ public class JdbcBandDao implements BandDao {
     @Override
     public List<BandGenreDto> searchBandGenre(String searchTerm) {
 
-        List<BandGenreDto> bands = new ArrayList<>();
+        List<String> bandNames = new ArrayList<>();
+        List<Band> bands = new ArrayList<>();
+        List<String> genres = new ArrayList<>();
+        List<BandGenreDto> bandGenreDtos = new ArrayList<>();
 
-        String sql = "SELECT band_name, band_hero_image FROM bands " +
+        String sql = "SELECT * FROM bands " +
                 "WHERE band_name ILIKE ?;";
 
         searchTerm = "%" + searchTerm + "%";
@@ -196,7 +199,7 @@ public class JdbcBandDao implements BandDao {
         try {
             SqlRowSet results = template.queryForRowSet(sql, searchTerm);
             while (results.next()) {
-                bands.add(mapRowToBandGenreDto(results));
+                bands.add(mapRowToBand(results));
             }
 
         } catch (CannotGetJdbcConnectionException e) {
@@ -204,6 +207,31 @@ public class JdbcBandDao implements BandDao {
         } catch (DataIntegrityViolationException e) {
             System.out.println("Data problems" + e.getMessage());
         }
+
+
+        sql = "SELECT band_name FROM bands WHERE band_name ILIKE ?;";
+
+        searchTerm = "%" + searchTerm + "%";
+
+        try {
+            SqlRowSet results = template.queryForRowSet(sql, searchTerm);
+            while (results.next()) {
+                bandNames.add(results.getString("band_name"));
+            }
+
+            for (String bandName : bandNames) {
+                genres = getGenresByBandName(bandName);
+            }
+
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("Problem connecting");
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("Data problems" + e.getMessage());
+        }
+
+
+
+
 
         return bands;
     }
@@ -252,6 +280,30 @@ public class JdbcBandDao implements BandDao {
     private String mapGenreNameToString(SqlRowSet rowSet) {
 
         return rowSet.getString("genre_name");
+
+    }
+
+    private List<String> getGenresByBandName(String bandName) {
+        List<String> genres = new ArrayList<>();
+
+        String sql = "SELECT genre_name FROM genres\n" +
+                "\tJOIN band_genre ON genres.genre_id = band_genre.genre_id\n" +
+                "\tJOIN bands ON band_genre.band_id = bands.band_id\n" +
+                "\tWHERE band_name = ?;";
+
+        try {
+            SqlRowSet results = template.queryForRowSet(sql, bandName);
+            while(results.next()) {
+                genres.add(mapGenreNameToString(results));
+            }
+
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("Problem connecting");
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("Data problems");
+        }
+
+        return genres;
 
     }
 
