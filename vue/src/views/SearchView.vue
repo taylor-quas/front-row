@@ -70,12 +70,7 @@ export default {
     }
   },
   computed: {
-    fetchBands() {
-      BandService.getBands().then(response => {
-        this.bands = response.data;
-        //this.filterBands();
-      });
-    },
+
   }
 };
 </script>

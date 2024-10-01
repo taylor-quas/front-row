@@ -16,6 +16,10 @@ export default {
 
   getBands(id) {
     return http.get(`/bands`);
+  },
+
+  getFollowedBands() {
+    return http.get('/my-bands');
   }
 
 }
