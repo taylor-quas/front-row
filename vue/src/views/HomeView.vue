@@ -3,21 +3,16 @@
     <p>You must be authenticated to see this</p>
     <div id="inbox" @click="inboxView">
       <h2>INBOX</h2>
-
     </div>
-    <div id="bands">
-      <div class="bands-list">
-        <h2>Your Bands</h2>
-        <ul>
-          <li v-for="band in bands" :key="band.id">{{ band.name }}</li>
-        </ul>
-      </div>
-    </div>
+    <div>
+      <followed-bands-vue></followed-bands-vue>
+    </div>    
   </div>
 </template>
 
 <script>
 import { useRouter } from 'vue-router';
+import FollowedBandsVue from '../components/FollowedBands.vue';
 
 export default {
   data() {
@@ -28,6 +23,9 @@ export default {
       isFocused: false,
     };
   },
+  components: {
+    FollowedBandsVue
+  },
   methods: {
     inboxView() {
       this.router.push('/inbox')
@@ -37,7 +35,8 @@ export default {
     inboxCount() {
       return this.inboxMessages.length;
     },
-  }
+  },
+  
 };
 </script>
 
