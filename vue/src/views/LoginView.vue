@@ -96,8 +96,8 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    z-index: 100;
-
+    z-index: 50;
+    background-color: green;
   }
 
   #alert {

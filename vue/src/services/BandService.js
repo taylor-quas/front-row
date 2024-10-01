@@ -6,8 +6,6 @@ const http = axios.create({
 
 export default {
 
-  search(searchTerm) {
-    return http.post(`/search/${searchTerm}`)
-  }
+  
   
 }

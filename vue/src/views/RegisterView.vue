@@ -136,6 +136,8 @@ export default {
 
   #register {
     padding-top: 100px;
+    background-color: green;
+    z-index: 50;
   }
 
   #alert {
@@ -155,7 +157,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    z-index: 100;
+    
   }
 
   #router-link {
