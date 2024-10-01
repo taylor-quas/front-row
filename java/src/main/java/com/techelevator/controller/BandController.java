@@ -26,20 +26,18 @@ public class BandController {
         return bandDao.getAllBands();
     }
 
-
-//    @PostMapping("/search/filter/{searchTerm}")
-//    public List<Band> getSearchFilterBands(@PathVariable String searchTerm, @RequestBody List<Long> genreIds) {
-//        List<Band> searchedBands = bandDao.getBandsBySearchTerm(searchTerm);
-//
-//
-//
-//    }
-
     @GetMapping("/search-bands/{searchTerm}")
     public List<BandGenreDto> searchBands(@PathVariable String searchTerm) {
         return bandDao.searchBandGenre(searchTerm);
     }
 
+    @PutMapping("/{bandId}/update")
+    public void updateBand(@RequestBody @Valid Band band, @PathVariable long bandId) {
+        if (bandId != band.getBandId()) {
+            throw new IllegalArgumentException("Band name in the path does not match the request body");
+        }
+        bandDao.updateBand(band);
+    }
 
     @GetMapping("/my-bands")
     public List<Band> getSubscribedBands(Principal principal) {
@@ -52,10 +50,14 @@ public class BandController {
         bandDao.createBand(band);
     }
 
-    //TODO: Get a single band for bandview
     @GetMapping("/{bandName}")
-    public Band getBandByName(@PathVariable String bandName) {
+    public BandGenreDto getBandByName(@PathVariable String bandName) {
         return bandDao.getBandByBandName(bandName);
+    }
+
+    @PostMapping("/subscribe/{bandId}")
+    public void subscribeToBand(@PathVariable long bandId, Principal principal) {
+        bandDao.subscribe(bandId, principal);
     }
 
 }
