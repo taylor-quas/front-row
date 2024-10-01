@@ -1,8 +1,9 @@
 <template>
     <div class="results">
       <h3>Band Results</h3>
+      {{ bands }}
       <ul>
-        <li v-for="band in filteredBands" :key="band.id">{{ band.name }}</li>
+        <li v-for="band in bands" :key="band.bandId">{{ band.bandName }}</li>
       </ul>
     </div>
   </template>
@@ -15,11 +16,18 @@
     data() {
       return {
         bands: [],
-        filteredBands: []
+        filteredBands: [],
+        BandService
       }
     },
     created() {
       this.fetchBands();
+      BandService.getBands().then(response => {
+            this.bands = response.data 
+        })
+        .catch(error => {
+            console.error(error);
+        });
     },
     methods: {
       fetchBands() {
