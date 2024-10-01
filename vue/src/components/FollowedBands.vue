@@ -5,6 +5,7 @@
           <ul>
             <li v-for="band in followedBands" :key="band.bandId">{{ band.bandName }}</li>
             {{ followedBands }}
+            {{  $store.state.token }}
           </ul>
         </div>
       </div>
@@ -12,23 +13,23 @@
   
   <script>
   import BandService from '../services/BandService';
-  
+
   export default {
     data() {
       return {
         followedBands: [],
-        BandService
+        BandService,
       };
     },
     created() {
+      this.$store.commit('SET_AUTH_TOKEN', this.$store.state.token);
       BandService.getFollowedBands().then(response => {
-            this.followedBands = response.data
-            console.log(response.data)
+            this.followedBands = response.data 
         })
         .catch(error => {
             console.error(error);
         });
-    }
+    },
 
   };
   </script>

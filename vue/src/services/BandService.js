@@ -1,25 +1,20 @@
 import axios from 'axios';
 
-const http = axios.create({
-  baseURL: import.meta.env.VITE_REMOTE_API
-});
-
 export default {
-
   search(searchTerm) {
-    return http.post(`/search/${searchTerm}`)
+    return axios.post(`/search/${searchTerm}`)
   },
   
   getGenres() {
-    return http.get('/genres');
+    return axios.get('/genres');
   },
 
   getBands() {
-    return http.get(`/bands`);
+    return axios.get(`/bands`);
   },
 
   getFollowedBands() {
-    return http.get('/my-bands');
+    return axios.get('/my-bands');
   }
 
 }
