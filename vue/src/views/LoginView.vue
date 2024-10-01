@@ -96,6 +96,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
+
   }
 
   #alert {
@@ -134,8 +135,7 @@ export default {
     font-weight: 600;
     line-height: normal;
 
-    margin-left: 10px;
-    margin-right: 10px;
+    margin: 12px;
   }
 
   button {
@@ -149,10 +149,6 @@ export default {
 
   button:hover {
     background-color: #adadad;
-  }
-
-  button h2 {
-    margin: 10px;
   }
 
   #login-button {

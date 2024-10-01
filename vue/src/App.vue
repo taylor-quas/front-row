@@ -5,7 +5,7 @@
         <router-link v-bind:to="{ name: 'home' }" id="home-button">Home</router-link>
       </div>
       <div class="nav-item">
-          <input type="text" placeholder="SEARCH">
+          <input id="searchbox" type="text" placeholder="🔎 SEARCH">
       </div>
       <div class="nav-item">
         <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''" id="logout-button">Logout</router-link>
@@ -19,6 +19,8 @@
   #capstone-app{
     background-color: rgb(165, 165, 255);
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
   }
 
   #nav{
@@ -26,7 +28,7 @@
     
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-evenly;
     align-items: center;
 
     background-color: white;
@@ -55,6 +57,14 @@
     font-weight: 600;
     align-content: center;
     text-decoration-line: none;
+  }
+
+  #searchbox {
+    width: 20vw;
+    height: 1.5rem;
+    border-radius: 16px;
+    display: flex;
+    align-content: center;
   }
   
 
