@@ -25,7 +25,6 @@ public class JdbcBandDao implements BandDao {
 
     @Override
     public List<Band> getSubscribedBands(Principal principal) {
-        String currentUser = principal.getName();
         List<Band> bands = new ArrayList<>();
 
         String sql = "SELECT * FROM bands\n" +
@@ -33,10 +32,10 @@ public class JdbcBandDao implements BandDao {
                 "\tWHERE user_band.user_id = ?\n" +
                 "\tORDER BY band_name;";
 
-        long userId = getUserIdByUsername(currentUser);
+        long principalId = getUserIdByUsername(principal.getName());
 
         try {
-            SqlRowSet results = template.queryForRowSet(sql, userId);
+            SqlRowSet results = template.queryForRowSet(sql, principalId);
             while (results.next()) {
                 bands.add(mapRowToBand(results));
             }
@@ -73,15 +72,17 @@ public class JdbcBandDao implements BandDao {
     }
 
     @Override
-    public Band getBandByBandName(String bandName) {
-        Band band = new Band();
+    public BandGenreDto getBandByBandName(String bandName) {
+        BandGenreDto band = new BandGenreDto();
 
         String sql = "SELECT * FROM bands WHERE band_name = ?;";
 
         try {
             SqlRowSet results = template.queryForRowSet(sql, bandName);
             if (results.next()) {
-                band = mapRowToBand(results);
+                band = mapRowToBandGenreDto(results);
+                band.setGenreNames(getGenresByBandName(bandName));
+
             } else {
                 throw new DaoException("Band not found by given name.");
             }
@@ -104,7 +105,6 @@ public class JdbcBandDao implements BandDao {
             SqlRowSet results = template.queryForRowSet(sql);
             while (results.next()) {
                 bands.add(mapRowToBand(results));
-
             }
         } catch (CannotGetJdbcConnectionException e) {
             System.out.println("Problem connecting");
@@ -113,52 +113,12 @@ public class JdbcBandDao implements BandDao {
         }
 
         return bands;
-
     }
-
-    @Override
-    public List<Band> getBandsBySearchTerm(String searchTerm, List<Long> genreIds) {
-
-        List<Band> bands = new ArrayList<>();
-        searchTerm = "%" + searchTerm + "%";
-
-        String sql = "SELECT * FROM bands" +
-                "JOIN band_genre ON bands.band_id = band_genre.band_id" +
-                "WHERE band_name ILIKE ?";
-
-        if (genreIds.size() > 0) {
-            sql += " AND";
-            if (genreIds.size() == 1) {
-                sql += " band_genre.genre_id = ?;";
-            } else {
-                for (int i = 0; i < genreIds.size() - 1; i++) {
-                    sql += " band_genre.genre_id = ? OR";
-                }
-                sql += " band_genre.genre_id = ?;";
-            }
-        } else {
-            sql += ";";
-        }
-        try {
-            SqlRowSet results = template.queryForRowSet(sql, searchTerm);
-            while (results.next()) {
-                bands.add(mapRowToBand(results));
-            }
-
-        } catch (CannotGetJdbcConnectionException e) {
-            System.out.println("Problem connecting");
-        } catch (DataIntegrityViolationException e) {
-            System.out.println("Data problems" + e.getMessage());
-        }
-
-        return bands;
-    }
-
 
     @Override
     public void updateBand(Band updatedBand) {
 
-        String sql = "UPDATE bands" +
+        String sql = "UPDATE bands " +
                 "SET band_name = ?, band_description = ?, band_hero_image = ?\n" +
                 "\tWHERE band_id = ?;";
 
@@ -180,7 +140,8 @@ public class JdbcBandDao implements BandDao {
     @Override
     public void createBand(Band newBand) {
 
-        String sql = "INSERT INTO bands (band_name,band_description,band_manager_id,band_hero_image) VALUES (?,?,?,?);";
+        String sql = "INSERT INTO bands (band_name,band_description," +
+                "band_manager_id,band_hero_image) VALUES (?,?,?,?);";
 
         try {
             template.update(sql,
@@ -193,7 +154,6 @@ public class JdbcBandDao implements BandDao {
         } catch (DataIntegrityViolationException e) {
             System.out.println("Data problems");
         }
-
     }
 
     @Override
@@ -201,8 +161,9 @@ public class JdbcBandDao implements BandDao {
 
         List<BandGenreDto> bandGenreDtos = new ArrayList<>();
 
-        String sql = "SELECT band_name, band_hero_image FROM bands " +
-                "WHERE band_name ILIKE ?;";
+        String sql = "SELECT * FROM bands " +
+                "WHERE band_name ILIKE ? " +
+                "ORDER BY band_name;";
 
         searchTerm = "%" + searchTerm + "%";
 
@@ -212,7 +173,7 @@ public class JdbcBandDao implements BandDao {
                 bandGenreDtos.add(mapRowToBandGenreDto(results));
             }
             for (BandGenreDto band : bandGenreDtos) {
-                String bandName = band.getBandName();
+                String bandName = band.getBand().getBandName();
                 band.setGenreNames(getGenresByBandName(bandName));
             }
 
@@ -223,6 +184,22 @@ public class JdbcBandDao implements BandDao {
         }
 
         return bandGenreDtos;
+    }
+
+    @Override
+    public void subscribe(long bandId, Principal principal) {
+        String sql = "INSERT INTO user_band (user_id, band_id) " +
+                "VALUES (?,?);";
+
+        long principalId = getUserIdByUsername(principal.getName());
+
+        try {
+            template.update(sql, principalId, bandId);
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("Problem connecting");
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("Data problems");
+        }
     }
 
 
@@ -240,7 +217,6 @@ public class JdbcBandDao implements BandDao {
         }
 
         return userId;
-
     }
 
     private Band mapRowToBand(SqlRowSet rowSet) {
@@ -259,16 +235,9 @@ public class JdbcBandDao implements BandDao {
     private BandGenreDto mapRowToBandGenreDto(SqlRowSet rowSet) {
         BandGenreDto bandGenreDto = new BandGenreDto();
 
-        bandGenreDto.setBandName(rowSet.getString("band_name"));
-        bandGenreDto.setBandHeroImage(rowSet.getString("band_hero_image"));
+        bandGenreDto.setBand(mapRowToBand(rowSet));
 
         return bandGenreDto;
-
-    }
-
-    private String mapGenreNameToString(SqlRowSet rowSet) {
-
-        return rowSet.getString("genre_name");
 
     }
 
@@ -278,14 +247,14 @@ public class JdbcBandDao implements BandDao {
         String sql = "SELECT genre_name FROM genres\n" +
                 "\tJOIN band_genre ON genres.genre_id = band_genre.genre_id\n" +
                 "\tJOIN bands ON band_genre.band_id = bands.band_id\n" +
-                "\tWHERE band_name = ?;";
+                "\tWHERE band_name = ? " +
+                "ORDER BY band_name;";
 
         try {
             SqlRowSet results = template.queryForRowSet(sql, bandName);
             while(results.next()) {
-                genres.add(mapGenreNameToString(results));
+                genres.add(results.getString("genre_name"));
             }
-
         } catch (CannotGetJdbcConnectionException e) {
             System.out.println("Problem connecting");
         } catch (DataIntegrityViolationException e) {
@@ -293,7 +262,6 @@ public class JdbcBandDao implements BandDao {
         }
 
         return genres;
-
     }
 
 }
