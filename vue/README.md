@@ -106,7 +106,7 @@ if (requiresAuth && store.state.token === '') {
 ​
 The state for this application is stored in `src/store/index.js` using Vuex. The state object has two values: `token` and `user`. When you log in, the back-end service returns an authentication token along with your user credentials.
 ​
-The authentication token is sent in the `Authorization` header to verify your identify. To persist this token when the application is closed or the page is refreshed, you'll store the token in local storage.
+The authentication token is sent in the `Authorization` header to verify your identity. To persist this token when the application is closed or the page is refreshed, you'll store the token in local storage.
 ​
 The default token either comes from local storage or it's set to an empty string. As you learned in the previous section, if the route requires authentication and this token is empty, it redirects the user to the login page:
 ​

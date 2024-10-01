@@ -1,6 +1,4 @@
 <template>
-  <div class="search">
-
     <div class="genres">
       <h3>Genres</h3>
       <label>
@@ -10,7 +8,8 @@
           @input="toggleSelectAll"
         /> Select All
       </label>
-      <div class="genre-list">
+      </div>
+  <div class="genre-list">
         <label v-for="genre in genres" :key="genre.id">
           <input 
             type="checkbox" 
@@ -20,46 +19,45 @@
           /> {{ genre.name }}
         </label>
       </div>
-    </div>
-    <SearchResult>Here is the Search Result</SearchResult>
-    <GenreSearch>Here is the Genre List</GenreSearch>
-    <p>This is the search view</p>
-    <!-- create binding between search box text (in nav in app.vue)
-    filter bands at /search endpoint -->
-  </div>
 </template>
 
 <script>
-import SearchResultVue from '../components/SearchResult.vue';
 import BandService from '../services/BandService';
-import GenreSearch from '../components/GenreSearch.vue';
 
 export default {
-  data() {
+    data() {
     return {
       searchQuery: '',
       genres: [], 
       selectedGenres: [],
       selectAll: true,
-      bands: [], 
-      filteredBands: []
     };
   },
-  methods: {
-    
-  },
-  computed: {
-    searchResults() {
-      return this.filteredBands;
+    methods: {
+    filterBands() {
+      BandService.getBands(this.selectedGenres).then(response => {
+        this.filteredBands = response.data;
+      });
+    },
+    fetchGenres() {
+        BandService.getGenres().then(response => {
+            this.genres = response.data;
+            this.selectedGenres = this.genres.map(genre => genre.name); 
+        });
+    },
+    watch: {
+    selectedGenres(newVal) {
+      this.selectAll = newVal.length === this.genres.length; 
+    }
+    },
+    toggleSelectAll() {
+      this.selectedGenres = this.selectAll ? this.genres.map(genre => genre.name) : [];
+      this.filterBands(); 
     }
   },
-};
+}
 </script>
 
 <style>
-  .search {
-    padding-top: 12vh;
-  }
 
-  
 </style>

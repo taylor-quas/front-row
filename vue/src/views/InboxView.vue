@@ -14,6 +14,4 @@ export default {
   .inbox {
     padding-top: 12vh;
   }
-
-  
 </style>
