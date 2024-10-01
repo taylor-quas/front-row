@@ -2,8 +2,7 @@ package com.techelevator.dao;
 
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.Band;
-import com.techelevator.model.Genre;
-import org.springframework.dao.DataAccessException;
+import com.techelevator.model.BandGenreDto;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -75,11 +74,56 @@ public class JdbcBandDao implements BandDao {
     }
 
     @Override
-    public List<Band> getBandsBySearchTerm(String searchTerm) {
+    public List<Band> getAllBands() {
+        List<Band> bands = new ArrayList<>();
+        String sql = "SELECT * FROM bands;";
+
+        try {
+            SqlRowSet results = template.queryForRowSet(sql);
+            while (results.next()) {
+                bands.add(mapRowToBand(results));
+
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("Problem connecting");
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("Data problems" + e.getMessage());
+        }
+
+        return bands;
+
+    }
+
+
+
+    @Override
+    public List<Band> getBandsBySearchTerm(String searchTerm, List<Long> genreIds) {
 
         List<Band> bands = new ArrayList<>();
         searchTerm = "%" + searchTerm + "%";
-        String sql = "SELECT * FROM bands WHERE band_name ILIKE ?;";
+
+        String sql = "SELECT * FROM bands" +
+                "JOIN band_genre ON bands.band_id = band_genre.band_id" +
+                "WHERE band_name ILIKE ?";
+
+        if (genreIds.size() > 0) {
+
+            sql += " AND";
+
+            if (genreIds.size() == 1) {
+                sql += " band_genre.genre_id = ?;";
+            } else {
+                for (int i = 0; i < genreIds.size() - 1; i++) {
+                    sql += " band_genre.genre_id = ? OR";
+                }
+
+                sql += " band_genre.genre_id = ?;";
+
+            }
+
+        } else {
+            sql += ";";
+        }
 
         try {
             SqlRowSet results = template.queryForRowSet(sql, searchTerm);
@@ -96,41 +140,6 @@ public class JdbcBandDao implements BandDao {
         return bands;
     }
 
-    //TODO: Check functionality of getBandsByGenres
-    @Override
-    public List<Band> getBandsByGenres(List<Genre> genres) {
-        List<Band> bands = new ArrayList<>();
-        String sql = "SELECT * FROM bands" +
-                "JOIN band_genre ON bands.band_id = band_genre.band_id" +
-                "WHERE ";
-
-        if (genres.size() == 1) {
-            sql += "band_genre.genre_id = ?;";
-        } else {
-            for (int i = 0; i < genres.size() - 1; i++) {
-                sql += "band_genre.genre_id = ? OR";
-            }
-
-            sql += " band_genre.genre_id = ?;";
-
-        }
-
-        try {
-            SqlRowSet results = template.queryForRowSet(sql, genres);
-            while (results.next()) {
-                bands.add(mapRowToBand(results));
-
-            }
-
-        } catch (CannotGetJdbcConnectionException e) {
-            System.out.println("Problem connecting");
-        } catch (DataIntegrityViolationException e) {
-            System.out.println("Data problems" + e.getMessage());
-        }
-
-        return bands;
-
-    }
 
     @Override
     public void updateBand(Band updatedBand) {
@@ -156,30 +165,51 @@ public class JdbcBandDao implements BandDao {
 
     //TODO: Check functionality of createBand
     @Override
-    public Band createBand(Band newBand) {
+    public void createBand(Band newBand) {
 
-        String sql = "INSERT INTO bands (band_name,band_description,band_manager_id,band_hero_image) VALUES (?,?,?,?) RETURNING band_id;";
-
-        long newBandId = -1;
+        String sql = "INSERT INTO bands (band_name,band_description,band_manager_id,band_hero_image) VALUES (?,?,?,?);";
 
         try {
-            newBandId = template.queryForObject(sql, Long.class,
+            template.update(sql,
                     newBand.getBandName(),
                     newBand.getBandDescription(),
                     newBand.getBandManagerId(),
-                    newBand.getBandHeroImage(), 1);
+                    newBand.getBandHeroImage());
         } catch (CannotGetJdbcConnectionException e) {
             System.out.println("Problem connecting");
         } catch (DataIntegrityViolationException e) {
             System.out.println("Data problems");
         }
 
-        return getBandByBandId(newBandId);
+    }
+
+    @Override
+    public List<BandGenreDto> searchBandGenre(String searchTerm) {
+
+        List<BandGenreDto> bands = new ArrayList<>();
+
+        String sql = "SELECT band_name, band_hero_image FROM bands " +
+                "WHERE band_name ILIKE ?;";
+
+        searchTerm = "%" + searchTerm + "%";
+
+        try {
+            SqlRowSet results = template.queryForRowSet(sql, searchTerm);
+            while (results.next()) {
+                bands.add(mapRowToBandGenreDto(results));
+            }
+
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("Problem connecting");
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("Data problems" + e.getMessage());
+        }
+
+        return bands;
     }
 
 
-
-// Private methods below
+    // Private methods below
     private long getUserIdByUsername(String username) {
         String sql = "SELECT user_id FROM users WHERE username = ?;";
         long userId = -1;
@@ -206,6 +236,22 @@ public class JdbcBandDao implements BandDao {
         band.setBandManagerId(rowSet.getLong("band_manager_id"));
 
         return band;
+
+    }
+
+    private BandGenreDto mapRowToBandGenreDto(SqlRowSet rowSet) {
+        BandGenreDto bandGenreDto = new BandGenreDto();
+
+        bandGenreDto.setBandName(rowSet.getString("band_name"));
+        bandGenreDto.setBandHeroImage(rowSet.getString("band_hero_image"));
+
+        return bandGenreDto;
+
+    }
+
+    private String mapGenreNameToString(SqlRowSet rowSet) {
+
+        return rowSet.getString("genre_name");
 
     }
 

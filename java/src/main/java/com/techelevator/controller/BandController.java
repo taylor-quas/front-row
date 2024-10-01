@@ -2,6 +2,7 @@ package com.techelevator.controller;
 
 import com.techelevator.dao.BandDao;
 import com.techelevator.model.Band;
+import com.techelevator.model.BandGenreDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -21,13 +23,23 @@ public class BandController {
 
     @GetMapping("/bands")
     public List<Band> getAllBands() {
-        return bandDao.getBandsBySearchTerm("");
+        return bandDao.getAllBands();
     }
 
-    @GetMapping("/search/{searchTerm}")
-    public List<Band> getSearchBands(@PathVariable String searchTerm) {
-        return bandDao.getBandsBySearchTerm(searchTerm);
+
+//    @PostMapping("/search/filter/{searchTerm}")
+//    public List<Band> getSearchFilterBands(@PathVariable String searchTerm, @RequestBody List<Long> genreIds) {
+//        List<Band> searchedBands = bandDao.getBandsBySearchTerm(searchTerm);
+//
+//
+//
+//    }
+
+    @GetMapping("/search-bands/{searchTerm}")
+    public List<BandGenreDto> searchBands(@PathVariable String searchTerm) {
+        return bandDao.searchBandGenre(searchTerm);
     }
+
 
     @GetMapping("/my-bands")
     public List<Band> getSubscribedBands(Principal principal) {
@@ -36,8 +48,8 @@ public class BandController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/create-band")
-    public Band createBand(@RequestBody @Valid Band band) {
-        return bandDao.createBand(band);
+    public void createBand(@RequestBody @Valid Band band) {
+        bandDao.createBand(band);
     }
 
     //TODO: Get a single band for bandview
