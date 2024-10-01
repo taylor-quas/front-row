@@ -5,13 +5,13 @@
         <router-link v-bind:to="{ name: 'home' }" id="home-button">Home</router-link>
       </div>
       <div class="nav-item">
-          <input id="searchbox" type="text" placeholder="🔎 SEARCH" @focus="searchView">
+          <input id="searchbox" type="text" placeholder="🔎 SEARCH" @focus="startSearch">
       </div>
       <div class="nav-item">
         <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''" id="logout-button">Logout</router-link>
       </div>
     </div>
-    <router-view />
+    <router-view :searchQuery="searchQuery"/>
   </div>
 </template>
 
@@ -27,7 +27,7 @@ export default {
     };
   },
   methods: {
-    searchView() {
+    startSearch() {
       this.router.push('/search')
     }
   }
