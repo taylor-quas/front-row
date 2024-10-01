@@ -1,6 +1,5 @@
 <template>
   <div class="search">
-
     <div class="genres">
       <h3>Genres</h3>
       <label>
@@ -21,6 +20,7 @@
         </label>
       </div>
     </div>
+    <SearchResult></SearchResult>
     <p>This is the search view</p>
     create binding between search box text (in nav in app.vue)
     filter bands at /search endpoint
@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import SearchResultVue from '../components/SearchResult.vue';
+import SearchResult from '../components/SearchResult.vue';
 import BandService from '../services/BandService';
 
 export default {
@@ -45,6 +45,7 @@ export default {
   created() {
     this.fetchGenres();
     this.fetchBands();
+    this.searchResults();
   },
   methods: {
     fetchGenres() {
