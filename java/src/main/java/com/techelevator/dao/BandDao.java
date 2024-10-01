@@ -15,7 +15,7 @@ public interface BandDao {
     BandGenreDto getBandByBandName(String bandName);
     // but what if there are
     // multiple bands with the same name???
-    List<Band> getAllBands();
+    List<BandGenreDto> getAllBands();
 
     void updateBand(Band updatedBand);
 

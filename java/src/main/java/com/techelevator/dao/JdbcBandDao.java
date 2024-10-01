@@ -97,15 +97,20 @@ public class JdbcBandDao implements BandDao {
     }
 
     @Override
-    public List<Band> getAllBands() {
-        List<Band> bands = new ArrayList<>();
+    public List<BandGenreDto> getAllBands() {
+        List<BandGenreDto> bands = new ArrayList<>();
         String sql = "SELECT * FROM bands;";
 
         try {
             SqlRowSet results = template.queryForRowSet(sql);
             while (results.next()) {
-                bands.add(mapRowToBand(results));
+                bands.add(mapRowToBandGenreDto(results));
             }
+            for (BandGenreDto band : bands) {
+                String bandName = band.getBand().getBandName();
+                band.setGenreNames(getGenresByBandName(bandName));
+            }
+
         } catch (CannotGetJdbcConnectionException e) {
             System.out.println("Problem connecting");
         } catch (DataIntegrityViolationException e) {

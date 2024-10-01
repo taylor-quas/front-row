@@ -22,7 +22,7 @@ public class BandController {
     private BandDao bandDao;
 
     @GetMapping("/bands")
-    public List<Band> getAllBands() {
+    public List<BandGenreDto> getAllBands() {
         return bandDao.getAllBands();
     }
 
