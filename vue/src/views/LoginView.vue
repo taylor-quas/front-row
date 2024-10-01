@@ -1,25 +1,39 @@
 <template>
   <div id="login">
-    <form v-on:submit.prevent="login">
-      <h1 >Please Sign In</h1>
-      <div role="alert" v-if="invalidCredentials">
-        Invalid username and password!
-      </div>
-      <div role="alert" v-if="this.$route.query.registration">
-        Thank you for registering, please sign in.
-      </div>
-      <div class="form-input-group">
-        <label for="username">Username</label>
-        <input type="text" id="username" v-model="user.username" required autofocus />
-      </div>
-      <div class="form-input-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" v-model="user.password" required />
-      </div>
-      <button type="submit">Sign in</button>
-      <p>
-      <router-link v-bind:to="{ name: 'register' }">Need an account? Sign up.</router-link></p>
-    </form>
+    <div id="title">
+      <h1 >Log in to Front Row</h1>
+    </div>
+    <div id="login-form">
+      <form v-on:submit.prevent="login">
+        <div id="alert" role="alert" v-if="invalidCredentials">
+          ⚠ Incorrect username and password!
+        </div>
+        <div role="alert" v-if="this.$route.query.registration">
+          Thank you for registering, please log in.
+        </div>
+        <div class="form-input-group">
+          <label for="username">
+            <p>Username</p>
+          </label>
+          <input type="text" id="username" v-model="user.username" required autofocus />
+        </div>
+        <div class="form-input-group">
+          <label for="password">
+            <p>Password</p>
+          </label>
+          <input type="password" id="password" v-model="user.password" required />
+        </div>
+        <div id="login-button">
+          <button id="submit" type="submit">
+            <h2>Log in</h2>
+          </button>
+        </div>
+        <p>
+          Don't have an account yet? 
+          <router-link id="router-link" v-bind:to="{ name: 'register' }">Sign up.</router-link>
+        </p>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -61,10 +75,85 @@ export default {
 </script>
 
 <style scoped>
-.form-input-group {
-  margin-bottom: 1rem;
-}
-label {
-  margin-right: 0.5rem;
-}
+  .form-input-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+    
+  }
+  
+  label {
+    margin-right: 0.5rem;
+  }
+  
+  h1 {
+    font-size: 48px;
+  }
+
+  #login {
+    padding-top: 12vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+  }
+
+  #alert {
+    display: flex;
+    font-family: Montserrat;
+    
+    justify-content: center;
+
+    background-color: red;
+    color: white;
+    margin: 20px;
+    padding: 20px;
+  }
+
+  #router-link {
+    color: white;
+  }
+
+  #title{
+    margin-bottom: 40px;
+  }
+
+  input {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+  }
+
+  button h2 {
+    color: black;
+    
+    font-family: Montserrat;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+
+    margin: 12px;
+  }
+
+  button {
+    color: white;
+    border-radius: 24px;
+    border: none;
+    margin: 20px;
+
+    width: 100%;
+  }
+
+  button:hover {
+    background-color: #adadad;
+  }
+
+  #login-button {
+    display: flex;
+    justify-content: center;
+  }
+
 </style>

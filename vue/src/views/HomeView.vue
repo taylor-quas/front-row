@@ -24,6 +24,7 @@
         </ul>
       </div>
     </div>
+    <p>You must be authenticated to see this</p>
   </div>
 </template>
 
@@ -51,4 +52,9 @@ export default {
 
 <style>
 
+  .home {
+    padding-top: 12vh;
+  }
+
+  
 </style>

@@ -9,7 +9,7 @@ public class Genre {
         return genreId;
     }
 
-    public void setGenreId(int genreId) {
+    public void setGenreId(long genreId) {
         this.genreId = genreId;
     }
 

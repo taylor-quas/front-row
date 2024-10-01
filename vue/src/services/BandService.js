@@ -6,14 +6,8 @@ const http = axios.create({
 
 export default {
 
-  login(user) {
-    return http.post('/login', user)
-  },
-
-  register(user) {
-    return http.post('/register', user)
-  },
-
+  search(searchTerm) {
+    return http.post(`/search/${searchTerm}`)
+  }
   
-
 }

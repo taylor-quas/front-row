@@ -1,30 +1,52 @@
 <template>
   <div id="register" class="text-center">
-    <form v-on:submit.prevent="register">
-      <h1>Create Account</h1>
-      <div role="alert" v-if="registrationErrors">
-        {{ registrationErrorMsg }}
-      </div>
-      <div class="form-input-group">
-        <label for="username">Username</label>
-        <input type="email" id="username" v-model="user.username" required autofocus @blur="validateEmail" @input="validateEmail"/>
-        <span v-if="!isValidEmail">Invalid email format</span>
-      </div>
-
-      <div class="form-input-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" v-model="user.password" @focus="validatePassword" @input="validatePassword" />
-        <span v-if="!isValidPassword">
-          Password must contain one capital letter, one lowercase letter, one number, and a minimum of 8 characters.
-        </span>
-      </div>
-      <div class="form-input-group">
-        <label for="confirmPassword">Confirm Password</label>
-        <input type="password" id="confirmPassword" v-model="user.confirmPassword" required />
-      </div>
-      <button type="submit">Create Account</button>
-      <p><router-link v-bind:to="{ name: 'login' }">Already have an account? Log in.</router-link></p>
-    </form>
+    <div id="title">
+      <h1 >Create an Account</h1>
+    </div>
+    <div id="register-form">
+      <form v-on:submit.prevent="register">
+        <div id="alert" role="alert" v-if="registrationErrors">
+          {{ registrationErrorMsg }}
+        </div>
+        <div class="form-input-group">
+          <label for="username">
+            <p>Username</p>
+          </label>
+          <input type="email" id="username" v-model="user.username" required autofocus @blur="validateEmail" @input="validateEmail"/>
+          <span class="register-alert" v-if="!isValidEmail">
+            Invalid email format
+          </span>
+        </div>
+        <div class="form-input-group">
+          <label for="password">
+            <p>Password</p>
+          </label>
+          <input type="password" id="password" v-model="user.password" @focus="validatePassword" @input="validatePassword" />
+          <span class="register-alert" v-if="!isValidPassword">
+            Password must contain: <br>
+            - One capital letter <br>
+            - One lowercase letter <br>
+            - One number <br>
+            - Minimum of 8 characters.
+          </span>
+        </div>
+        <div class="form-input-group">
+          <label for="confirmPassword">
+            <p>Confirm Password</p>
+          </label>
+          <input type="password" id="confirmPassword" v-model="user.confirmPassword" required />
+        </div>
+        <div id="register-button">
+          <button type="submit">
+            <h2>Create Account</h2>
+          </button>
+        </div>
+        <p>
+          Already have an account?
+          <router-link id="router-link" v-bind:to="{ name: 'login' }"> Log in.</router-link>
+        </p>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -43,7 +65,7 @@ export default {
       isValidPassword: true,
       isValidEmail: true,
       registrationErrors: false,
-      registrationErrorMsg: 'There were problems registering this user.',
+      registrationErrorMsg: '⚠ There were problems registering this user.',
     };
   },
   methods: {
@@ -57,7 +79,7 @@ export default {
     register() {
       if (this.user.password != this.user.confirmPassword) {
         this.registrationErrors = true;
-        this.registrationErrorMsg = 'Password & Confirm Password do not match.';
+        this.registrationErrorMsg = '⚠ Password & Confirm Password do not match.';
       } else {
         authService
           .register(this.user)
@@ -73,7 +95,7 @@ export default {
             const response = error.response;
             this.registrationErrors = true;
             if (response.status === 400) {
-              this.registrationErrorMsg = 'A user with this email already exists.';
+              this.registrationErrorMsg = '⚠ A user with this email already exists.';
             }
           });
       }
@@ -95,10 +117,96 @@ export default {
 </script>
 
 <style scoped>
-.form-input-group {
-  margin-bottom: 1rem;
-}
-label {
-  margin-right: 0.5rem;
-}
+  .form-input-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+    
+  }
+
+  label {
+    margin-right: 0.5rem;
+  }
+
+  h1 {
+    font-size: 48px;
+  }
+
+
+  #register {
+    padding-top: 100px;
+  }
+
+  #alert {
+    display: flex;
+    font-family: Montserrat;
+    
+    justify-content: center;
+
+    background-color: red;
+    color: white;
+    margin: 20px;
+    padding: 20px;
+  }
+
+  #register {
+    padding-top: 12vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+  }
+
+  #router-link {
+    color: white;
+  }
+
+  #title{
+    margin-bottom: 40px;
+  }
+
+  input {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+  }
+
+  button h2 {
+    color: black;
+    
+    font-family: Montserrat;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+
+    margin: 12px;
+  }
+
+  button {
+    color: white;
+    border-radius: 24px;
+    border: none;
+    margin: 20px;
+
+    width: 100%;
+  }
+
+  button:hover {
+    background-color: #adadad;
+  }
+
+  .register-alert {
+    color: red;
+    font-family: Montserrat;
+    font-size: 16px;
+  }
+
+  #register-button {
+    display: flex;
+    justify-content: center;
+  }
+
 </style>
