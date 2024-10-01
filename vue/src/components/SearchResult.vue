@@ -1,16 +1,28 @@
 <template>
   <div class="results">
-    <!-- <router-link v-for="band in bands" v-bind:key="band.id"
-      v-bind:to="{ name: 'SearchView', params: { id: band.id } }">
-      <div class="band">{{ band }}</div>
-    </router-link> -->
     <router-link v-bind:to="{ name: 'bands' }"></router-link>
   </div>
 </template>
 
 <script>
+import BandService from '../services/BandService';
+
 export default {
-    props: ['bands'],
+    data() {
+        return {
+            bands: [],
+            BandService
+        }
+    },
+    created() {
+        BandService.getBands().then(response => {
+            this.bands = response.data
+            console.log(response.data)
+        })
+        .catch(error => {
+            console.error(error);
+        });
+    }
 }
 </script>
 

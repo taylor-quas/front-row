@@ -1,5 +1,6 @@
 <template>
   <div class="search">
+<<<<<<< HEAD
 
     <div class="genres">
       <h3>Genres</h3>
@@ -21,15 +22,20 @@
         </label>
       </div>
     </div>
+=======
+    <SearchResult>Here is the Search Result</SearchResult>
+    <GenreSearch>Here is the Genre List</GenreSearch>
+>>>>>>> 05e58cdf0083fe9dc170c1d55afc05bf7c8f36e3
     <p>This is the search view</p>
-    create binding between search box text (in nav in app.vue)
-    filter bands at /search endpoint
+    <!-- create binding between search box text (in nav in app.vue)
+    filter bands at /search endpoint -->
   </div>
 </template>
 
 <script>
 import SearchResultVue from '../components/SearchResult.vue';
 import BandService from '../services/BandService';
+import GenreSearch from '../components/GenreSearch.vue';
 
 export default {
   data() {
@@ -42,29 +48,15 @@ export default {
       filteredBands: []
     };
   },
-  methods: {
-    fetchGenres() {
-      BandService.getGenres().then(response => {
-        this.genres = response.data;
-        this.selectedGenres = this.genres.map(genre => genre.name); 
-    });
-    },
-    filterBands() {
-      this.filteredBands = this.bands.filter(band => {
-        const matchesSearch = band.name.toLowerCase().includes(this.searchQuery.toLowerCase());
-        const matchesGenre = this.selectedGenres.length === 0 || this.selectedGenres.includes(band.genre);
-        return matchesSearch && matchesGenre;
-      });
-    },
-    toggleSelectAll() {
-      this.selectedGenres = this.selectAll ? this.genres.map(genre => genre.name) : [];
-      this.filterBands(); 
-    }
+<<<<<<< HEAD
+=======
+  components: {
+    SearchResult,
+    GenreSearch
   },
-  watch: {
-    selectedGenres(newVal) {
-      this.selectAll = newVal.length === this.genres.length; 
-    }
+>>>>>>> 05e58cdf0083fe9dc170c1d55afc05bf7c8f36e3
+  methods: {
+    
   },
   computed: {
     searchResults() {

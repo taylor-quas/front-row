@@ -55,13 +55,35 @@ public class JdbcBandDao implements BandDao {
         Band band = new Band();
         String sql = "SELECT * FROM bands WHERE band_id = ?;";
 
-
         try {
             SqlRowSet results = template.queryForRowSet(sql, bandId);
             if (results.next()) {
                 band = mapRowToBand(results);
             } else {
                 throw new DaoException("Band not found by given ID.");
+            }
+
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("Problem connecting");
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("Data problems");
+        }
+
+        return band;
+    }
+
+    @Override
+    public Band getBandByBandName(String bandName) {
+        Band band = new Band();
+
+        String sql = "SELECT * FROM bands WHERE band_name = ?;";
+
+        try {
+            SqlRowSet results = template.queryForRowSet(sql, bandName);
+            if (results.next()) {
+                band = mapRowToBand(results);
+            } else {
+                throw new DaoException("Band not found by given name.");
             }
 
         } catch (CannotGetJdbcConnectionException e) {
@@ -94,8 +116,6 @@ public class JdbcBandDao implements BandDao {
 
     }
 
-
-
     @Override
     public List<Band> getBandsBySearchTerm(String searchTerm, List<Long> genreIds) {
 
@@ -107,24 +127,18 @@ public class JdbcBandDao implements BandDao {
                 "WHERE band_name ILIKE ?";
 
         if (genreIds.size() > 0) {
-
             sql += " AND";
-
             if (genreIds.size() == 1) {
                 sql += " band_genre.genre_id = ?;";
             } else {
                 for (int i = 0; i < genreIds.size() - 1; i++) {
                     sql += " band_genre.genre_id = ? OR";
                 }
-
                 sql += " band_genre.genre_id = ?;";
-
             }
-
         } else {
             sql += ";";
         }
-
         try {
             SqlRowSet results = template.queryForRowSet(sql, searchTerm);
             while (results.next()) {
@@ -163,7 +177,6 @@ public class JdbcBandDao implements BandDao {
 
     }
 
-    //TODO: Check functionality of createBand
     @Override
     public void createBand(Band newBand) {
 
@@ -186,12 +199,9 @@ public class JdbcBandDao implements BandDao {
     @Override
     public List<BandGenreDto> searchBandGenre(String searchTerm) {
 
-        List<String> bandNames = new ArrayList<>();
-        List<Band> bands = new ArrayList<>();
-        List<String> genres = new ArrayList<>();
         List<BandGenreDto> bandGenreDtos = new ArrayList<>();
 
-        String sql = "SELECT * FROM bands " +
+        String sql = "SELECT band_name, band_hero_image FROM bands " +
                 "WHERE band_name ILIKE ?;";
 
         searchTerm = "%" + searchTerm + "%";
@@ -199,7 +209,11 @@ public class JdbcBandDao implements BandDao {
         try {
             SqlRowSet results = template.queryForRowSet(sql, searchTerm);
             while (results.next()) {
-                bands.add(mapRowToBand(results));
+                bandGenreDtos.add(mapRowToBandGenreDto(results));
+            }
+            for (BandGenreDto band : bandGenreDtos) {
+                String bandName = band.getBandName();
+                band.setGenreNames(getGenresByBandName(bandName));
             }
 
         } catch (CannotGetJdbcConnectionException e) {
@@ -208,32 +222,7 @@ public class JdbcBandDao implements BandDao {
             System.out.println("Data problems" + e.getMessage());
         }
 
-
-        sql = "SELECT band_name FROM bands WHERE band_name ILIKE ?;";
-
-        searchTerm = "%" + searchTerm + "%";
-
-        try {
-            SqlRowSet results = template.queryForRowSet(sql, searchTerm);
-            while (results.next()) {
-                bandNames.add(results.getString("band_name"));
-            }
-
-            for (String bandName : bandNames) {
-                genres = getGenresByBandName(bandName);
-            }
-
-        } catch (CannotGetJdbcConnectionException e) {
-            System.out.println("Problem connecting");
-        } catch (DataIntegrityViolationException e) {
-            System.out.println("Data problems" + e.getMessage());
-        }
-
-
-
-
-
-        return bands;
+        return bandGenreDtos;
     }
 
 

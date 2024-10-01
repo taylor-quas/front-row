@@ -12,7 +12,9 @@ public interface BandDao {
     List<Band> getSubscribedBands(Principal principal);
 
     Band getBandByBandId(long bandId);
-
+    Band getBandByBandName(String bandName);
+    // but what if there are
+    // multiple bands with the same name???
     List<Band> getAllBands();
 
     List<Band> getBandsBySearchTerm(String searchTerm, List<Long> genreIds);
