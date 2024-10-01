@@ -4,8 +4,7 @@
           <h2>Your Bands</h2>
           <ul>
             <li v-for="band in followedBands" :key="band.bandId">{{ band.bandName }}</li>
-            {{ followedBands }}
-            {{  $store.state.token }}
+
           </ul>
         </div>
       </div>
@@ -22,7 +21,6 @@
       };
     },
     created() {
-      this.$store.commit('SET_AUTH_TOKEN', this.$store.state.token);
       BandService.getFollowedBands().then(response => {
             this.followedBands = response.data 
         })

@@ -13,8 +13,4 @@ export default {
   register(user) {
     return http.post('/register', user)
   },
-<<<<<<< HEAD
-=======
-
->>>>>>> 05e58cdf0083fe9dc170c1d55afc05bf7c8f36e3
 }
