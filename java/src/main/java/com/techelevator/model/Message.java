@@ -8,7 +8,7 @@ public class Message {
     private String messageContent;
     private LocalDateTime messageTimeSent;
     private LocalDateTime messageTimeExpiration;
-    private long messageSender;
+    private long messageSender; // band Id
 
     public long getMessageId() {
         return messageId;
