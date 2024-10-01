@@ -38,7 +38,7 @@ export default {
   #bg-image {
     height: 100%;
     background-image: url('src/assets/BR.png');
-    background-size: cover;
+    background-size: fill;
     background-position: center;
 
     display: flex; 
@@ -46,6 +46,8 @@ export default {
     align-items: center;
 
     height: 100vh;
+
+    z-index: 50;
   }
 
   #buttons{
@@ -53,7 +55,7 @@ export default {
     flex-direction: row;
     align-content: center;
     margin: auto;
-    padding: 20px;
+    
   }
 
   button {
@@ -70,12 +72,13 @@ export default {
   }
 
   #anonymous-home {
-    padding-top: 12vh;
+    padding-top: 5vh;
     display: flex;
     width: 90%;
     flex-direction: column;
     align-items: center;
     gap: 50vh;
+    margin: 0;
   }
 
   .router-button {

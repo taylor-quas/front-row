@@ -5,7 +5,7 @@
         <router-link v-bind:to="{ name: 'home' }" id="home-button">Home</router-link>
       </div>
       <div class="nav-item">
-          <input id="searchbox" type="text" placeholder="🔎 SEARCH">
+          <input id="searchbox" type="text" placeholder="🔎 SEARCH" @focus="searchView">
       </div>
       <div class="nav-item">
         <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''" id="logout-button">Logout</router-link>
@@ -14,6 +14,27 @@
     <router-view />
   </div>
 </template>
+
+<script>
+import { useRouter } from 'vue-router';
+
+export default {
+  components: {},
+  data() {
+    const router = useRouter();
+    return {
+      router
+    };
+  },
+  methods: {
+    searchView() {
+      this.router.push('/search')
+    }
+  }
+};
+
+
+</script>
 
 <style>
   #capstone-app{
