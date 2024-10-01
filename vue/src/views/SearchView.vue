@@ -1,6 +1,6 @@
 <template>
-  <div class="home">
-    <p>You must be authenticated to see this</p>
+  <div class="search">
+    <p>This is the search view</p>
   </div>
 </template>
 
@@ -11,7 +11,7 @@ export default {
 </script>
 
 <style>
-  .home {
+  .search {
     padding-top: 12vh;
   }
 
