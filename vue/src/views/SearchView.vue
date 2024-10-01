@@ -1,5 +1,10 @@
 <template>
   <div class="search">
+    <h2>Search Results</h2>
+    <div class="Search-Results">
+      <SearchResult :searchQuery="searchQuery" :selectedGenres="selectedGenres"/>
+      <GenreSearch @update:selectedGenres="updateSelectedGenres" />
+    </div>
 
     <div class="genres">
       <h3>Genres</h3>
@@ -30,11 +35,26 @@
 </template>
 
 <script>
-import SearchResultVue from '../components/SearchResult.vue';
+import SearchResult from '../components/SearchResult.vue';
 import BandService from '../services/BandService';
 import GenreSearch from '../components/GenreSearch.vue';
 
 export default {
+  // data() {
+  //   return {
+  //     searchQuery: '',
+  //     genres: [], 
+  //     selectedGenres: [],
+  //     selectAll: true,
+  //     bands: [], 
+  //     filteredBands: []
+  //   };
+  // },
+  components: {
+    SearchResult,
+    GenreSearch
+  },
+  props: ['searchQuery'],
   data() {
     return {
       searchQuery: '',
@@ -46,7 +66,9 @@ export default {
     };
   },
   methods: {
-    
+    updateSelectedGenres(genres) {
+      this.selectedGenres = genres;
+    },
   },
   computed: {
     searchResults() {

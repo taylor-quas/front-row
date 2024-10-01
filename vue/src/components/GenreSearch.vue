@@ -1,62 +1,65 @@
 <template>
-    <div class="genres">
-      <h3>Genres</h3>
-      <label>
-        <input 
-          type="checkbox" 
-          v-model="selectAll" 
-          @input="toggleSelectAll"
-        /> Select All
-      </label>
+    <div class="genre-search">
+      <h3>Filter by Genre</h3>
+      <div class="genres">
+        <label>
+          <input 
+            type="checkbox" 
+            v-model="selectAll" 
+            @change="toggleSelectAll"
+          /> Select All
+        </label>
       </div>
-  <div class="genre-list">
+      <div class="genre-list">
         <label v-for="genre in genres" :key="genre.id">
           <input 
             type="checkbox" 
             v-model="selectedGenres" 
             :value="genre.name" 
-            @change="filterBands" 
+            @change="updateSelectedGenres" 
           /> {{ genre.name }}
         </label>
       </div>
-</template>
-
-<script>
-import BandService from '../services/BandService';
-
-export default {
+    </div>
+  </template>
+  
+  <script>
+  import BandService from '../services/BandService';
+  
+  export default {
     data() {
-    return {
-      searchQuery: '',
-      genres: [], 
-      selectedGenres: [],
-      selectAll: true,
-    };
-  },
-    methods: {
-    filterBands() {
-      BandService.getBands(this.selectedGenres).then(response => {
-        this.filteredBands = response.data;
-      });
+      return {
+        genres: [], 
+        selectedGenres: [],
+        selectAll: true, 
+      };
     },
-    fetchGenres() {
+    methods: {
+      fetchGenres() {
         BandService.getGenres().then(response => {
-            this.genres = response.data;
-            this.selectedGenres = this.genres.map(genre => genre.name); 
+          this.genres = response.data;
+          this.selectedGenres = this.genres.map(genre => genre.name);
+          this.updateSelectedGenres();
         });
+      },
+      toggleSelectAll() {
+        this.selectedGenres = this.selectAll ? this.genres.map(genre => genre.name) : [];
+        this.updateSelectedGenres();
+      },
+      updateSelectedGenres() {
+        this.$emit('update:selectedGenres', this.selectedGenres);
+      }
     },
     watch: {
-    selectedGenres(newVal) {
-      this.selectAll = newVal.length === this.genres.length; 
-    }
+      selectedGenres(newVal) {
+        this.selectAll = newVal.length === this.genres.length;
+      }
     },
-    toggleSelectAll() {
-      this.selectedGenres = this.selectAll ? this.genres.map(genre => genre.name) : [];
-      this.filterBands(); 
+    created() {
+      this.fetchGenres();
     }
-  },
-}
-</script>
+  }
+  </script>
 
 <style>
 
