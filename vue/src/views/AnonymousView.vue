@@ -78,6 +78,7 @@ export default {
     flex-direction: column;
     align-items: center;
     gap: 50vh;
+    margin: 0;
   }
 
   .router-button {
