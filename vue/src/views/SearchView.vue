@@ -74,7 +74,7 @@ export default {
   computed: {
     searchResults() {
       return this.filteredBands;
-      }
+    }
   },
 };
 </script>

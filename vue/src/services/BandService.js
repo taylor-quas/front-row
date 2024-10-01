@@ -14,8 +14,12 @@ export default {
     return http.get('/genres');
   },
 
-  getBands(id) {
+  getBands() {
     return http.get(`/bands`);
+  },
+
+  getFollowedBands() {
+    return http.get('/my-bands');
   }
 
 }

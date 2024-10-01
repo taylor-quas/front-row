@@ -29,7 +29,7 @@ CREATE TABLE bands (
     band_id SERIAL,
     band_name varchar(50) NOT NULL UNIQUE,
     band_description varchar(10000) NOT NULL,
-    band_manager_id int NOT NULL,
+    band_manager_id BIGINT NOT NULL,
     band_hero_image varchar(500) NOT NULL,
     CONSTRAINT PK_band PRIMARY KEY (band_id),
     CONSTRAINT FK_band_manager FOREIGN KEY (band_manager_id) REFERENCES users(user_id)
