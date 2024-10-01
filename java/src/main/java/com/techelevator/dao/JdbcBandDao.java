@@ -138,16 +138,18 @@ public class JdbcBandDao implements BandDao {
     }
 
     @Override
-    public void createBand(Band newBand) {
+    public void createBand(Band newBand, Principal principal) {
 
         String sql = "INSERT INTO bands (band_name,band_description," +
                 "band_manager_id,band_hero_image) VALUES (?,?,?,?);";
+
+        long principalId = getUserIdByUsername(principal.getName());
 
         try {
             template.update(sql,
                     newBand.getBandName(),
                     newBand.getBandDescription(),
-                    newBand.getBandManagerId(),
+                    principalId,
                     newBand.getBandHeroImage());
         } catch (CannotGetJdbcConnectionException e) {
             System.out.println("Problem connecting");

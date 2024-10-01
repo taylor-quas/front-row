@@ -46,8 +46,8 @@ public class BandController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/create-band")
-    public void createBand(@RequestBody @Valid Band band) {
-        bandDao.createBand(band);
+    public void createBand(@RequestBody @Valid Band band, Principal principal) {
+        bandDao.createBand(band, principal);
     }
 
     @GetMapping("/{bandName}")

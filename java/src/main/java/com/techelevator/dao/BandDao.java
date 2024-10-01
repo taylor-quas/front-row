@@ -19,7 +19,7 @@ public interface BandDao {
 
     void updateBand(Band updatedBand);
 
-    void createBand(Band newBand);
+    void createBand(Band newBand, Principal principal);
 
     List<BandGenreDto> searchBandGenre(String searchTerm);
 
