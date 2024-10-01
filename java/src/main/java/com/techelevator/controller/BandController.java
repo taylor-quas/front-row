@@ -53,5 +53,9 @@ public class BandController {
     }
 
     //TODO: Get a single band for bandview
+    @GetMapping("/{bandName}")
+    public Band getBandByName(@PathVariable String bandName) {
+        return bandDao.getBandByBandName(bandName);
+    }
 
 }
