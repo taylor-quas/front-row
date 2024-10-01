@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import SearchResultVue from '../components/SearchResult.vue';
 import BandService from '../services/BandService';
 
 export default {
@@ -53,11 +54,11 @@ export default {
     });
     },
     filterBands() {
-      // this.filteredBands = this.bands.filter(band => {
-      //   const matchesSearch = band.name.toLowerCase().includes(this.searchQuery.toLowerCase());
-      //   const matchesGenre = this.selectedGenres.length === 0 || this.selectedGenres.includes(band.genre);
-      //   return matchesSearch && matchesGenre;
-      //});
+      this.filteredBands = this.bands.filter(band => {
+        const matchesSearch = band.name.toLowerCase().includes(this.searchQuery.toLowerCase());
+        const matchesGenre = this.selectedGenres.length === 0 || this.selectedGenres.includes(band.genre);
+        return matchesSearch && matchesGenre;
+      });
     },
     toggleSelectAll() {
       this.selectedGenres = this.selectAll ? this.genres.map(genre => genre.name) : [];
@@ -70,13 +71,10 @@ export default {
     }
   },
   computed: {
-    fetchBands() {
-      BandService.getBands().then(response => {
-        this.bands = response.data;
-        //this.filterBands();
-      });
-    },
-  }
+    searchResults() {
+      return this.filteredBands;
+      }
+  },
 };
 </script>
 
