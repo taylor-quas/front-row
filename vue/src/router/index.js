@@ -8,6 +8,7 @@ import LogoutView from '../views/LogoutView.vue';
 import RegisterView from '../views/RegisterView.vue';
 import AnonymousView from '../views/AnonymousView.vue';
 import SearchView from '../views/SearchView.vue';
+import InboxView from '../views/InboxView.vue';
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -30,6 +31,14 @@ const routes = [
     path: '/search',
     name: 'search',
     component: SearchView,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/inbox',
+    name: 'inbox',
+    component: InboxView,
     meta: {
       requiresAuth: true
     }

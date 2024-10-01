@@ -1,5 +1,6 @@
 <template>
   <div class="search">
+
     <div class="genres">
       <h3>Genres</h3>
       <label>
@@ -20,6 +21,9 @@
         </label>
       </div>
     </div>
+    <p>This is the search view</p>
+    create binding between search box text (in nav in app.vue)
+    filter bands at /search endpoint
   </div>
 </template>
 

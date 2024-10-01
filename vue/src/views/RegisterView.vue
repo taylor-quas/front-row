@@ -136,6 +136,8 @@ export default {
 
   #register {
     padding-top: 100px;
+    background-color: green;
+    z-index: 50;
   }
 
   #alert {
