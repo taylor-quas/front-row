@@ -15,16 +15,6 @@ import GenreSearch from '../components/GenreSearch.vue';
 
 
 export default {
-  // data() {
-  //   return {
-  //     searchQuery: '',
-  //     genres: [], 
-  //     selectedGenres: [],
-  //     selectAll: true,
-  //     bands: [], 
-  //     filteredBands: []
-  //   };
-  // },
   components: {
     BandSearch,
     GenreSearch,
@@ -39,14 +29,37 @@ export default {
       filteredBands: []
     };
   },
+  created() {
+    this.fetchBands();
+  },
   methods: {
     updateSelectedGenres(genres) {
       this.selectedGenres = genres;
     },
+    fetchBands() {
+      BandService.getBands()
+        .then(response => {
+          this.bands = response.data;
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
   },
   computed: {
-    searchResults() {
-      return this.filteredBands;
+    filterBands() {
+      let filteredBands = this.bands;
+      if (this.searchQuery) {
+        filteredBands = filteredBands.filter(band => {
+          return band.name.toLowerCase().includes(this.searchQuery.toLowerCase());
+        });
+      }
+      if (this.selectedGenres.length > 0) {
+        filteredBands = filteredBands.filter(band => 
+          this.selectedGenres.includes(band.genre)
+        );
+      }
+      return filteredBands;
     }
   },
 };
