@@ -11,13 +11,14 @@
         </label>
       </div>
       <div class="genre-list"> This is the Genre List
-        <label v-for="genre in genres" :key="genre.id">
+        <label v-for="genre in genres" :key="genre">
+          <br />
           <input 
             type="checkbox" 
             v-model="selectedGenres" 
-            :value="genre.name" 
+            :value="genre" 
             @change="updateSelectedGenres" 
-          /> {{ genre.name }}
+          /> {{ genre }}
         </label>
       </div>
     </div>
@@ -43,12 +44,12 @@
       fetchGenres() {
         BandService.getGenres().then(response => {
           this.genres = response.data;
-          this.selectedGenres = this.genres.map(genre => genre.name);
+          this.selectedGenres = this.genres.map(genre => genre);
           this.updateSelectedGenres();
         });
       },
       toggleSelectAll() {
-        this.selectedGenres = this.selectAll ? this.genres.map(genre => genre.name) : [];
+        this.selectedGenres = this.selectAll ? this.genres.map(genre => genre) : [];
         this.updateSelectedGenres();
       },
       updateSelectedGenres() {
