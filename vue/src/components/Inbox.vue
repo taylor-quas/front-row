@@ -2,7 +2,8 @@
   <div>
     <h2>This is the inbox</h2>
     <div v-for="message in messages" :key=message.messageId>
-    <h3>{{ message.messageContent }}</h3>
+    <h3>Message: {{ message.message.messageContent }}</h3>
+    <h4>From: {{ message.bandName }}</h4>
     </div>
   </div>
 </template>
