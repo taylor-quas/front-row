@@ -29,39 +29,39 @@ export default {
       filteredBands: []
     };
   },
-  created() {
-    this.fetchBands();
-  },
+  // created() {
+  //   this.fetchBands();
+  // },
   methods: {
     updateSelectedGenres(genres) {
       this.selectedGenres = genres;
     },
-    fetchBands() {
-      BandService.getBands()
-        .then(response => {
-          this.bands = response.data;
-        })
-        .catch(error => {
-          console.error(error);
-        });
-    }
+    // fetchBands() {
+    //   BandService.getBands()
+    //     .then(response => {
+    //       this.bands = response.data;
+    //     })
+    //     .catch(error => {
+    //       console.error(error);
+    //     });
+    // }
   },
-  computed: {
-    filterBands() {
-      let filteredBands = this.bands;
-      if (this.searchQuery) {
-        filteredBands = filteredBands.filter(band => {
-          return band.name.toLowerCase().includes(this.searchQuery.toLowerCase());
-        });
-      }
-      if (this.selectedGenres.length > 0) {
-        filteredBands = filteredBands.filter(band => 
-          this.selectedGenres.includes(band.genre)
-        );
-      }
-      return filteredBands;
-    }
-  },
+  // computed: {
+  //   filterBands() {
+  //     let filteredBands = this.bands;
+  //     if (this.searchQuery) {
+  //       filteredBands = filteredBands.filter(band => {
+  //         return band.name.toLowerCase().includes(this.searchQuery.toLowerCase());
+  //       });
+  //     }
+  //     if (this.selectedGenres.length > 0) {
+  //       filteredBands = filteredBands.filter(band => 
+  //         this.selectedGenres.includes(band.genre)
+  //       );
+  //     }
+  //     return filteredBands;
+  //   }
+  // },
 };
 </script>
 
