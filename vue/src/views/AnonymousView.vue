@@ -8,15 +8,11 @@
       <div id="description">
         <p>Tailored to strengthen the engagement between bands and their fans.<br>Stay up to date on all your favorites.</p>
         <div id="buttons">
-          <button>
-            <h2>
-              <router-link class="router-button" v-bind:to="{ name: 'login' }">Login</router-link>
-            </h2>
+          <button @click="$router.push('/login')">
+              <h2 class="router-button" >Login</h2>
           </button>
-          <button>
-            <h2>
-              <router-link class="router-button" v-bind:to="{ name: 'register' }">Create Account</router-link>
-            </h2>
+          <button @click="$router.push('/register')">
+              <h2 class="router-button" >Create Account</h2>
           </button>
         </div>
       </div>
