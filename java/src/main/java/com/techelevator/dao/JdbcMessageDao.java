@@ -1,6 +1,8 @@
 package com.techelevator.dao;
 
+import com.techelevator.model.BandGenreDto;
 import com.techelevator.model.Message;
+import com.techelevator.model.MessageBandDto;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -23,9 +25,32 @@ public class JdbcMessageDao implements MessageDao {
         template = new JdbcTemplate(ds);
     }
 
+//    @Override
+//    public List<Message> getInboxMessages(Principal principal) {
+//        List<Message> messages = new ArrayList<>();
+//        String sql = "SELECT * FROM messages m " +
+//                "JOIN user_band ub ON ub.band_id = m.message_sender " +
+//                "WHERE ub.user_id = ? " +
+//                "ORDER BY message_time_sent DESC;";
+//
+//        long principalId = getUserIdByUsername(principal.getName());
+//
+//        try {
+//            SqlRowSet results = template.queryForRowSet(sql, principalId);
+//            while (results.next()) {
+//                messages.add(mapRowToMessage(results));
+//            }
+//        } catch (CannotGetJdbcConnectionException e) {
+//            System.out.println("Problem connecting");
+//        } catch (DataIntegrityViolationException e) {
+//            System.out.println("Data problems");
+//        }
+//        return messages;
+//    }
+
     @Override
-    public List<Message> getInboxMessages(Principal principal) {
-        List<Message> messages = new ArrayList<>();
+    public List<MessageBandDto> getInboxMessages(Principal principal) {
+        List<MessageBandDto> messages = new ArrayList<>();
         String sql = "SELECT * FROM messages m " +
                 "JOIN user_band ub ON ub.band_id = m.message_sender " +
                 "WHERE ub.user_id = ? " +
@@ -36,8 +61,13 @@ public class JdbcMessageDao implements MessageDao {
         try {
             SqlRowSet results = template.queryForRowSet(sql, principalId);
             while (results.next()) {
-                messages.add(mapRowToMessage(results));
+                messages.add(mapRowToMessageBandDto(results));
             }
+            for (MessageBandDto message : messages) {
+                long messageSender = message.getMessage().getMessageSender();
+                message.setBandName(getBandNameByMessageSender(messageSender));
+            }
+
         } catch (CannotGetJdbcConnectionException e) {
             System.out.println("Problem connecting");
         } catch (DataIntegrityViolationException e) {
@@ -84,4 +114,23 @@ public class JdbcMessageDao implements MessageDao {
         message.setMessageSender(rowSet.getLong("message_sender"));
         return message;
     }
+
+    private MessageBandDto mapRowToMessageBandDto(SqlRowSet rowSet) {
+        MessageBandDto messageBandDto = new MessageBandDto();
+
+        messageBandDto.setMessage(mapRowToMessage(rowSet));
+
+        return messageBandDto;
+
+    }
+
+    private String getBandNameByMessageSender(long messageSender) {
+        String sql = "SELECT band_name FROM bands WHERE band_id = ?;";
+
+        String bandName = template.queryForObject(sql, new Object[]{messageSender}, String.class);
+
+        return bandName;
+
+    }
+
 }

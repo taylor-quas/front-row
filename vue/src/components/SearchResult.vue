@@ -4,7 +4,7 @@
       {{ bands }}
       <ul>
         <li v-for="band in bands" :key="band.bandId">{{ band.bandName }}</li>
-        g
+        
       </ul>
     </div>
   </template>
