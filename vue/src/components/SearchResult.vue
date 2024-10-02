@@ -4,10 +4,27 @@
       {{ bands }}
       <ul>
         <li v-for="band in bands" :key="band.bandId">{{ band.bandName }}</li>
+        
       </ul>
     </div>
   </template>
   
+  Search filtering
+  //take the value input into the search box
+  //compare that value in a filter method to the array of all bands
+  //compare against - band name, band artists* (need artists in database)
+  //include all matching Results in the filtered list
+  
+  genre
+  //get list of genres from /genres endpoint
+  //use list to create a bunch of checkboxes
+  //when the box is checked call a filter function that filters the bands array
+  //should include if the band has a genre that matches the checked genre
+
+  Search and genre need to work together
+  //module 3 unit 12 lecture has an example of filters working together
+  //Line 222 for check all, line 238 for filtering
+
   <script>
   import BandService from '../services/BandService';
   

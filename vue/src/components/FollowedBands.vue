@@ -4,7 +4,6 @@
           <h2>Your Bands</h2>
           <ul>
             <li v-for="band in followedBands" :key="band.bandId">{{ band.bandName }}</li>
-
           </ul>
         </div>
       </div>
