@@ -11,6 +11,10 @@ export default {
 
   getFollowedBands() {
     return axios.get('/my-bands');
+  },
+
+  getBand(bandName){
+    return axios.get(`/${bandName}`)
   }
 
 }
