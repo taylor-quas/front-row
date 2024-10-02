@@ -1,6 +1,6 @@
 <template>
   <div class="search">
-    <h2>(SearchView working title)</h2>
+    <h2>SearchView</h2>
     <div class="Search-Results">
       <GenreSearch id="genres" @update:selectedGenres="updateSelectedGenres" />
       <BandSearch id="bands" :searchQuery="searchQuery" :bands="bands"/>
@@ -35,6 +35,7 @@ export default {
   methods: {
     updateSelectedGenres(genres) {
       this.selectedGenres = genres;
+      this.filterBands();
     },
     // fetchBands() {
     //   BandService.getBands()

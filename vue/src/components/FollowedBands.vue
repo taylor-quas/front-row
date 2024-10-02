@@ -11,8 +11,12 @@
   
   <script>
   import BandService from '../services/BandService';
+  import BandComponent from './BandComponent.vue';
 
   export default {
+    components: {
+      BandComponent
+    },
     data() {
       return {
         followedBands: [],
