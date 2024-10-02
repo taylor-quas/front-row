@@ -2,9 +2,9 @@
       <div id="bands">
         <div class="bands-list">
           <h2>Your Bands</h2>
-          <ul>
-            <li v-for="band in followedBands" :key="band.bandId">{{ band.bandName }}</li>
-          </ul>
+          <div v-for="band in followedBands" :key="band.bandId">
+            <h3>{{ band.bandName }}</h3>
+          </div>
         </div>
       </div>
   </template>

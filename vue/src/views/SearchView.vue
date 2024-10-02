@@ -2,8 +2,8 @@
   <div class="search">
     <h2>(SearchView working title)</h2>
     <div class="Search-Results">
-      <BandSearch :searchQuery="searchQuery" :bands="bands"/>
-      <GenreSearch @update:selectedGenres="updateSelectedGenres" />
+      <GenreSearch id="genres" @update:selectedGenres="updateSelectedGenres" />
+      <BandSearch id="bands" :searchQuery="searchQuery" :bands="bands"/>
     </div>
   </div>
 </template>
@@ -52,9 +52,28 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
   .search {
     padding-top: 12vh;
+  }
+
+  .Search-Results {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    gap: 1rem;
+  }
+
+  #genres {
+    padding-left: 2rem;
+  }
+
+  #bands {
+    padding-right: 2rem;
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 1rem;
   }
 
   
