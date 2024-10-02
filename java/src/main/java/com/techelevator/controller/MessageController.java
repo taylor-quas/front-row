@@ -2,6 +2,7 @@ package com.techelevator.controller;
 
 import com.techelevator.dao.MessageDao;
 import com.techelevator.model.Message;
+import com.techelevator.model.MessageBandDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,7 @@ public class MessageController {
     private MessageDao messageDao;
 
     @GetMapping("/inbox")
-    public List<Message> getMyMessages(Principal principal) {
+    public List<MessageBandDto> getMyMessages(Principal principal) {
         return messageDao.getInboxMessages(principal);
     }
 }
