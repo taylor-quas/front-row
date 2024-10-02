@@ -1,12 +1,16 @@
 <template>
   <div class="inbox">
-    <p>This is the inbox view</p>
+    <inbox></inbox>
   </div>
 </template>
 
 <script>
+import Inbox from '../components/Inbox.vue';
+
 export default {
-  
+  components: {
+    Inbox
+  }  
 };
 </script>
 
