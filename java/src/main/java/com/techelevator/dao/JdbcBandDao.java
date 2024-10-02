@@ -30,7 +30,7 @@ public class JdbcBandDao implements BandDao {
         String sql = "SELECT * FROM bands\n" +
                 "\tJOIN user_band ON bands.band_id = user_band.band_id\n" +
                 "\tWHERE user_band.user_id = ?\n" +
-                "\tORDER BY band_name;";
+                "\tORDER BY REGEXP_REPLACE(band_name, '^(The |An |A )', '', 'i');";
 
         long principalId = getUserIdByUsername(principal.getName());
 
@@ -170,7 +170,7 @@ public class JdbcBandDao implements BandDao {
 
         String sql = "SELECT * FROM bands " +
                 "WHERE band_name ILIKE ? " +
-                "ORDER BY band_name;";
+                "ORDER BY REGEXP_REPLACE(band_name, '^(The |An |A )', '', 'i');";
 
         searchTerm = "%" + searchTerm + "%";
 
@@ -255,7 +255,7 @@ public class JdbcBandDao implements BandDao {
                 "\tJOIN band_genre ON genres.genre_id = band_genre.genre_id\n" +
                 "\tJOIN bands ON band_genre.band_id = bands.band_id\n" +
                 "\tWHERE band_name = ? " +
-                "ORDER BY band_name;";
+                "ORDER BY REGEXP_REPLACE(band_name, '^(The |An |A )', '', 'i');";
 
         try {
             SqlRowSet results = template.queryForRowSet(sql, bandName);
