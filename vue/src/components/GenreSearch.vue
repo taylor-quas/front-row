@@ -12,6 +12,7 @@
       </div>
       <div class="genre-list"> This is the Genre List
         <label v-for="genre in genres" :key="genre">
+          <br />
           <input 
             type="checkbox" 
             v-model="selectedGenres" 
