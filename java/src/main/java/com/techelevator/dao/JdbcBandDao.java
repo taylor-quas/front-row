@@ -24,8 +24,8 @@ public class JdbcBandDao implements BandDao {
     }
 
     @Override
-    public List<Band> getSubscribedBands(Principal principal) {
-        List<Band> bands = new ArrayList<>();
+    public List<BandGenreDto> getSubscribedBands(Principal principal) {
+        List<BandGenreDto> bands = new ArrayList<>();
 
         String sql = "SELECT * FROM bands\n" +
                 "\tJOIN user_band ON bands.band_id = user_band.band_id\n" +
@@ -37,7 +37,11 @@ public class JdbcBandDao implements BandDao {
         try {
             SqlRowSet results = template.queryForRowSet(sql, principalId);
             while (results.next()) {
-                bands.add(mapRowToBand(results));
+                bands.add(mapRowToBandGenreDto(results));
+            }
+            for (BandGenreDto band : bands) {
+                String bandName = band.getBand().getBandName();
+                band.setGenreNames(getGenresByBandName(bandName));
             }
         } catch (CannotGetJdbcConnectionException e) {
             System.out.println("Problem connecting");

@@ -18,6 +18,7 @@ INSERT INTO user_band (user_id, band_id) VALUES (1, 3), (1, 5), (1, 1);
 INSERT INTO messages (message_content, message_time_sent, message_time_expiration, message_sender) VALUES ('Hello', '2024-10-01 13:12:00', '2024-10-14 13:12:00', 3);
 INSERT INTO messages (message_content, message_time_sent, message_time_expiration, message_sender) VALUES ('Cheerio, g-day mate,', '2024-10-01 13:12:00', '2024-10-31 13:12:00', 2);
 INSERT INTO messages (message_content, message_time_sent, message_time_expiration, message_sender) VALUES ('Howdy padner', '2024-10-01 13:12:00', '2024-10-11 13:12:00', 3);
+INSERT INTO messages (message_content, message_time_sent, message_time_expiration, message_sender) VALUES ('This is an expired message. It should not be visible.', '2024-09-01 13:12:00', '2024-10-01 13:12:00', 3);
 
 INSERT INTO genres (genre_name) VALUES ('blues'), ('classical'), ('country'), ('electronic'), ('folk'), ('hip-hop'), ('jazz'), ('latin'), ('new age'), ('pop'), ('r&b'), ('reggae'), ('rock');
 

@@ -40,7 +40,7 @@ public class BandController {
     }
 
     @GetMapping("/my-bands")
-    public List<Band> getSubscribedBands(Principal principal) {
+    public List<BandGenreDto> getSubscribedBands(Principal principal) {
         return bandDao.getSubscribedBands(principal);
     }
 
