@@ -21,7 +21,16 @@ import BandService from '../services/BandService';
 import BandComponent from './BandComponent.vue';
 
 export default {
-  props: ['searchQuery', 'selectedGenres'],
+  props: {
+    searchQuery: {
+      type: String,
+      required: false
+    },
+    selectedGenres: {
+      type: Array,
+      required: false
+    }
+  },
   components: {
     BandComponent
   },
@@ -47,22 +56,42 @@ export default {
         });
     },
     filterBands() {
-      let filteredBands = this.bands;
+      let filteredBands = this.bands || [];
+
       if (this.searchQuery) {
-        filteredBands = filteredBands.filter(band => {
+        console.log(this.searchQuery);
+        const search = this.searchQuery.toLowerCase();
+
+        console.log(this.bands);
+        console.log(this.filteredBands);
+
+        filteredBands = this.bands.filter(band => {
+          const bandName = band.band.bandName || '';
+
+          console.log(band.band.bandName.toLowerCase());
+          console.log(search);
+
           return (
-            band.band.bandName.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-            band.band.name.toLowerCase().includes(this.searchQuery.toLowerCase())
-          );
+            bandName.toLowerCase().includes(search)
+        )
 
         });
       }
 
-      // if (this. selectedGenres && this.selectedGenres.length > 0) {
-      //   filteredBands = filteredBands.filter(band => {
-      //     return this.selectedGenres.some(genre => band.genres.includes(genre));
-      //   });
-      // }
+      if (this.selectedGenres && this.selectedGenres.length > 0) {
+        filteredBands = filteredBands.filter(band => {
+          console.log(band);
+          console.log(band.genreNames);
+          console.log(this.selectedGenres);
+
+          return this.selectedGenres.some(genre => {
+            return band.genreNames.includes(genre)
+          });
+          
+        });
+      } else if (this.selectedGenres && this.selectedGenres.length === 0) {
+        filteredBands = [];
+      }
       this.filteredBands = filteredBands;
     }
   },
