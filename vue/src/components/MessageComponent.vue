@@ -25,10 +25,10 @@ export default {
 .messageComponent {
     display: flex;
     flex-direction: column;
-    margin: 2%;
+    margin: 5px;
     border: 1px solid black;
     border-radius: 20px;
-    padding: 2%;
+    padding: 5px;
     align-content: center;
     justify-content: center;
 

@@ -1,10 +1,12 @@
 <template>
     <div id="bands">
-      <div class="bands-list">
-        <h2>Your Bands</h2>
+      <div>
+        <h2>My Bands</h2>
         
-          <div v-for="band in followedBands" :key="band.bandId">
-            <BandComponent :band="band" />
+          <div class="followedBands">
+            <div v-for="band in followedBands" :key="band.bandId">
+              <BandComponent :band="band" />
+            </div>
           </div>
 
       </div>
@@ -44,6 +46,17 @@
   
   <style>
   
+  .followedBands {
+    display: flex;
+    margin: 5px;
+    border: 1px solid black;
+    border-radius: 20px;
+    padding: 5px;
+    align-content: center;
+    justify-content: center;
+    width: 100%;
+  
+  }
     
   </style>
   
