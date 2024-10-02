@@ -22,7 +22,7 @@ export default {
       filteredMessages() {
         const currentTime = new Date();
         return this.messages.filter(message => {
-          const expirationTime = new Date(message.messageTimeExpiration);
+          const expirationTime = new Date(message.message.messageTimeExpiration);
           return expirationTime > currentTime;
         });
       }
