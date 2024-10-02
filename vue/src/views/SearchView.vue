@@ -29,32 +29,38 @@ export default {
       filteredBands: []
     };
   },
+  created() {
+    this.fetchBands();
+  },
   methods: {
-    fetchBands() {
-      BandService.getBands().then(response => {
-        this.bands = response.data;
-        this.filterBands();
-      }).catch(error => {
-        console.error('Error fetching bands:', error);
-      });
-    },
     updateSelectedGenres(genres) {
       this.selectedGenres = genres;
       this.filterBands();
     },
-    filterBands() {
-      if (this.selectedGenres.length === 0) {
-        this.filteredBands = this.bands;
-      } else {
-        this.filteredBands = this.bands.filter(band => 
-          band.genres.some(genre => this.selectedGenres.includes(genre))
-        );
-      }
+    fetchBands() {
+      BandService.getBands()
+        .then(response => {
+          this.bands = response.data;
+        })
+        .catch(error => {
+          console.error(error);
+        });
     }
   },
   computed: {
-    searchResults() {
-      return this.filteredBands;
+    filterBands() {
+      let filteredBands = this.bands;
+      if (this.searchQuery) {
+        filteredBands = filteredBands.filter(band => {
+          return band.name.toLowerCase().includes(this.searchQuery.toLowerCase());
+        });
+      }
+      if (this.selectedGenres.length > 0) {
+        filteredBands = filteredBands.filter(band => 
+          this.selectedGenres.includes(band.genre)
+        );
+      }
+      return filteredBands;
     }
   },
 };

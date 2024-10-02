@@ -34,31 +34,32 @@
     },
     created() {
       this.fetchBands();
-      BandService.getBands().then(response => {
-            this.bands = response.data 
-        })
-        .catch(error => {
-            console.error(error);
-        });
     },
     methods: {
       fetchBands() {
-        BandService.getBands().then(response => {
-          this.bands = response.data;
-          this.filterBands();
-        })
-        .catch(error => {
-          console.error(error);
-        });
+        BandService.getBands()
+          .then(response => {
+            this.bands = response.data;
+            this.filterBands();
+          })
+          .catch(error => {
+            console.error(error);
+          });
       },
       filterBands() {
-        this.filteredBands = this.bands.filter(band => {
-          const matchesSearch = this.searchQuery ? 
-            band.name.toLowerCase().includes(this.searchQuery.toLowerCase()) : true;
-          const matchesGenre = this.selectedGenres.length === 0 || 
-            this.selectedGenres.some(genre => band.genres.includes(genre));
-          return matchesSearch && matchesGenre;
-        });
+        let filteredBands = this.bands;
+        if (this.searchQuery) {
+          filteredBands = filteredBands.filter(band => {
+            return band.name.toLowerCase().includes(this.searchQuery.toLowerCase());
+          });
+        }
+
+        if (this. selectedGenres && this.selectedGenres.length > 0) {
+          filteredBands = filteredBands.filter(band => {
+            return this.selectedGenres.some(genre => band.genres.includes(genre));
+          });
+        }
+        this.filteredBands = filteredBands;
       }
     },
     watch: {
@@ -72,7 +73,7 @@
         deep: true
       }
     }
-  }
+  };
   </script>
 
 <style>
