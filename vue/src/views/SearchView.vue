@@ -1,9 +1,9 @@
 <template>
   <div class="search">
-    <h2>(SearchView working title)</h2>
+    <h2>SearchView</h2>
     <div class="Search-Results">
       <GenreSearch id="genres" @update:selectedGenres="updateSelectedGenres" />
-      <BandSearch id="bands" :searchQuery="searchQuery" :bands="bands"/>
+      <BandSearch id="bands" :searchQuery="searchQuery" :bands="bands" :selectedGenres="selectedGenres"/>
     </div>
   </div>
 </template>
@@ -15,16 +15,6 @@ import GenreSearch from '../components/GenreSearch.vue';
 
 
 export default {
-  // data() {
-  //   return {
-  //     searchQuery: '',
-  //     genres: [], 
-  //     selectedGenres: [],
-  //     selectAll: true,
-  //     bands: [], 
-  //     filteredBands: []
-  //   };
-  // },
   components: {
     BandSearch,
     GenreSearch,
@@ -39,16 +29,40 @@ export default {
       filteredBands: []
     };
   },
+  // created() {
+  //   this.fetchBands();
+  // },
   methods: {
     updateSelectedGenres(genres) {
       this.selectedGenres = genres;
+      this.filterBands();
     },
+    // fetchBands() {
+    //   BandService.getBands()
+    //     .then(response => {
+    //       this.bands = response.data;
+    //     })
+    //     .catch(error => {
+    //       console.error(error);
+    //     });
+    // }
   },
-  computed: {
-    searchResults() {
-      return this.filteredBands;
-    }
-  },
+  // computed: {
+  //   filterBands() {
+  //     let filteredBands = this.bands;
+  //     if (this.searchQuery) {
+  //       filteredBands = filteredBands.filter(band => {
+  //         return band.name.toLowerCase().includes(this.searchQuery.toLowerCase());
+  //       });
+  //     }
+  //     if (this.selectedGenres.length > 0) {
+  //       filteredBands = filteredBands.filter(band => 
+  //         this.selectedGenres.includes(band.genre)
+  //       );
+  //     }
+  //     return filteredBands;
+  //   }
+  // },
 };
 </script>
 

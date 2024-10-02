@@ -31,6 +31,7 @@
   //should include if the band has a genre that matches the checked genre
   
   import BandService from '../services/BandService';
+  import BandComponent from './BandComponent.vue';
   
   export default {
     data() {
@@ -74,5 +75,6 @@
   </script>
 
 <style>
+
 
 </style>
