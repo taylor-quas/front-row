@@ -13,7 +13,7 @@
 import BandService from '../services/BandService';
 
 export default {
-    props: ['band'],
+    props: ['band', 'searchQuery'], 
     data() {
         return {
             bands: [],

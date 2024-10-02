@@ -1,6 +1,6 @@
 <template>
   <div class="search">
-    <h2>(SearchView working title)</h2>
+    <h2>SearchView</h2>
     <div class="Search-Results">
       <GenreSearch id="genres" @update:selectedGenres="updateSelectedGenres" />
       <BandSearch id="bands" :searchQuery="searchQuery" :bands="bands"/>
@@ -15,16 +15,6 @@ import GenreSearch from '../components/GenreSearch.vue';
 
 
 export default {
-  // data() {
-  //   return {
-  //     searchQuery: '',
-  //     genres: [], 
-  //     selectedGenres: [],
-  //     selectAll: true,
-  //     bands: [], 
-  //     filteredBands: []
-  //   };
-  // },
   components: {
     BandSearch,
     GenreSearch,
@@ -40,9 +30,27 @@ export default {
     };
   },
   methods: {
+    fetchBands() {
+      BandService.getBands().then(response => {
+        this.bands = response.data;
+        this.filterBands();
+      }).catch(error => {
+        console.error('Error fetching bands:', error);
+      });
+    },
     updateSelectedGenres(genres) {
       this.selectedGenres = genres;
+      this.filterBands();
     },
+    filterBands() {
+      if (this.selectedGenres.length === 0) {
+        this.filteredBands = this.bands;
+      } else {
+        this.filteredBands = this.bands.filter(band => 
+          band.genres.some(genre => this.selectedGenres.includes(genre))
+        );
+      }
+    }
   },
   computed: {
     searchResults() {
