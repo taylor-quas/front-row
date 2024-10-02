@@ -49,7 +49,7 @@ export default {
                 const matchesSearch = this.searchQuery ? 
                     band.name.toLowerCase().includes(this.searchQuery.toLowerCase()) : true;
                 const matchesGenre = this.selectedGenres.length === 0 || 
-                    this.selectedGenres.some(genre => band.genres.includes(genre));
+                    this.selectedGenres.some(genre => band.genreNames.includes(genre));
                 return matchesSearch && matchesGenre;
             });
         }

@@ -3,7 +3,7 @@
     <h2>SearchView</h2>
     <div class="Search-Results">
       <GenreSearch id="genres" @update:selectedGenres="updateSelectedGenres" />
-      <BandSearch id="bands" :searchQuery="searchQuery" :bands="bands"/>
+      <BandSearch id="bands" :searchQuery="searchQuery" :bands="bands" :selectedGenres="selectedGenres"/>
     </div>
   </div>
 </template>
