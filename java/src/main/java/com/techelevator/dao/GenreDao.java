@@ -10,4 +10,6 @@ public interface GenreDao {
 
     Genre getGenreByName(String genreName);
 
+    List<String> getAllGenreNames();
+
 }

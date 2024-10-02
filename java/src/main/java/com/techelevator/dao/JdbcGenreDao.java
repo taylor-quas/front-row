@@ -42,6 +42,29 @@ public class JdbcGenreDao implements GenreDao {
     }
 
     @Override
+    public List<String> getAllGenreNames() {
+
+        List<String> genres = new ArrayList<>();
+        String sql = "SELECT genre_name FROM genres";
+
+        try {
+            SqlRowSet results = template.queryForRowSet(sql);
+            while (results.next()) {
+                genres.add(results.getString("genre_name"));
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("Problem connecting");
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("Data problems");
+        }
+
+        return genres;
+
+    }
+
+
+
+    @Override
     public Genre getGenreByName(String genreName) {
 
         Genre genre = new Genre();
