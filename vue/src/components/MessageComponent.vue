@@ -1,5 +1,5 @@
 <template>
-  <div class="messageComponent" v-for="message in filteredMessages" :key="message.messageId">
+  <div class="messageComponent">
     <h3>Message from {{ message.bandName }}</h3>
     <h4>{{ new Date(message.message.messageTimeSent).toLocaleString('en-US', {month: 'long', day: '2-digit', year: 'numeric', hour: 'numeric', minute:'2-digit'}) }}</h4>
     <p class="content">{{ message.message.messageContent }}</p>
@@ -9,32 +9,13 @@
 </template>
 
 <script>
-import MessageService from '../services/MessageService';
-
 export default {
-    data() {
-        return {
-            messages: [],
-            MessageService
-        };
-    },
-    computed: {
-        filteredMessages() {
-        const currentTime = new Date();
-        return this.messages.filter(message => {
-            const expirationTime = new Date(message.message.messageTimeExpiration);
-            return expirationTime > currentTime;
-        });
+    props: {
+        message: {
+            type: Object,
+            required: true
         }
-    },
-    created() {
-        MessageService.getUserInbox().then(response => {
-            this.messages = response.data 
-        })
-        .catch(error => {
-            console.error(error);
-        });
-    },
+    }
 
 }
 </script>
@@ -44,10 +25,10 @@ export default {
 .messageComponent {
     display: flex;
     flex-direction: column;
-    margin: 3%;
+    margin: 2%;
     border: 1px solid black;
     border-radius: 20px;
-    padding: 3%;
+    padding: 2%;
     align-content: center;
     justify-content: center;
 
