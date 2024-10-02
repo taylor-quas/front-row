@@ -48,7 +48,7 @@ export default {
                     this.selectedGenres.some(genre => band.genres.includes(genre));
                 return matchesSearch && matchesGenre;
             });
-        }
+        },
     },
     watch: {
         searchQuery() {
