@@ -1,5 +1,5 @@
 <template>
-    <div class="bandItem" @click="$router.push(`/${band.band.bandName}`)">
+    <div class="bandItem" @click="this.$router.push({ path: `/${band.band.bandName}` })">
         <img :src="band.band.bandHeroImage" alt="band image"/>
         <div class="artistGenre">
             <h4>{{ band.band.bandName }}</h4>

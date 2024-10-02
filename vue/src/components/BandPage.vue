@@ -1,6 +1,7 @@
 <template>
-  <div>
+  <div class="band-view">  
     <h2>Band Page Component</h2>
+    {{ $route.params.bandName }}
     {{ band }}
   </div>
 </template>
@@ -10,27 +11,20 @@ import BandService from '../services/BandService';
 
 export default {
 data() {
-    
     return {
-        props: {
-            band: {
-                type: Object,
-                required: true
-            }
-        },
-        BandService,
-        band: ''
+        band: '',
+        bandName: this.$route.params.bandName,
+        BandService
     }
   },
   created() {
-    this.fetchBands();
+    this.getBand();
   },
   methods: {
-    fetchBands() {
-      BandService.getBand()
+    getBand() {
+      this.BandService.getBand(this.bandName)
         .then(response => {
           this.band = response.data;
-          this.filterBands();
         })
         .catch(error => {
           console.error(error);
@@ -41,5 +35,7 @@ data() {
 </script>
 
 <style>
-
+  .band-view{
+    margin-top: 10vh;
+  }
 </style>
