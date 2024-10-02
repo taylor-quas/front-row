@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface BandDao {
 
-    List<Band> getSubscribedBands(Principal principal);
+    List<BandGenreDto> getSubscribedBands(Principal principal);
 
     Band getBandByBandId(long bandId);
     BandGenreDto getBandByBandName(String bandName);
