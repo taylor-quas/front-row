@@ -1,10 +1,6 @@
 <template>
   <div>
-    <h2>This is the inbox</h2>
-    <div v-for="message in filteredMessages" :key=message.messageId>
-    <h3>Message: {{ message.message.messageContent }}</h3>
-    <h4>From: {{ message.bandName }}</h4>
-    </div>
+    <h2>Your Messages</h2>
   </div>
 </template>
 
