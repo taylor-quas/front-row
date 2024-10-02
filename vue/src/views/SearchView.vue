@@ -2,18 +2,17 @@
   <div class="search">
     <h2>(SearchView working title)</h2>
     <div class="Search-Results">
-      <!-- <band-search></band-search>  -->
-      <SearchResult :searchQuery="searchQuery" :bands="bands"/>
+      <BandSearch :searchQuery="searchQuery" :bands="bands"/>
       <GenreSearch @update:selectedGenres="updateSelectedGenres" />
     </div>
   </div>
 </template>
 
 <script>
-import SearchResult from '../components/SearchResult.vue';
+import BandSearch from '../components/BandSearch.vue';
 import BandService from '../services/BandService';
 import GenreSearch from '../components/GenreSearch.vue';
-import BandSearch from '../components/BandSearch.vue';
+
 
 export default {
   // data() {
@@ -27,9 +26,8 @@ export default {
   //   };
   // },
   components: {
-    SearchResult,
+    BandSearch,
     GenreSearch,
-    // BandSearch
   },
   props: ['searchQuery'],
   data() {
@@ -54,7 +52,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
   .search {
     padding-top: 12vh;
   }
