@@ -1,6 +1,7 @@
 <template>
     <div class="results">
-      <BandComponent v-for="band in filteredBands" :key="band.bandId" :band="band" />
+      <h3>Band Results</h3>
+      <BandComponent v-for="band in filteredBands" :key="band.band.bandId" :band="band" />
     </div>
   </template>
   

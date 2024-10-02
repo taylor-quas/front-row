@@ -14,13 +14,12 @@
 </template>
 
 <script>
-import BandService from '../services/BandService';
-
 export default {
     props: {
         band: {
             type: Object,
             required: true
+
         }
     }
     
