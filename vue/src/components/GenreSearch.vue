@@ -48,7 +48,7 @@
         });
       },
       toggleSelectAll() {
-        this.selectedGenres = this.selectAll ? this.genres.map(genre => genre.name) : [];
+        this.selectedGenres = this.selectAll ? this.genres.map(genre => genre) : [];
         this.updateSelectedGenres();
       },
       updateSelectedGenres() {
