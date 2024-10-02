@@ -1,14 +1,7 @@
 <template>
     <div class="results">
       <h3>Band Results</h3>
-        <div v-for="band in bands" :key="band.bandId">
-          <h4>{{ band.band.bandName }}</h4>
-          <ul>
-            <li v-for="genre in band.genreNames" :key="genre">{{ genre }}</li>
-          </ul>
-          <img src="{{ band.band.bandImage }}" alt="band image">
-          <p>{{ band.band.bandDescription }}</p>
-        </div>
+      <BandComponent v-for="band in bands" :key="band.bandId" :band="band" />
     </div>
   </template>
   
@@ -30,9 +23,13 @@
 
   <script>
   import BandService from '../services/BandService';
+  import BandComponent from './BandComponent.vue';
   
   export default {
     props: ['searchQuery', 'selectedGenres'],
+    components: {
+      BandComponent
+    },
     data() {
       return {
         bands: [],
