@@ -35,7 +35,7 @@ export default {
   methods: {
     updateSelectedGenres(genres) {
       this.selectedGenres = genres;
-      this.filterBands();
+      // this.filterBands();
     },
     // fetchBands() {
     //   BandService.getBands()
