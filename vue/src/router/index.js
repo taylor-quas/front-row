@@ -37,7 +37,7 @@ const routes = [
     }
   },
   {
-    path: '/:band-name',
+    path: '/:bandName',
     name: 'band',
     component: BandView,
     meta: {

@@ -1,20 +1,26 @@
 <template>
   <div>  
-    <band-page></band-page>
+    <band-page-vue></band-page-vue>
   </div>
 </template>
 
 <script>
-import BandPage from '../components/BandPage.vue';
+import BandPageVue from '../components/BandPage.vue';
 
 export default {
+
+  data() {
+    return {
+      
+    };
+  },
+
   components: {
-    BandPage
+    BandPageVue
   }
 };
 </script>
 
 <style>
 
-  
 </style>
