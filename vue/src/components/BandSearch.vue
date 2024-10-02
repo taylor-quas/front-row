@@ -1,11 +1,14 @@
 <template>
     <div class="results">
       <h3>Band Results</h3>
-      {{ bands }}
-      <ul>
-        <li v-for="band in bands" :key="band.bandId">{{ band.bandName }}</li>
-        g
-      </ul>
+        <div v-for="band in bands" :key="band.bandId">
+          <h4>{{ band.band.bandName }}</h4>
+          <ul>
+            <li v-for="genre in band.genreNames" :key="genre">{{ genre }}</li>
+          </ul>
+          <img src="{{ band.band.bandImage }}" alt="band image">
+          <p>{{ band.band.bandDescription }}</p>
+        </div>
     </div>
   </template>
   
