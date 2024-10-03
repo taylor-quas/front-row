@@ -199,8 +199,35 @@ public class JdbcBandDao implements BandDao {
 
     @Override
     public void subscribe(long bandId, Principal principal) {
+
+        String checkSql = "SELECT COUNT(*) FROM user_band " +
+                "WHERE user_id = ? AND band_id =?;";
+
         String sql = "INSERT INTO user_band (user_id, band_id) " +
                 "VALUES (?,?);";
+
+        long principalId = getUserIdByUsername(principal.getName());
+
+        try {
+            int count = template.queryForObject(checkSql, Integer.class, principalId, bandId);
+            if (count > 0) {
+                return;
+            } else {
+                template.update(sql, principalId, bandId);
+            }
+
+
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("Problem connecting");
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("Data problems");
+        }
+    }
+
+    public void unsubscribe(long bandId, Principal principal) {
+        String sql = "DELETE FROM user_band " +
+                "WHERE user_id = ? " +
+                "AND band_id = ?;";
 
         long principalId = getUserIdByUsername(principal.getName());
 
@@ -211,6 +238,7 @@ public class JdbcBandDao implements BandDao {
         } catch (DataIntegrityViolationException e) {
             System.out.println("Data problems");
         }
+
     }
 
 

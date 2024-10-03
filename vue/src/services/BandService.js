@@ -19,6 +19,10 @@ export default {
 
   create(band) {
     return axios.post('/bands', band);
-  }
+  },
+
+  followBand(bandId) {
+    return axios.post(`/subscribe/${bandId}`);
+  },
 
 }

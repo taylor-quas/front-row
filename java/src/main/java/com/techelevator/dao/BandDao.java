@@ -25,4 +25,6 @@ public interface BandDao {
 
     void subscribe(long bandId, Principal principal);
 
+    void unsubscribe(long bandId, Principal principal);
+
 }

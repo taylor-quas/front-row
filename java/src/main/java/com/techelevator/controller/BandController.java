@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.annotation.HttpConstraint;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ public class BandController {
         return bandDao.searchBandGenre(searchTerm);
     }
 
+    @ResponseStatus(HttpStatus.ACCEPTED)
     @PutMapping("/{bandId}/update")
     public void updateBand(@RequestBody @Valid Band band, @PathVariable long bandId) {
         if (bandId != band.getBandId()) {
@@ -55,9 +57,16 @@ public class BandController {
         return bandDao.getBandByBandName(bandName);
     }
 
+    @ResponseStatus(HttpStatus.ACCEPTED)
     @PostMapping("/subscribe/{bandId}")
     public void subscribeToBand(@PathVariable long bandId, Principal principal) {
         bandDao.subscribe(bandId, principal);
+    }
+
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @DeleteMapping("/unsubscribe/{bandId}")
+    public void unsubscribeFromBand(@PathVariable long bandId, Principal principal) {
+        bandDao.unsubscribe(bandId, principal);
     }
 
 }
