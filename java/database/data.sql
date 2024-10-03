@@ -17,6 +17,14 @@ INSERT INTO bands (band_name, band_description, band_manager_id, band_hero_image
 
 INSERT INTO user_band (user_id, band_id) VALUES (1, 3), (1, 5), (1, 1);
 
+INSERT INTO images (band_id, image_link) VALUES (4, 'https://res.cloudinary.com/dhgcjy2pf/image/upload/v1727978501/singer-Taylor-swift-2013_nbzrsl.webp');
+INSERT INTO images (band_id, image_link) VALUES (4, 'https://res.cloudinary.com/dhgcjy2pf/image/upload/v1727978381/Taylor-Swift-concert-yellow-dress-GettyImages-2015112497-2400x1600-1_ldmruc.webp');
+INSERT INTO images (band_id, image_link) VALUES (4, 'https://res.cloudinary.com/dhgcjy2pf/image/upload/v1727978408/240927-taylor-swift-republicans-kh-513629_eia5cy.webp');
+INSERT INTO images (band_id, image_link) VALUES (4, 'https://res.cloudinary.com/dhgcjy2pf/image/upload/v1727978042/IBYTAM_still-page_yk4vjm.jpg');
+INSERT INTO images (band_id, image_link) VALUES (4, 'https://res.cloudinary.com/dhgcjy2pf/image/upload/v1727977890/VF1421_Taylor_Swift_Lede_qlev8u.webp');
+INSERT INTO images (band_id, image_link) VALUES (4, 'https://res.cloudinary.com/dhgcjy2pf/image/upload/v1727978430/taylor-swift-red-carpet_zkkype.jpg');
+INSERT INTO images (band_id, image_link) VALUES (4, 'https://res.cloudinary.com/dhgcjy2pf/image/upload/v1727978064/download_t058lp.webp');
+
 INSERT INTO messages (message_content, message_time_sent, message_time_expiration, message_sender) VALUES ('Hello', '2024-10-01 13:12:00', '2024-10-14 13:12:00', 3);
 INSERT INTO messages (message_content, message_time_sent, message_time_expiration, message_sender) VALUES ('Cheerio, g-day mate,', '2024-10-01 13:12:00', '2024-10-31 13:12:00', 2);
 INSERT INTO messages (message_content, message_time_sent, message_time_expiration, message_sender) VALUES ('Howdy padner', '2024-10-01 13:12:00', '2024-10-11 13:12:00', 3);
