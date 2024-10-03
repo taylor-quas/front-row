@@ -51,13 +51,13 @@ public class JdbcImageDao implements ImageDao{
     @Override
     public void uploadImage(String url, Principal principal) {
 
-        String sql = "INSERT INTO images (image_url, band_id) VALUES (?,?) RETURNING image_id;";
+        String sql = "INSERT INTO images (image_link, band_id) VALUES (?,?);";
 
         long principalId = getUserIdByUsername(principal.getName());
-        long band_manager_id = getBandByOwnerId(principalId);
+        long band_id = getBandByOwnerId(principalId);
 
         try {
-            template.update(sql, url, principalId, band_manager_id);
+            template.update(sql, url, band_id);
         } catch (CannotGetJdbcConnectionException e) {
             System.out.println("Problem connecting");
         } catch (DataIntegrityViolationException e) {

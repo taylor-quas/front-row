@@ -28,7 +28,7 @@ export default {
     sendImageToServer(imageUrl) {
       ImageService.uploadImage(imageUrl)
         .then(response => {
-          console.log(response);
+          console.log(response.data);
         })
         .catch(error => {
           console.error(error.response.data);
