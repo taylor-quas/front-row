@@ -241,6 +241,30 @@ public class JdbcBandDao implements BandDao {
 
     }
 
+    public boolean isFollowing(long bandId, Principal principal) {
+        String sql = "SELECT COUNT(*) FROM user_band " +
+                "WHERE user_id = ? AND band_id =?;";
+
+        long principalId = getUserIdByUsername(principal.getName());
+        boolean following = false;
+
+        try {
+            long count = template.queryForObject(sql, Integer.class, principalId, bandId);
+            if (count > 0) {
+                following = true;
+            }
+
+
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("Problem connecting");
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("Data problems");
+        }
+
+        return following;
+
+    }
+
 
     // Private methods below
     private long getUserIdByUsername(String username) {

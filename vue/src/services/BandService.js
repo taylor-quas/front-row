@@ -25,4 +25,12 @@ export default {
     return axios.post(`/subscribe/${bandId}`);
   },
 
+  unfollowBand(bandId) {
+    return axios.delete(`/unsubscribe/${bandId}`);
+  },
+
+  getIsFollowing(bandId) {
+    return axios.get(`/is-following/${bandId}`);
+  }
+
 }
