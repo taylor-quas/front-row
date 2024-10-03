@@ -1,6 +1,5 @@
 <template>
   <div class="results">
-    <h3>Band Results</h3>
     <div v-if="$store.state.token == ''" @click="$router.push('/fbc')">
       <h4 style="color: red;">X</h4>
     </div>
@@ -108,7 +107,7 @@ export default {
 #band-results-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  grid-gap: 1em;
+  grid-gap: 0.5em;
 }
 
 </style>

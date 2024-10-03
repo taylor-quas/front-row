@@ -3,10 +3,8 @@
       <div>
         <h2>My Bands</h2>
         
-          <div class="followedBands">
-            <div v-for="band in followedBands" :key="band.bandId">
-              <BandComponent :band="band" />
-            </div>
+          <div id="followed-bands">
+              <BandComponent v-for="band in followedBands" :key="band.bandId" :band="band" />
           </div>
 
       </div>
@@ -46,15 +44,10 @@
   
   <style>
   
-  .followedBands {
-    display: flex;
-    margin: 5px;
-    border: 1px solid black;
-    border-radius: 20px;
-    padding: 5px;
-    align-content: center;
-    justify-content: center;
-    width: 100%;
+  #followed-bands {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-gap: 0.5em;
   
   }
     
