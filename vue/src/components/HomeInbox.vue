@@ -2,7 +2,7 @@
     <div id="inbox">
       <h2>My Messages</h2>
       <div id="message-card" v-for="message in sortedMessages" :key="message.messageId">
-        <MessageComponent :message="message"/>
+        <MessageComponent :message="message" @markAsRead="handleMarkAsRead"/>
       </div>
     </div>
   </template>
@@ -82,6 +82,14 @@
           });
   
       },
+      methods: {
+        handleMarkAsRead(messageId) {
+            const message = this.messages.find(message => message.message.messageId === messageId);
+            if (message) {
+                message.isRead = true;
+            }
+        }
+    }
   }
   </script>
   
