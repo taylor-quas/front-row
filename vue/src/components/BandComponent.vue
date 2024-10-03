@@ -1,5 +1,5 @@
 <template>
-    <div class="bandItem" @click="this.$router.push({ path: `/${band.band.bandName}` })">
+    <div class="bandItem" @click="toBandPage">
         <div class="image-container">
             <img :src="band.band.bandHeroImage" alt="band image"/>
             <div class="artistGenre">
@@ -18,6 +18,14 @@ export default {
         band: {
             type: Object,
             required: true
+        }
+    },
+    methods: {
+        toBandPage () {
+            if(this.$store.state.token != ''){
+                this.$router.push({ path: `/${this.band.band.bandName}` })
+            }
+            else this.$router.push('/login')
         }
     }
 }
@@ -61,12 +69,28 @@ export default {
     text-align: center;
 }
 
+.artistGenre h4 {
+    font-size: 1.6em;
+    margin: 0;
+}
+
+.genreList {
+    display: flex;
+    width: 90%;
+    justify-content: center;
+    align-items: center;
+}
+
+.genreList p {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1em;
+    text-align: center;
+    justify-content: center;
+    margin: 0.2em;
+}
+
 p {
     display: flex;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 15px;
-    flex-basis: 40%;
-    text-align: right;
     justify-content: center;
     align-items: center;
     padding: 5px;

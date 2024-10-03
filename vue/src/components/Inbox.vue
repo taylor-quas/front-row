@@ -7,8 +7,15 @@
       <option value="all">All</option>
       <option v-for="band in followedBands" :key="band.bandId" :value="band.band.bandName">{{band.band.bandName}}</option>
     </select>
+    <h4>Sort By</h4>
+    <select class="sort-by" v-model="selectedSort">
+      <option value="newest">Newest</option>
+      <option value="oldest">Oldest</option>
+      <option value="band-name">Band Name (A-Z)</option>
+      <option value="band-name-reverse">Band Name (Z-A)</option>
+    </select>
     </div>
-    <div id="message-card" v-for="message in filteredMessages" :key="message.messageId">
+    <div id="message-card" v-for="message in sortedMessages" :key="message.messageId">
       <MessageComponent :message="message"/>
     </div>
   </div>
@@ -27,7 +34,8 @@ export default {
       return {
         messages: [],
         followedBands: [],
-        selectedBand: 'all'
+        selectedBand: 'all',
+        selectedSort: 'newest'
       };
     },
     computed: {
@@ -41,6 +49,36 @@ export default {
 
           return notExpired && bandMatches;
         });
+      },
+      sortedMessages() {
+        let sortedMessages = this.filteredMessages;
+
+        const removeThe = (name) => {
+          return name.trim().toLowerCase().startsWith('the ')
+            ? name.trim().slice(4).trim()
+            : name.trim();
+        }
+
+        if (this.selectedSort === 'newest') {
+          sortedMessages = sortedMessages.sort((a, b) => {
+            return new Date(b.message.messageTimeSent) - new Date(a.message.messageTimeSent);
+          });
+        } else if (this.selectedSort === 'oldest') {
+          sortedMessages = sortedMessages.sort((a, b) => {
+            return new Date(a.message.messageTimeSent) - new Date(b.message.messageTimeSent);
+          });
+        } else if (this.selectedSort === 'band-name') {
+          sortedMessages = sortedMessages.sort((a, b) => {
+            return removeThe(a.bandName).localeCompare(removeThe(b.bandName));
+          });
+        } else if (this.selectedSort === 'band-name-reverse') {
+          sortedMessages = sortedMessages.sort((a, b) => {
+            return removeThe(b.bandName).localeCompare(removeThe(a.bandName));
+          });
+        }
+
+        return sortedMessages;
+
       }
     },
     created() {
@@ -83,6 +121,12 @@ export default {
 }
 
 .filterByBand {
+  margin: 5px;
+  padding: 5px;
+  border-radius: 20px;
+}
+
+.sort-by {
   margin: 5px;
   padding: 5px;
   border-radius: 20px;
