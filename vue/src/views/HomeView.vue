@@ -1,9 +1,6 @@
 <template>
   <div class="home">
     <!-- <p>You must be authenticated to see this</p> -->
-    <div id="inbox" @click="inboxView">
-      <Inbox></Inbox>
-    </div>
     <div id="followed-bands">
       <followed-bands-vue></followed-bands-vue>
     </div>
