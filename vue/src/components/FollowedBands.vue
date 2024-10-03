@@ -4,7 +4,10 @@
         <h2>My Bands</h2>
         
           <div id="followed-bands">
-              <BandComponent v-for="band in followedBands" :key="band.bandId" :band="band" />
+            <div id="add-band" @click="searchView">
+              <img id="plus-sign" src="../assets/plus-sign-icon-2048x2048-mp0pz4g8.png" alt="Add Band" />
+            </div>
+            <BandComponent v-for="band in followedBands" :key="band.bandId" :band="band" />
           </div>
 
       </div>
@@ -36,6 +39,9 @@
         .catch(error => {
             console.error(error);
         });
+      },
+      searchView() {
+        this.$router.push('/search')
       }
     }
 
@@ -49,6 +55,28 @@
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     grid-gap: 0.5em;
   
+  }
+
+  #add-band {
+    width: 200px;
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+    margin: 1em;
+    border-radius: 20px;
+    z-index: 1;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1em;
+  }
+
+  #plus-sign {
+    width: 50%;
+    height: 50%;
   }
     
   </style>

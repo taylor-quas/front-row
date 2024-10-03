@@ -1,12 +1,7 @@
 <template>
   <div class="home">
-    <!-- <p>You must be authenticated to see this</p> -->
-    <div id="inbox" @click="inboxView">
-      <Inbox></Inbox>
-    </div>
-    <div id="followed-bands">
-      <followed-bands-vue></followed-bands-vue>
-    </div>    
+    <Inbox id="inbox" @click="inboxView"></Inbox>
+    <followed-bands-vue id="followed-bands"></followed-bands-vue>
   </div>
 </template>
 
@@ -45,7 +40,7 @@ export default {
 <style>
 
   .home {
-    padding-top: 12vh;
+    padding-top: 10vh;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-areas: 
