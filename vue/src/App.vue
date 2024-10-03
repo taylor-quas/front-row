@@ -2,13 +2,16 @@
   <div id="capstone-app">
     <div id="nav">
       <div class="nav-item">
-        <router-link v-bind:to="{ name: 'home' }" id="home-button">Home</router-link>
+        <router-link v-bind:to="{ name: 'home' }" v-if="$store.state.token != ''" id="home-button">Home</router-link>
       </div>
       <div class="nav-item">
           <input id="searchbox" type="text" placeholder="🔎 SEARCH" @focus="startSearch" v-model="searchQuery" />
       </div>
       <div class="nav-item">
         <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''" id="logout-button">Logout</router-link>
+      </div>
+      <div class="nav-item">
+        <router-link v-bind:to="{ name: 'profile' }" v-if="$store.state.token != ''" id="profile-button">Profile</router-link>
       </div>
     </div>
     <router-view :searchQuery="searchQuery"/>
@@ -19,7 +22,9 @@
 import { useRouter } from 'vue-router';
 
 export default {
-  components: {},
+  components: {
+
+  },
   data() {
     const router = useRouter();
     return {
@@ -29,7 +34,10 @@ export default {
   },
   methods: {
     startSearch() {
-      this.router.push('/search')
+      if(this.$store.state.token != ''){
+        this.router.push('/search')
+      }
+      else this.router.push('/discover')
     }
   }
 };
@@ -87,6 +95,15 @@ export default {
     border-radius: 16px;
     display: flex;
     align-content: center;
+  }
+
+  #profile-button {
+    color: black;
+    font-family: Montserrat;
+    font-size: 20px;
+    font-weight: 600;
+    align-content: center;
+    text-decoration-line: none;
   }
   
 

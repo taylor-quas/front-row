@@ -10,6 +10,8 @@ import AnonymousView from '../views/AnonymousView.vue';
 import SearchView from '../views/SearchView.vue';
 import InboxView from '../views/InboxView.vue';
 import BandView from '../views/BandView.vue';
+import AnonymousSearchView from '../views/AnonymousSearchView.vue';
+import ProfileView from '../views/ProfileView.vue';
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -32,6 +34,22 @@ const routes = [
     path: '/search',
     name: 'search',
     component: SearchView,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/discover',
+    name: 'anonymousSearch',
+    component: AnonymousSearchView,
+    meta: {
+      requiresAuth: false
+    }
+  },
+  {
+    path: '/profile',
+    name: 'profile',
+    component: ProfileView,
     meta: {
       requiresAuth: true
     }
