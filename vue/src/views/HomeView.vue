@@ -10,6 +10,8 @@
     <div id="manager-view" v-if="isManager">
       <ManagerView></ManagerView>
     </div>    
+    <HomeInbox id="inbox" @click="inboxView"></HomeInbox>
+    <followed-bands-vue id="followed-bands"></followed-bands-vue>
   </div>
 </template>
 
@@ -18,6 +20,7 @@ import { useRouter } from 'vue-router';
 import FollowedBandsVue from '../components/FollowedBands.vue';
 import Inbox from '../components/Inbox.vue';
 import ManagerView from './ManagerView.vue';
+import HomeInbox from '../components/HomeInbox.vue';
 
 export default {
   data() {
@@ -33,6 +36,7 @@ export default {
     FollowedBandsVue,
     Inbox,
     ManagerView,
+    HomeInbox,
   },
   methods: {
     inboxView() {
@@ -51,11 +55,12 @@ export default {
 <style>
 
   .home {
-    padding-top: 12vh;
+    padding-top: 10vh;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-areas: 
       "inbox followed-bands followed-bands";
+    background-color: rgb(22, 22, 22);
   }
 
   #inbox {

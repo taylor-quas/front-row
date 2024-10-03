@@ -65,6 +65,7 @@ export default {
     width: 100%;
     height: 6vh;
     padding-left: 20px;
+    z-index: 1000;
   }
 
   .nav-item {

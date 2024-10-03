@@ -78,6 +78,6 @@ public class BandController {
     @GetMapping("/is-following/{bandId}")
     public boolean isFollowing(@PathVariable long bandId, Principal principal) {
         return bandDao.isFollowing(bandId, principal);
-    }
 
+    }
 }
