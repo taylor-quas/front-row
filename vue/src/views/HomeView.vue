@@ -6,6 +6,9 @@
     </div>
     <div id="followed-bands">
       <followed-bands-vue></followed-bands-vue>
+    </div>
+    <div id="manager-view" v-if="isManager">
+      <ManagerView></ManagerView>
     </div>    
   </div>
 </template>
@@ -14,6 +17,7 @@
 import { useRouter } from 'vue-router';
 import FollowedBandsVue from '../components/FollowedBands.vue';
 import Inbox from '../components/Inbox.vue';
+import ManagerView from './ManagerView.vue';
 
 export default {
   data() {
@@ -22,11 +26,13 @@ export default {
       router,
       username: '',
       isFocused: false,
+      isManager: false,
     };
   },
   components: {
     FollowedBandsVue,
-    Inbox
+    Inbox,
+    ManagerView,
   },
   methods: {
     inboxView() {
@@ -56,6 +62,7 @@ export default {
     grid-area: inbox;
     margin: 5px;
     border-radius: 20px;
+    z-index: 1;
   }
 
   #followed-bands {
@@ -66,7 +73,14 @@ export default {
     flex-wrap: wrap;
     justify-content: center;
     align-items: flex-start;
+    z-index: 1;
   }
 
+  #manager-view {
+    grid-area: manager-view;
+    margin: 5px;
+    border-radius: 20px;
+    z-index: 100;
+  }
   
 </style>
