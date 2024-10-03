@@ -1,7 +1,9 @@
 <template>
   <div class="results">
     <h3>Band Results</h3>
-    <BandComponent v-for="band in filteredBands" :key="band.bandId" :band="band" />
+    <div id="band-results-grid">
+      <BandComponent v-for="band in filteredBands" :key="band.bandId" :band="band" />
+    </div>
   </div>
 </template>
 
@@ -99,5 +101,10 @@ export default {
 </script>
 
 <style>
+#band-results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-gap: 1em;
+}
 
 </style>
