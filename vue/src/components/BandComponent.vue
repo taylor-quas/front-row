@@ -1,5 +1,5 @@
 <template>
-    <div class="bandItem" @click="this.$router.push({ path: `/${band.band.bandName}` })">
+    <div class="bandItem" @click="toBandPage">
         <div class="image-container">
             <img :src="band.band.bandHeroImage" alt="band image"/>
             <div class="artistGenre">
@@ -18,6 +18,14 @@ export default {
         band: {
             type: Object,
             required: true
+        }
+    },
+    methods: {
+        toBandPage () {
+            if(this.$store.state.token != ''){
+                this.$router.push({ path: `/${this.band.band.bandName}` })
+            }
+            else this.$router.push('/login')
         }
     }
 }

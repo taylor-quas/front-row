@@ -10,6 +10,9 @@
       <div class="nav-item">
         <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''" id="logout-button">Logout</router-link>
       </div>
+      <div class="nav-item">
+        <router-link v-bind:to="{ name: 'profile' }" v-if="$store.state.token != ''" id="profile-button">Profile</router-link>
+      </div>
     </div>
     <router-view :searchQuery="searchQuery"/>
   </div>
@@ -92,6 +95,15 @@ export default {
     border-radius: 16px;
     display: flex;
     align-content: center;
+  }
+
+  #profile-button {
+    color: black;
+    font-family: Montserrat;
+    font-size: 20px;
+    font-weight: 600;
+    align-content: center;
+    text-decoration-line: none;
   }
   
 

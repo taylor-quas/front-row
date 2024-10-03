@@ -1,6 +1,9 @@
 <template>
   <div class="results">
     <h3>Band Results</h3>
+    <div v-if="$store.state.token == ''" @click="$router.push('/fbc')">
+      <h4 style="color: red;">X</h4>
+    </div>
     <div id="band-results-grid">
       <BandComponent v-for="band in filteredBands" :key="band.bandId" :band="band" />
     </div>
@@ -8,6 +11,7 @@
 </template>
 
 <script>
+import router from '../router';
 import BandService from '../services/BandService';
 import BandComponent from './BandComponent.vue';
 
