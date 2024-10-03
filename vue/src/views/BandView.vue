@@ -1,5 +1,5 @@
 <template>
-  <div>  
+  <div class="band-page">  
     <band-page-vue></band-page-vue>
     
   </div>
