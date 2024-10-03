@@ -1,8 +1,11 @@
 <template>
   <div class="results">
     <h3>Band Results</h3>
-    <div id="band-results-grid">
+    <div id="band-results-grid" v-if="filteredBands.length > 0">
       <BandComponent v-for="band in filteredBands" :key="band.bandId" :band="band" />
+    </div>
+    <div v-else>
+      <p>No bands found</p>
     </div>
   </div>
 </template>
@@ -50,22 +53,14 @@ export default {
       let filteredBands = this.bands || [];
 
       if (this.searchQuery) {
-        console.log(this.searchQuery);
         const search = this.searchQuery.toLowerCase();
-
-        console.log(this.bands);
-        console.log(this.filteredBands);
 
         filteredBands = this.bands.filter(band => {
           const bandName = band.band.bandName || '';
-
-          console.log(band.band.bandName.toLowerCase());
-          console.log(search);
-
+        
           return (
             bandName.toLowerCase().includes(search)
-        )
-
+          );
         });
       }
 
