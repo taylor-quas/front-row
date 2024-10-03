@@ -3,7 +3,11 @@
     <section class="content">  
       <div v-if="band">
         <h2 id="name">{{ bandName }}</h2>
-        <button id="follow-button" v-if="band && isFollowing !== null" @click="toggleFollow">{{ isFollowing? 'Unfollow' : 'Follow' }}</button>
+        <button :class="{'follow-button': true, 'unfollow': isFollowing}" 
+          v-if="band && isFollowing !== null" 
+          @click="toggleFollow">
+            {{ isFollowing? 'Unfollow' : 'Follow' }}
+        </button>
         <img id="heroImage" :src="band.band.bandHeroImage" alt="Band Hero Image">
         <section class="genres">
           <p>{{ band.genreNames.join(' • ') }}</p>
@@ -11,24 +15,28 @@
         </section>
         <br>
         <p id="description">{{ band.band.bandDescription }}</p>
-        
-        <!-- {{ $route.params.bandName }}
-        {{ band }} -->
-        <br><br><p>{{ band }}</p>
-
+        <br>
+        <section id="gallery">
+          <gallery-image :bandName="bandName"/>
+        </section>
       </div>
       <div v-else>
         Loading...
       </div>
+      
     </section>
   </div>
 </template>
 
 <script>
 import BandService from '../services/BandService';
+import GalleryImage from './GalleryImage.vue';
 
 export default {
-data() {
+  components: {
+    GalleryImage
+  },
+  data() {
     return {
         band: '',
         bandName: this.$route.params.bandName,
@@ -97,42 +105,78 @@ data() {
 
 <style scoped>
 
-  .band-view{
-    margin: 10vh;
-    display: grid;
-    grid-template-columns: 1fr 5fr 1fr;
-    grid-template-areas: 
-      ". content .";
-  }
+.band-view{
+  margin: 10vh;
+  display: grid;
+  grid-template-columns: 1fr 5fr 1fr;
+  grid-template-areas: 
+    ". content ."
+    ". content ."
+    ". content ."
+    "gallery gallery gallery"; 
+}
 
-  #name{
-    font-size: 2em;
-    margin-bottom: 1em;
-    justify-content: flex-start;
-  }
+#name{
+  font-size: 2em;
+  margin-bottom: 1em;
+  justify-content: flex-start;
+}
 
-  #description{
-    font-size: 1.2em;
-    margin-top: 1em;
-  }
+#description{
+  font-size: 1.2em;
+  margin-top: 1em;
+}
 
-  #heroImage{
-    width: 100%;
-    height: 50%;
-    object-fit: cover;
-    justify-content: center;
-    align-items: center;
-  }
+#heroImage{
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+  justify-content: center;
+  align-items: center;
+}
 
-  .genres{
-    display: flex;
-    flex-direction: row;
-  }
+.genres{
+  display: flex;
+  flex-direction: row;
+}
 
-  .content{
-    grid-area: content;
-    display: flex;
-    /* flex-direction: column;
-    align-items: center; */
-  }
+.content{
+  grid-area: content;
+  display: flex;
+  /* flex-direction: column;
+  align-items: center; */
+}
+
+.follow-button {
+padding: 10px 20px;
+background-color: #999999;  /* Light grey */
+color: white;               /* White text */
+border: none;               /* Remove default border */
+border-radius: 5px;         /* Rounded corners */
+font-size: 16px;            /* Font size */
+cursor: pointer;            /* Pointer on hover */
+transition: background-color 0.3s ease; /* Smooth transition */
+margin-bottom: 1em;
+}
+
+.follow-button:hover {
+  background-color: #808080;  /* Darker light grey on hover */
+}
+
+.follow-button:active {
+  background-color: #333333;  /* Even darker grey when clicked */
+}
+
+.follow-button:focus {
+  outline: none;              /* Remove focus outline */
+}
+
+.follow-button.unfollow {
+  background-color: #666666;  /* Darker grey for unfollow */
+}
+
+.follow-button.unfollow:hover {
+  background-color: #4d4d4d;  /* Darker grey on hover */
+}
+
 </style>
