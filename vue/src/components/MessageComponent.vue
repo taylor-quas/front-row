@@ -14,6 +14,11 @@
 
 <script>
 export default {
+    data() {
+        return {
+            isViewed: false
+        }
+    },
     props: {
         message: {
             type: Object,
@@ -34,12 +39,14 @@ export default {
     display: flex;
     flex-direction: column;
     margin: 5px;
-    background-color: white;
-    border-radius: 20px;
+    background-color: rgb(27, 27, 27);
+    color: white;
     padding: 5px;
     align-content: center;
     justify-content: center;
     width: 90%;
+    border-bottom: 1px solid darkgray;
+    border-top: 1px solid darkgray;
 
 }
 
@@ -49,12 +56,14 @@ export default {
     align-items: flex-start;
     justify-content: center;
     margin: 0.5em;
+    text-align: left;
+    
 }
 
 #band-date h3 {
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-size: 2em;
-    color: red;
+    text-align: left;
 }
 
 #band-date h4 {
@@ -62,6 +71,7 @@ export default {
     font-size: 1em;
     font-style: italic;
     margin-top: 0.2em;
+    text-align: left;
     
 }
 
@@ -78,7 +88,8 @@ p {
 .content {
     font-size: 18px;
     justify-content: flex-start;
-    color: black;
+    text-align: left;
+
 }
 
 .expiration {
@@ -86,6 +97,7 @@ p {
     font-style: italic;
     justify-content: flex-start;
     color: darkgray;
+    text-align: left;
 }
 
 

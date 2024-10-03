@@ -7,7 +7,7 @@
             <div id="add-band" @click="searchView">
               <img id="plus-sign" src="../assets/plus-sign-icon-2048x2048-mp0pz4g8.png" alt="Add Band" />
             </div>
-            <BandComponent v-for="band in followedBands" :key="band.bandId" :band="band" />
+            <BandComponent v-for="band in followedBands" :key="band.bandId" :band="band" :hasMessage="checkIfBandHasMessage(band)"/>
           </div>
 
       </div>
@@ -16,6 +16,7 @@
   
   <script>
   import BandService from '../services/BandService';
+  import MessageService from '../services/MessageService';
   import BandComponent from './BandComponent.vue';
 
   export default {
@@ -25,10 +26,12 @@
     data() {
       return {
         followedBands: [],
+        messages: []
       };
     },
     created() {
       this.fetchFollowedBands();
+      this.fetchMessages();
     },
     methods: {
       fetchFollowedBands() {
@@ -42,6 +45,18 @@
       },
       searchView() {
         this.$router.push('/search')
+      },
+      fetchMessages() {
+        MessageService.getUserInbox().then(response => {
+            this.messages = response.data;
+            console.log(this.messages);
+        })
+        .catch(error => {
+            console.error(error);
+        });
+      },
+      checkIfBandHasMessage(band) {
+        return this.messages.some(message => message.message.messageSender === band.band.bandId);
       }
     }
 
@@ -65,7 +80,7 @@
     margin: 1em;
     border-radius: 20px;
     z-index: 1;
-    background-color: white;
+    background-color: darkgray;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;

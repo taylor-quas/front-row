@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <Inbox id="inbox" @click="inboxView"></Inbox>
+    <HomeInbox id="inbox" @click="inboxView"></HomeInbox>
     <followed-bands-vue id="followed-bands"></followed-bands-vue>
   </div>
 </template>
@@ -8,7 +8,7 @@
 <script>
 import { useRouter } from 'vue-router';
 import FollowedBandsVue from '../components/FollowedBands.vue';
-import Inbox from '../components/Inbox.vue';
+import HomeInbox from '../components/HomeInbox.vue';
 
 export default {
   data() {
@@ -21,7 +21,7 @@ export default {
   },
   components: {
     FollowedBandsVue,
-    Inbox
+    HomeInbox,
   },
   methods: {
     inboxView() {
@@ -45,6 +45,7 @@ export default {
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-areas: 
       "inbox followed-bands followed-bands";
+    background-color: rgb(22, 22, 22);
   }
 
   #inbox {

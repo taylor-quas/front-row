@@ -1,5 +1,5 @@
 <template>
-    <div class="bandItem" @click="toBandPage">
+    <div :class="{'bandItem':true, 'highlighted':hasMessage}" @click="toBandPage">
         <div class="image-container">
             <img :src="band.band.bandHeroImage" alt="band image"/>
             <div class="artistGenre">
@@ -17,6 +17,10 @@ export default {
     props: {
         band: {
             type: Object,
+            required: true
+        },
+        hasMessage: {
+            type: Boolean,
             required: true
         }
     },
@@ -41,6 +45,10 @@ export default {
     margin: 1em;
     border-radius: 20px;
     z-index: 1;
+}
+
+.highlighted {
+    border: 3px solid gold;
 }
 
 .image-container {
