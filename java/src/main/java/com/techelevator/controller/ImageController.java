@@ -2,6 +2,7 @@ package com.techelevator.controller;
 
 import com.techelevator.dao.ImageDao;
 import com.techelevator.model.Image;
+import com.techelevator.model.ImageDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -26,7 +27,7 @@ public class ImageController {
 
     @ResponseStatus(HttpStatus.ACCEPTED)
     @RequestMapping(path = "/band/gallery-upload", method = RequestMethod.POST)
-    public void uploadImageToGallery(@RequestBody String url, Principal principal){
+    public void uploadImageToGallery(@RequestBody ImageDto url, Principal principal){
         imageDao.uploadImage(url, principal);
     }
 }

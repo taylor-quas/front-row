@@ -1,6 +1,7 @@
 package com.techelevator.dao;
 
 import com.techelevator.model.Image;
+import com.techelevator.model.ImageDto;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
@@ -49,7 +50,7 @@ public class JdbcImageDao implements ImageDao{
     }
 
     @Override
-    public void uploadImage(String url, Principal principal) {
+    public void uploadImage(ImageDto url, Principal principal) {
 
         String sql = "INSERT INTO images (image_link, band_id) VALUES (?,?);";
 
@@ -57,7 +58,7 @@ public class JdbcImageDao implements ImageDao{
         long band_id = getBandByOwnerId(principalId);
 
         try {
-            template.update(sql, url, band_id);
+            template.update(sql, url.getUrl(), band_id);
         } catch (CannotGetJdbcConnectionException e) {
             System.out.println("Problem connecting");
         } catch (DataIntegrityViolationException e) {
@@ -98,26 +99,23 @@ public class JdbcImageDao implements ImageDao{
         } catch (CannotGetJdbcConnectionException e) {
             System.out.println("Problem connecting");
         } catch (DataIntegrityViolationException e) {
-            System.out.println("Data problems");
+            System.out.println("Data problems ");
         }
         return userId;
     }
 
     private long getBandByOwnerId(long id) {
         String sql = "SELECT band_id FROM bands WHERE band_manager_id = ?;";
-        long userId = -1;
+        long bandId = -1;
 
         try {
-            SqlRowSet results = template.queryForRowSet(sql, id);
-            if (results.next()) {
-                userId = results.getLong("band_manager_id");
-            }
+            bandId = template.queryForObject(sql, new Object[]{id}, Long.class);
         } catch (CannotGetJdbcConnectionException e) {
             System.out.println("Problem connecting");
         } catch (DataIntegrityViolationException e) {
             System.out.println("Data problems");
         }
 
-        return userId;
+        return bandId;
     }
 }

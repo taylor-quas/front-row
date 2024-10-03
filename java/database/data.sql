@@ -2,7 +2,7 @@ BEGIN TRANSACTION;
 
 INSERT INTO users (username,password_hash,role) VALUES ('user@example.com','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
 INSERT INTO users (username,password_hash,role) VALUES ('admin@example.com','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN');
-INSERT INTO users (username,password_hash,role) VALUES ('drake@drake.com', '5f4dcc3b5aa765d61d8327deb882cf99', 'ROLE_BAND');
+INSERT INTO users (username,password_hash,role) VALUES ('drake@drake.com', '$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC', 'ROLE_BAND');
 INSERT INTO users (username,password_hash,role) VALUES ('rihanna@rihanna.com', '5f4dcc3b5aa765d61d8327deb882cf99', 'ROLE_BAND');
 INSERT INTO users (username,password_hash,role) VALUES ('thebeatles@thebeatles.com', '5f4dcc3b5aa765d61d8327deb882cf99', 'ROLE_BAND');
 INSERT INTO users (username,password_hash,role) VALUES ('taylorswift@taylorswift.com', '5f4dcc3b5aa765d61d8327deb882cf99', 'ROLE_BAND');
