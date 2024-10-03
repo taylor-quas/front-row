@@ -1,11 +1,12 @@
 <template>
-  <div>  
-    <BandPage></BandPage>
+  <div class="band-page">  
+    <band-page-vue></band-page-vue>
+    
   </div>
 </template>
 
 <script>
-import BandPage from '../components/BandPage.vue';
+import BandPageVue from '../components/BandPage.vue';
 
 export default {
 
@@ -16,11 +17,15 @@ export default {
   },
 
   components: {
-    BandPage
+    BandPageVue
   }
 };
 </script>
 
 <style>
+
+.band-page {
+    background-color: rgb(22, 22, 22);
+  }
 
 </style>

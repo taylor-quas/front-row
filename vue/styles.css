@@ -22,6 +22,16 @@ h2 {
 
 }
 
+h3 {
+    color: #FFF;
+    text-align: start;
+    font-family: Montserrat;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
 p {
     color: #FFF;
     text-align: center;

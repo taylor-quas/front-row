@@ -22,7 +22,7 @@
       
     </div>
     <div id="message-card" v-for="message in sortedMessages" :key="message.messageId">
-      <MessageComponent :message="message"/>
+      <MessageComponent :message="message" @markAsRead="handleMarkAsRead"/>
     </div>
   </div>
 </template>
@@ -102,10 +102,18 @@ export default {
         });
 
     },
+    methods: {
+      handleMarkAsRead(messageId) {
+        const message = this.messages.find(message => message.message.messageId === messageId);
+        if (message) {
+          message.isRead = true;
+        }
+      }
+    }
 }
 </script>
 
-<style>
+<style scoped>
 
 #inbox {
   display: flex;
@@ -114,6 +122,7 @@ export default {
   align-items: center;
   flex-basis: 100%;
   width: 100%;
+  color: rgba(255, 255, 255, 0.743);
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
