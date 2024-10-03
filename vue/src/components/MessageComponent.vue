@@ -1,5 +1,5 @@
 <template>
-  <div class="messageComponent">
+  <div :class="{'messageComponent':true, 'unread':!isRead}" @click="markAsRead">
     <div id="band-date">
         <h3>{{ message.bandName }}</h3>
         <h4>{{ new Date(message.message.messageTimeSent).toLocaleString('en-US', {month: 'long', day: '2-digit', year: 'numeric', hour: 'numeric', minute:'2-digit'}) }}</h4>
@@ -16,8 +16,11 @@
 export default {
     data() {
         return {
-            isViewed: false
+            isRead: false
         }
+    },
+    created() {
+        this.isRead = this.checkIfRead();
     },
     props: {
         message: {
@@ -28,8 +31,21 @@ export default {
             type: Object,
             required: true
         }
+    },
+    methods: {
+        checkIfRead() {
+            const readMessages = JSON.parse(localStorage.getItem('readMessages')) || [];
+            return readMessages.includes(this.message.message.messageId);
+        },
+        markAsRead() {
+            if (!this.isRead) {
+                this.isRead = true;
+                const readMessages = JSON.parse(localStorage.getItem('readMessages')) || [];
+                readMessages.push(this.message.message.messageId);
+                localStorage.setItem('readMessages', JSON.stringify(readMessages));
+            }
+        }
     }
-
 }
 </script>
 
@@ -48,6 +64,11 @@ export default {
     border-bottom: 1px solid darkgray;
     border-top: 1px solid darkgray;
 
+}
+
+.unread {
+    border-top: 3px solid gold;
+    border-bottom: 3px solid gold;
 }
 
 #band-date {
