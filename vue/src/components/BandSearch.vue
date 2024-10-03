@@ -1,7 +1,14 @@
 <template>
   <div class="results">
+<<<<<<< HEAD
     <h3>Band Results</h3>
     <div id="band-results-grid" v-if="filteredBands.length > 0">
+=======
+    <div v-if="$store.state.token == ''" @click="$router.push('/fbc')">
+      <h4 style="color: red;">X</h4>
+    </div>
+    <div id="band-results-grid">
+>>>>>>> b6f8017e52fdd65922ac8a9c034133dd81f20c50
       <BandComponent v-for="band in filteredBands" :key="band.bandId" :band="band" />
     </div>
     <div v-else>
@@ -11,6 +18,7 @@
 </template>
 
 <script>
+import router from '../router';
 import BandService from '../services/BandService';
 import BandComponent from './BandComponent.vue';
 
@@ -96,7 +104,7 @@ export default {
 #band-results-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  grid-gap: 1em;
+  grid-gap: 0.5em;
 }
 
 </style>
