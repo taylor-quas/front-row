@@ -1,5 +1,6 @@
 <template>
   <div class="band-view">
+    
     <section class="content">  
       <div v-if="band">
         <h2 id="name">{{ bandName }}</h2>
@@ -15,8 +16,9 @@
         </section>
         <br>
         <p id="description">{{ band.band.bandDescription }}</p>
-        <br>
+        <br><br><br>
         <section id="gallery">
+          <h3 id="gallery-header">Gallery</h3>
           <gallery-image :bandName="bandName"/>
         </section>
       </div>
@@ -110,16 +112,21 @@ export default {
   display: grid;
   grid-template-columns: 1fr 5fr 1fr;
   grid-template-areas: 
+    ". name ."
     ". content ."
     ". content ."
     ". content ."
+    ". content ."
+    "gallery gallery gallery"
+    "gallery gallery gallery"
     "gallery gallery gallery"; 
 }
 
 #name{
+  grid-area: name;
   font-size: 2em;
   margin-bottom: 1em;
-  justify-content: flex-start;
+  text-align: left;
 }
 
 #description{
@@ -147,16 +154,36 @@ export default {
   align-items: center; */
 }
 
+#gallery{
+  grid-area: gallery;
+}
+
+#gallery-header{
+  font-size: 1.5em;
+  margin-bottom: 1em;
+  justify-content: center;
+}
+
+section h3 {
+    color: #FFF;
+    text-align: start;
+    font-family: Montserrat;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
 .follow-button {
-padding: 10px 20px;
-background-color: #999999;  /* Light grey */
-color: white;               /* White text */
-border: none;               /* Remove default border */
-border-radius: 5px;         /* Rounded corners */
-font-size: 16px;            /* Font size */
-cursor: pointer;            /* Pointer on hover */
-transition: background-color 0.3s ease; /* Smooth transition */
-margin-bottom: 1em;
+  padding: 10px 20px;
+  background-color: #999999;  /* Light grey */
+  color: white;               /* White text */
+  border: none;               /* Remove default border */
+  border-radius: 5px;         /* Rounded corners */
+  font-size: 16px;            /* Font size */
+  cursor: pointer;            /* Pointer on hover */
+  transition: background-color 0.3s ease; /* Smooth transition */
+  margin-bottom: 1em;
 }
 
 .follow-button:hover {

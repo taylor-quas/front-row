@@ -113,7 +113,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 #inbox {
   display: flex;
@@ -122,6 +122,7 @@ export default {
   align-items: center;
   flex-basis: 100%;
   width: 100%;
+  color: rgba(255, 255, 255, 0.743);
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 

@@ -1,6 +1,5 @@
 <template>
   <div id="gallery">
-    <h3>Gallery</h3>
     <div id="images-grid" v-if="images.length > 0">
       <img class="photos" v-for="image in images" :key="image.imageId" :image="image" :src="image.imageLink"/>
     </div>
@@ -27,6 +26,7 @@ export default {
     };
   },
   created() {
+    console.log(this.bandName);
     ImageService.getGallery(this.bandName)
       .then(response => {
         this.images = response.data;

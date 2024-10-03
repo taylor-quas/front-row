@@ -24,4 +24,8 @@ export default {
 
 <style>
 
+.band-page {
+    background-color: rgb(22, 22, 22);
+  }
+
 </style>

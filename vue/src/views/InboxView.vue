@@ -1,6 +1,6 @@
 <template>
   <div class="inbox">
-    <inbox></inbox>
+    <inbox />
   </div>
 </template>
 
@@ -15,8 +15,9 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
   .inbox {
     padding-top: 12vh;
+    background-color: rgb(22, 22, 22);
   }
 </style>

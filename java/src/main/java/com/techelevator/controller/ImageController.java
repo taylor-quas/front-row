@@ -18,7 +18,7 @@ public class ImageController {
     @Autowired
     private ImageDao imageDao;
 
-    @PreAuthorize("isAuthenticated")
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/{bandName}/gallery")
     public List<Image> getImagesForGallery(@PathVariable String bandName) {
         return imageDao.getGallery(bandName);
