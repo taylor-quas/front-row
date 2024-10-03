@@ -2,6 +2,7 @@
   <div class="band-view">  
     <h2>Band Page Component</h2>
     {{ $route.params.bandName }}
+    <button @click="followBand">Follow</button>
     {{ band }}
   </div>
 </template>
@@ -30,7 +31,16 @@ data() {
           console.error(error);
         });
     },
-}
+    followBand() {
+      this.BandService.followBand(this.band.band.bandId)
+        .then(response => {
+          console.log(response);
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
+  }
 }
 </script>
 
