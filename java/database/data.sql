@@ -19,6 +19,9 @@ INSERT INTO messages (message_content, message_time_sent, message_time_expiratio
 INSERT INTO messages (message_content, message_time_sent, message_time_expiration, message_sender) VALUES ('Cheerio, g-day mate,', '2024-10-01 13:12:00', '2024-10-31 13:12:00', 2);
 INSERT INTO messages (message_content, message_time_sent, message_time_expiration, message_sender) VALUES ('Howdy padner', '2024-10-01 13:12:00', '2024-10-11 13:12:00', 3);
 INSERT INTO messages (message_content, message_time_sent, message_time_expiration, message_sender) VALUES ('This is an expired message. It should not be visible.', '2024-09-01 13:12:00', '2024-10-01 13:12:00', 3);
+INSERT INTO messages (message_content, message_time_sent, message_time_expiration, message_sender) VALUES ('Sup', '2024-10-02 13:12:00', '2024-10-16 13:12:00', 1);
+INSERT INTO messages (message_content, message_time_sent, message_time_expiration, message_sender) VALUES ('Sup', '2024-10-02 13:12:00', '2024-10-16 13:12:00', 4);
+INSERT INTO messages (message_content, message_time_sent, message_time_expiration, message_sender) VALUES ('Hey there', '2024-10-02 13:12:00', '2024-10-16 13:12:00', 5);
 
 INSERT INTO genres (genre_name) VALUES ('blues'), ('classical'), ('country'), ('electronic'), ('folk'), ('hip-hop'), ('jazz'), ('latin'), ('new age'), ('pop'), ('r&b'), ('reggae'), ('rock');
 

@@ -1,19 +1,17 @@
 <template>
   <div class="inbox">
     <inbox></inbox>
-    <MessageComponent/>
   </div>
 </template>
 
 <script>
 import Inbox from '../components/Inbox.vue';
-import MessageComponent from '../components/MessageComponent.vue';
+import MessageService from '../services/MessageService';
 
 export default {
   components: {
-    Inbox,
-    MessageComponent
-  }  
+    Inbox
+  }
 };
 </script>
 

@@ -25,13 +25,7 @@
   </template>
   
   <script>
-  //get list of genres from /genres endpoint
-  //use list to create a bunch of checkboxes
-  //when the box is checked call a filter function that filters the bands array
-  //should include if the band has a genre that matches the checked genre
-  
   import BandService from '../services/BandService';
-  import BandComponent from './BandComponent.vue';
   
   export default {
     data() {

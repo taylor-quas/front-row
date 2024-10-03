@@ -1,25 +1,45 @@
 <template>
-  <div>
-    <h2>Your Messages</h2>
+  <div id="inbox">
+    <h2>My Messages</h2>
+    <div id="filter">
+    <h4>Filter By Band</h4>
+    <select class="filterByBand" v-model="selectedBand">
+      <option value="all">All</option>
+      <option v-for="band in followedBands" :key="band.bandId" :value="band.band.bandName">{{band.band.bandName}}</option>
+    </select>
+    </div>
+    <div id="message-card" v-for="message in filteredMessages" :key="message.messageId">
+      <MessageComponent :message="message"/>
+    </div>
   </div>
 </template>
 
 <script>
-import MessageService from "../services/MessageService.js"
+import MessageService from "../services/MessageService.js";
+import BandService from "../services/BandService.js";
+import MessageComponent from "../components/MessageComponent.vue";
 
 export default {
+  components: {
+    MessageComponent
+  },
     data() {
       return {
         messages: [],
-        MessageService,
+        followedBands: [],
+        selectedBand: 'all'
       };
     },
     computed: {
       filteredMessages() {
         const currentTime = new Date();
+
         return this.messages.filter(message => {
           const expirationTime = new Date(message.message.messageTimeExpiration);
-          return expirationTime > currentTime;
+          const notExpired = expirationTime > currentTime;
+          const bandMatches = this.selectedBand === 'all' || message.bandName === this.selectedBand;
+
+          return notExpired && bandMatches;
         });
       }
     },
@@ -30,10 +50,50 @@ export default {
         .catch(error => {
             console.error(error);
         });
+      BandService.getFollowedBands().then(response => {
+            this.followedBands = response.data;
+        })
+        .catch(error => {
+            console.error(error);
+        });
+
     },
 }
 </script>
 
 <style>
+
+#inbox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-basis: 100%;
+  width: 100%;
+}
+
+#filter {
+  display: flex;
+  flex-direction: column;
+  margin: 5px;
+  padding: 5px;
+  border-radius: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.filterByBand {
+  margin: 5px;
+  padding: 5px;
+  border-radius: 20px;
+}
+
+#message-card {
+  display: flex;
+  width: 100%;
+  padding: 5px;
+  align-content: center;
+  justify-content: center;
+}
 
 </style>

@@ -1,10 +1,10 @@
 <template>
   <div class="home">
-    <p>You must be authenticated to see this</p>
+    <!-- <p>You must be authenticated to see this</p> -->
     <div id="inbox" @click="inboxView">
-      <h2>INBOX</h2>
+      <Inbox></Inbox>
     </div>
-    <div>
+    <div id="followed-bands">
       <followed-bands-vue></followed-bands-vue>
     </div>    
   </div>
@@ -13,6 +13,7 @@
 <script>
 import { useRouter } from 'vue-router';
 import FollowedBandsVue from '../components/FollowedBands.vue';
+import Inbox from '../components/Inbox.vue';
 
 export default {
   data() {
@@ -24,7 +25,8 @@ export default {
     };
   },
   components: {
-    FollowedBandsVue
+    FollowedBandsVue,
+    Inbox
   },
   methods: {
     inboxView() {
@@ -44,11 +46,26 @@ export default {
 
   .home {
     padding-top: 12vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas: 
+      "inbox followed-bands followed-bands";
   }
 
   #inbox {
-    border:1px solid black;
+    grid-area: inbox;
+    margin: 5px;
+    border-radius: 20px;
+  }
 
+  #followed-bands {
+    grid-area: followed-bands;
+    margin: 5px;
+    border-radius: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
   }
 
   
