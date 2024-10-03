@@ -28,5 +28,4 @@ public interface BandDao {
     void unsubscribe(long bandId, Principal principal);
 
     boolean isFollowing(long bandId, Principal principal);
-
 }

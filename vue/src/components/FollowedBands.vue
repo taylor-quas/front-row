@@ -4,7 +4,10 @@
         <h2>My Bands</h2>
         
           <div id="followed-bands">
-              <BandComponent v-for="band in followedBands" :key="band.bandId" :band="band" />
+            <div id="add-band" @click="searchView">
+              <img id="plus-sign" src="../assets/plus-sign-icon-2048x2048-mp0pz4g8.png" alt="Add Band" />
+            </div>
+            <BandComponent v-for="band in followedBands" :key="band.bandId" :band="band" :hasMessage="checkIfBandHasMessage(band)"/>
           </div>
 
       </div>
@@ -13,6 +16,7 @@
   
   <script>
   import BandService from '../services/BandService';
+  import MessageService from '../services/MessageService';
   import BandComponent from './BandComponent.vue';
 
   export default {
@@ -22,10 +26,12 @@
     data() {
       return {
         followedBands: [],
+        messages: []
       };
     },
     created() {
       this.fetchFollowedBands();
+      this.fetchMessages();
     },
     methods: {
       fetchFollowedBands() {
@@ -36,6 +42,21 @@
         .catch(error => {
             console.error(error);
         });
+      },
+      searchView() {
+        this.$router.push('/search')
+      },
+      fetchMessages() {
+        MessageService.getUserInbox().then(response => {
+            this.messages = response.data;
+            console.log(this.messages);
+        })
+        .catch(error => {
+            console.error(error);
+        });
+      },
+      checkIfBandHasMessage(band) {
+        return this.messages.some(message => message.message.messageSender === band.band.bandId);
       }
     }
 
@@ -49,6 +70,28 @@
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     grid-gap: 0.5em;
   
+  }
+
+  #add-band {
+    width: 200px;
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+    margin: 1em;
+    border-radius: 20px;
+    z-index: 1;
+    background-color: darkgray;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1em;
+  }
+
+  #plus-sign {
+    width: 50%;
+    height: 50%;
   }
     
   </style>

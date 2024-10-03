@@ -17,7 +17,6 @@
         >
     </div>
     <div>
-        // Add a new input field for the genre
         <h2>Add Genres</h2>
         <div v-for="(genre, index) in genres" :key="index">
             <span>{{ genre }}</span>

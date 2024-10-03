@@ -2,18 +2,24 @@
   <div id="inbox">
     <h2>My Messages</h2>
     <div id="filter">
-      <h4>Filter By Band</h4>
+      <div id="filter-box">
+        <h4>Filter By Band</h4>
       <select class="filterByBand" v-model="selectedBand">
         <option value="all">All</option>
         <option v-for="band in followedBands" :key="band.bandId" :value="band.band.bandName">{{band.band.bandName}}</option>
       </select>
-      <h4>Sort By</h4>
+      </div>
+
+      <div id="sort-box">
+        <h4>Sort By</h4>
       <select class="sort-by" v-model="selectedSort">
         <option value="newest">Newest</option>
         <option value="oldest">Oldest</option>
         <option value="band-name">Band Name (A-Z)</option>
         <option value="band-name-reverse">Band Name (Z-A)</option>
       </select>
+      </div>
+      
     </div>
     <div id="message-card" v-for="message in sortedMessages" :key="message.messageId">
       <MessageComponent :message="message"/>
@@ -107,11 +113,12 @@ export default {
   align-items: center;
   flex-basis: 100%;
   width: 100%;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 #filter {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   margin: 5px;
   padding: 5px;
   border-radius: 20px;
@@ -137,6 +144,18 @@ export default {
   padding: 5px;
   align-content: center;
   justify-content: center;
+}
+
+#filter-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#sort-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 </style>
