@@ -21,11 +21,13 @@
 </template>
 
 <script>
+
 export default {
   data() {
     return {
-      
     }
+  },
+  components: {
   }
 };
 </script>
@@ -42,8 +44,6 @@ export default {
     align-items: center;
 
     height: 100vh;
-
-    z-index: 50;
   }
 
   #buttons{
