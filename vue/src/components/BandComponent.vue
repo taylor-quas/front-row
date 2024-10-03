@@ -40,6 +40,7 @@ export default {
     overflow: hidden;
     margin: 1em;
     border-radius: 20px;
+    z-index: 1;
 }
 
 .image-container {
@@ -67,11 +68,13 @@ export default {
     color: white;
     background-color: rgba(0, 0, 0, 0.4);
     text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .artistGenre h4 {
     font-size: 1.6em;
-    margin: 0;
+    width: 90%;
+    line-height: 1.1;
 }
 
 .genreList {
