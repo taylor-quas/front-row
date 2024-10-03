@@ -15,7 +15,6 @@
 <script>
 import { useRouter } from 'vue-router';
 import FollowedBandsVue from '../components/FollowedBands.vue';
-import Inbox from '../components/Inbox.vue';
 import ManagerView from './ManagerView.vue';
 import HomeInbox from '../components/HomeInbox.vue';
 
@@ -31,7 +30,6 @@ export default {
   },
   components: {
     FollowedBandsVue,
-    Inbox,
     ManagerView,
     HomeInbox,
   },
