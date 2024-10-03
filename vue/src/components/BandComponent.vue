@@ -18,10 +18,8 @@ export default {
         band: {
             type: Object,
             required: true
-
         }
     }
-    
 }
 </script>
 
