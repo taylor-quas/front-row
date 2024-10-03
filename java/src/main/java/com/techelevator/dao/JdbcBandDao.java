@@ -253,17 +253,14 @@ public class JdbcBandDao implements BandDao {
             if (count > 0) {
                 following = true;
             }
-
-
         } catch (CannotGetJdbcConnectionException e) {
             System.out.println("Problem connecting");
         } catch (DataIntegrityViolationException e) {
             System.out.println("Data problems");
         }
-
         return following;
-
     }
+
 
 
     // Private methods below
@@ -273,6 +270,23 @@ public class JdbcBandDao implements BandDao {
 
         try {
             userId = template.queryForObject(sql, new Object[]{username}, Long.class);
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("Problem connecting");
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("Data problems");
+        }
+        return userId;
+    }
+
+    private long getBandByOwnerId(long id) {
+        String sql = "SELECT band_id FROM bands WHERE band_manager_id = ?;";
+        long userId = -1;
+
+        try {
+            SqlRowSet results = template.queryForRowSet(sql, id);
+            if (results.next()) {
+                userId = results.getLong("band_manager_id");
+            }
         } catch (CannotGetJdbcConnectionException e) {
             System.out.println("Problem connecting");
         } catch (DataIntegrityViolationException e) {
