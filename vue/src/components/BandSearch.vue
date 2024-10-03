@@ -66,10 +66,7 @@ export default {
 
       if (this.selectedGenres && this.selectedGenres.length > 0) {
         filteredBands = filteredBands.filter(band => {
-          console.log(band);
-          console.log(band.genreNames);
-          console.log(this.selectedGenres);
-
+          
           return this.selectedGenres.some(genre => {
             return band.genreNames.includes(genre)
           });
