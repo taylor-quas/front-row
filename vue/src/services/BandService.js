@@ -15,6 +15,10 @@ export default {
 
   getBand(bandName){
     return axios.get(`/${bandName}`)
+  },
+
+  create(band) {
+    return axios.post('/bands', band);
   }
 
 }
