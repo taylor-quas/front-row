@@ -1,11 +1,12 @@
 <template>
   <div>  
-    <BandPage></BandPage>
+    <band-page-vue></band-page-vue>
+    
   </div>
 </template>
 
 <script>
-import BandPage from '../components/BandPage.vue';
+import BandPageVue from '../components/BandPage.vue';
 
 export default {
 
@@ -16,7 +17,7 @@ export default {
   },
 
   components: {
-    BandPage
+    BandPageVue
   }
 };
 </script>

@@ -2,18 +2,18 @@
   <div id="inbox">
     <h2>My Messages</h2>
     <div id="filter">
-    <h4>Filter By Band</h4>
-    <select class="filterByBand" v-model="selectedBand">
-      <option value="all">All</option>
-      <option v-for="band in followedBands" :key="band.bandId" :value="band.band.bandName">{{band.band.bandName}}</option>
-    </select>
-    <h4>Sort By</h4>
-    <select class="sort-by" v-model="selectedSort">
-      <option value="newest">Newest</option>
-      <option value="oldest">Oldest</option>
-      <option value="band-name">Band Name (A-Z)</option>
-      <option value="band-name-reverse">Band Name (Z-A)</option>
-    </select>
+      <h4>Filter By Band</h4>
+      <select class="filterByBand" v-model="selectedBand">
+        <option value="all">All</option>
+        <option v-for="band in followedBands" :key="band.bandId" :value="band.band.bandName">{{band.band.bandName}}</option>
+      </select>
+      <h4>Sort By</h4>
+      <select class="sort-by" v-model="selectedSort">
+        <option value="newest">Newest</option>
+        <option value="oldest">Oldest</option>
+        <option value="band-name">Band Name (A-Z)</option>
+        <option value="band-name-reverse">Band Name (Z-A)</option>
+      </select>
     </div>
     <div id="message-card" v-for="message in sortedMessages" :key="message.messageId">
       <MessageComponent :message="message"/>
@@ -94,8 +94,7 @@ export default {
         .catch(error => {
             console.error(error);
         });
-
-    },
+    }
 }
 </script>
 
