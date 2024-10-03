@@ -31,6 +31,7 @@ export default {
     padding: 5px;
     align-content: center;
     justify-content: center;
+    width: 90%;
 
 }
 
@@ -58,6 +59,7 @@ p {
 }
 
 .expiration {
+    font-size: 14px;
     font-style: italic;
     justify-content: flex-start;
 }

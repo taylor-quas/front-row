@@ -53,6 +53,12 @@ export default {
       sortedMessages() {
         let sortedMessages = this.filteredMessages;
 
+        const removeThe = (name) => {
+          return name.trim().toLowerCase().startsWith('the ')
+            ? name.trim().slice(4).trim()
+            : name.trim();
+        }
+
         if (this.selectedSort === 'newest') {
           sortedMessages = sortedMessages.sort((a, b) => {
             return new Date(b.message.messageTimeSent) - new Date(a.message.messageTimeSent);
@@ -63,15 +69,15 @@ export default {
           });
         } else if (this.selectedSort === 'band-name') {
           sortedMessages = sortedMessages.sort((a, b) => {
-            return a.bandName.localeCompare(b.bandName);
+            return removeThe(a.bandName).localeCompare(removeThe(b.bandName));
           });
         } else if (this.selectedSort === 'band-name-reverse') {
           sortedMessages = sortedMessages.sort((a, b) => {
-            return b.bandName.localeCompare(a.bandName);
+            return removeThe(b.bandName).localeCompare(removeThe(a.bandName));
           });
         }
 
-        return sortedMessages
+        return sortedMessages;
 
       }
     },
@@ -115,6 +121,12 @@ export default {
 }
 
 .filterByBand {
+  margin: 5px;
+  padding: 5px;
+  border-radius: 20px;
+}
+
+.sort-by {
   margin: 5px;
   padding: 5px;
   border-radius: 20px;

@@ -32,7 +32,8 @@ INSERT INTO messages (message_content, message_time_sent, message_time_expiratio
 INSERT INTO messages (message_content, message_time_sent, message_time_expiration, message_sender) VALUES ('Sup', '2024-10-02 13:12:00', '2024-10-16 13:12:00', 1);
 INSERT INTO messages (message_content, message_time_sent, message_time_expiration, message_sender) VALUES ('Sup', '2024-10-02 13:12:00', '2024-10-16 13:12:00', 4);
 INSERT INTO messages (message_content, message_time_sent, message_time_expiration, message_sender) VALUES ('Hey there', '2024-10-02 13:12:00', '2024-10-16 13:12:00', 5);
-INSERT INTO messages (message_content, message_time_sent, message_time_expiration, message_sender) VALUES ('You should probably leave', '2024-10-03 09:31:00', '2024-10-17 09:31:00', 5);
+INSERT INTO messages (message_content, message_time_sent, message_time_expiration, message_sender) VALUES ('You should probably leave', '2024-10-03 09:31:00', '2024-10-17 09:31:00', 6);
+INSERT INTO messages (message_content, message_time_sent, message_time_expiration, message_sender) VALUES ('I really messed it up this time, didn''t I, my dear?', '2024-10-03 13:35:00', '2024-10-17 13:35:00', 7);
 
 INSERT INTO genres (genre_name) VALUES ('blues'), ('classical'), ('country'), ('electronic'), ('folk'), ('hip-hop'), ('jazz'), ('latin'), ('new age'), ('pop'), ('r&b'), ('reggae'), ('rock');
 
