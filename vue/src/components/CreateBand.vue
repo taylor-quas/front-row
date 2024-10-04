@@ -18,7 +18,7 @@
     </div>
     <div>
         <h2>Add Genres</h2>
-        <div v-for="(genre, index) in genres" :key="index">
+        <div v-for="genre in genres" :key="genre">
             <span>{{ genre }}</span>
             
         </div>
@@ -40,6 +40,7 @@
 
 <script>
 import BandService from '../services/BandService';
+import ImageUpload from '../components/ImageUpload.vue';
 
 export default {
     saveBand() {
