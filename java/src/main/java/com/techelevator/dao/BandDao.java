@@ -3,6 +3,7 @@ package com.techelevator.dao;
 import com.techelevator.model.Band;
 import com.techelevator.model.BandGenreDto;
 import com.techelevator.model.Genre;
+import com.techelevator.model.RoleDto;
 
 import java.security.Principal;
 import java.util.List;
@@ -28,4 +29,7 @@ public interface BandDao {
     void unsubscribe(long bandId, Principal principal);
 
     boolean isFollowing(long bandId, Principal principal);
+
+    RoleDto getRoleAndManagedBands(Principal principal);
+
 }
