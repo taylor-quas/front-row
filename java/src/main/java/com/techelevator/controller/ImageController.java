@@ -26,7 +26,7 @@ public class ImageController {
     }
 
     @ResponseStatus(HttpStatus.ACCEPTED)
-    @RequestMapping(path = "/band/gallery-upload", method = RequestMethod.POST)
+    @PostMapping("/band/gallery-upload")
     public void uploadImageToGallery(@RequestBody ImageDto url, Principal principal){
         imageDao.uploadImage(url, principal);
     }
