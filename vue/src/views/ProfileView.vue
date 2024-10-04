@@ -18,7 +18,7 @@ export default {
 </script>
 
 <style>
-  .inbox {
-    padding-top: 12vh;
+  .profile {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
 </style>

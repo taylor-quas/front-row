@@ -17,4 +17,6 @@ public interface UserDao {
 
     User createUser(RegisterUserDto user);
 
+    User getUserByPrincipal(Principal principal);
+
 }
