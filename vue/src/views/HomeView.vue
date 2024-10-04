@@ -1,16 +1,18 @@
 <template>
   <div class="home">
-    <div id="followed-bands">
-      <followed-bands-vue></followed-bands-vue>
-    </div>
-    <div id="manager-view" v-if="bandCreated">
-      <ManagerView></ManagerView>
-    </div>    
-    <HomeInbox id="inbox" @click="inboxView"></HomeInbox>
-    <followed-bands-vue id="followed-bands"></followed-bands-vue>
-    <button v-if="isButtonVisible" id="create-button" @click="showCreateBand = true, hideButton()">Manage a Band!</button>
-    <div v-if="showCreateBand" @close="showCreateBand = false" class="create-band-overlay">
-      <CreateBand id="create-band"/>
+      <div id="followed-bands">
+        <followed-bands-vue></followed-bands-vue>
+      </div>
+      <div id="manager-view" v-if="isManager">
+        <ManagerView></ManagerView>
+      </div>    
+      <HomeInbox id="inbox" @click="inboxView"></HomeInbox>
+      <followed-bands-vue id="followed-bands"></followed-bands-vue>
+      <button v-if="isButtonVisible" id="create-button" @click="showCreateBand = true, hideButton()">Manage a Band!</button>
+    <div v-if="showCreateBand" id="modal-overlay">
+      <div id="modal-content">
+        <CreateBand id="create-band" @close="closeModal" @band-created="bandCreated"/>
+      </div>
     </div>
   </div>
 </template>
@@ -30,7 +32,7 @@ export default {
       username: '',
       isFocused: false,
       showCreateBand: false,
-      bandCreated: false,
+      isManager: false,
       isButtonVisible: true,
     };
   },
@@ -45,7 +47,16 @@ export default {
       this.router.push('/inbox')
     },
     hideButton() {
-      this.isButtonVisible = false; // Set to false to hide the button
+      this.isButtonVisible = false;
+    },
+    closeModal() {
+      this.showCreateBand = false;
+      this.isButtonVisible = true;
+    },
+    bandCreated() {
+      this.showCreateBand = false;
+      this.isButtonVisible = true;
+      // More code to be added here for band creation
     }
   },
   computed: {
@@ -90,7 +101,24 @@ export default {
     grid-area: manager-view;
     margin: 5px;
     border-radius: 20px;
-    z-index: 100;
   }
-  
+  #modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+
+  }
+  #modal-content {
+    background-color:chocolate;
+    padding: 20px;
+    border-radius: 5px;
+  }
 </style>
