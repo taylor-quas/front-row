@@ -47,7 +47,7 @@ export default {
 
 <style>
   #capstone-app{
-    background-color: rgb(165, 165, 255);
+    background-color: rgb(22, 22, 22);
     min-height: 100vh;
     display: flex;
     flex-direction: column;

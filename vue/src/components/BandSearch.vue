@@ -96,9 +96,13 @@ export default {
 
 <style>
 #band-results-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  grid-gap: 0.5em;
+  margin: 5px;
+  border-radius: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: start;
+  align-items: flex-start;
+  z-index: 1;
 }
 
 </style>

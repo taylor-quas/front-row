@@ -107,6 +107,20 @@ export default {
 
 <style scoped>
 
+#description {
+  grid-area: content;
+  color: white;
+  background-color: rgb(43, 43, 43);
+  font-size: 1.2em;
+  line-height: 1.6;
+  padding: 15px 20px;
+  border-radius: 8px;
+  border: 1px solid #ddd;    /* Light grey border for emphasis */
+  max-width: 90%;            /* Keep within content width */
+  margin: 1em auto;
+  text-align: justify;
+}
+
 .band-view{
   margin: 10vh;
   display: grid;
