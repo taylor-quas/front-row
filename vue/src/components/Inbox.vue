@@ -108,7 +108,21 @@ export default {
         if (message) {
           message.isRead = true;
         }
+      },
+      markAllAsRead() {
+        this.messages.forEach(message => {
+          message.isRead = true;
+          const readMessages = JSON.parse(localStorage.getItem('readMessages')) || [];
+          if (!readMessages.includes(message.message.messageId)) {
+            readMessages.push(message.message.messageId);
+          }
+          localStorage.setItem('readMessages', JSON.stringify(readMessages));
+
+        });
       }
+    },
+    beforeUnmount() {
+      this.markAllAsRead();
     }
 }
 </script>

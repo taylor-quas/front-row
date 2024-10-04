@@ -3,6 +3,8 @@ package com.techelevator.dao;
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.Band;
 import com.techelevator.model.BandGenreDto;
+import com.techelevator.model.RoleDto;
+import com.techelevator.model.User;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -13,6 +15,8 @@ import javax.sql.DataSource;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
 
 @Component
 public class JdbcBandDao implements BandDao {
@@ -124,6 +128,7 @@ public class JdbcBandDao implements BandDao {
         return bands;
     }
 
+    // TODO
     @Override
     public void updateBand(Band updatedBand) {
 
@@ -261,6 +266,48 @@ public class JdbcBandDao implements BandDao {
         return following;
     }
 
+    @Override
+    public RoleDto getRoleAndManagedBands(Principal principal) {
+
+        String role = getRoleByUsername(principal.getName());
+        RoleDto principalInfo = new RoleDto(role);
+
+        if (principalInfo.getRole().equals("ROLE_BAND")) {
+            List<Band> bands = new ArrayList<>();
+            long principalId = getUserIdByUsername(principal.getName());
+
+            bands = getBandsManagedByUserId(principalId);
+            if (bands.size() == 0){
+                updateUser(principal, "ROLE_USER");
+                principalInfo.setRole("ROLE_USER");
+                return principalInfo;
+            }
+            principalInfo.setManagedBands(bands);
+        }
+
+        return principalInfo;
+    }
+
+    @Override
+    public void updateUser(Principal principal, String role) {
+        String sql = "UPDATE users\n" +
+                "\tSET role = ?\n" +
+                "\tWHERE user_id = ?;";
+
+        role = role.toUpperCase();
+        long principalId = getUserIdByUsername(principal.getName());
+
+        try {
+            int rowsAffected = template.update(sql, role, principalId);
+            if (rowsAffected == 0) {
+                throw new DaoException("No users affected. Expected at least one.");
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("Problem connecting");
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("Data problems");
+        }
+    }
 
 
     // Private methods below
@@ -311,11 +358,8 @@ public class JdbcBandDao implements BandDao {
 
     private BandGenreDto mapRowToBandGenreDto(SqlRowSet rowSet) {
         BandGenreDto bandGenreDto = new BandGenreDto();
-
         bandGenreDto.setBand(mapRowToBand(rowSet));
-
         return bandGenreDto;
-
     }
 
     private List<String> getGenresByBandName(String bandName) {
@@ -339,6 +383,42 @@ public class JdbcBandDao implements BandDao {
         }
 
         return genres;
+    }
+
+    private String getRoleByUsername(String username) {
+        String sql = "SELECT role FROM users WHERE username = ?;";
+        String userRole = "";
+
+        try {
+            SqlRowSet result = template.queryForRowSet(sql, username);
+            if (result.next()) {
+                userRole = result.getString("role");
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("Problem connecting");
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("Data problems");
+        }
+
+        return userRole;
+    }
+
+    private List<Band> getBandsManagedByUserId(long userId) {
+        List<Band> bands = new ArrayList<>();
+        String sql = "SELECT * FROM bands WHERE band_manager_id = ?;";
+
+        try {
+            SqlRowSet results = template.queryForRowSet(sql, userId);
+            while (results.next()) {
+                bands.add(mapRowToBand(results));
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("Problem connecting");
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("Data problems");
+        }
+
+        return bands;
     }
 
 }

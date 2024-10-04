@@ -100,7 +100,7 @@ export default {
   border-radius: 20px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: start;
+  justify-content: center;
   align-items: flex-start;
   z-index: 1;
 }

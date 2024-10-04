@@ -2,7 +2,7 @@
     <div id="inbox">
       <h2>My Messages</h2>
       <div id="message-card" v-for="message in sortedMessages" :key="message.messageId">
-        <MessageComponent :message="message" @markAsRead="handleMarkAsRead"/>
+        <MiniMessageComponent :message="message" @markAsRead="handleMarkAsRead"/>
       </div>
     </div>
   </template>
@@ -11,10 +11,11 @@
   import MessageService from "../services/MessageService.js";
   import BandService from "../services/BandService.js";
   import MessageComponent from "../components/MessageComponent.vue";
+  import MiniMessageComponent from "../components/MiniMessageComponent.vue";
   
   export default {
     components: {
-      MessageComponent
+      MiniMessageComponent
     },
       data() {
         return {
