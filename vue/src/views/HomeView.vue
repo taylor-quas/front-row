@@ -1,14 +1,17 @@
 <template>
   <div class="home">
-    <!-- <p>You must be authenticated to see this</p> -->
     <div id="followed-bands">
       <followed-bands-vue></followed-bands-vue>
     </div>
-    <div id="manager-view" v-if="isManager">
+    <div id="manager-view" v-if="bandCreated">
       <ManagerView></ManagerView>
     </div>    
     <HomeInbox id="inbox" @click="inboxView"></HomeInbox>
     <followed-bands-vue id="followed-bands"></followed-bands-vue>
+    <button v-if="isButtonVisible" id="create-button" @click="showCreateBand = true, hideButton()">Manage a Band!</button>
+    <div v-if="showCreateBand" @close="showCreateBand = false" class="create-band-overlay">
+      <CreateBand id="create-band"/>
+    </div>
   </div>
 </template>
 
@@ -17,6 +20,7 @@ import { useRouter } from 'vue-router';
 import FollowedBandsVue from '../components/FollowedBands.vue';
 import ManagerView from './ManagerView.vue';
 import HomeInbox from '../components/HomeInbox.vue';
+import CreateBand from '../components/CreateBand.vue';
 
 export default {
   data() {
@@ -25,17 +29,23 @@ export default {
       router,
       username: '',
       isFocused: false,
-      isManager: false,
+      showCreateBand: false,
+      bandCreated: false,
+      isButtonVisible: true,
     };
   },
   components: {
     FollowedBandsVue,
     ManagerView,
     HomeInbox,
+    CreateBand,
   },
   methods: {
     inboxView() {
       this.router.push('/inbox')
+    },
+    hideButton() {
+      this.isButtonVisible = false; // Set to false to hide the button
     }
   },
   computed: {

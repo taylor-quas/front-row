@@ -3,6 +3,7 @@ package com.techelevator.controller;
 import com.techelevator.dao.BandDao;
 import com.techelevator.model.Band;
 import com.techelevator.model.BandGenreDto;
+import com.techelevator.model.RoleDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -80,4 +81,10 @@ public class BandController {
         return bandDao.isFollowing(bandId, principal);
 
     }
+
+    @GetMapping("/user-role")
+    public RoleDto getRoleAndManagedBands(Principal principal) {
+        return bandDao.getRoleAndManagedBands(principal);
+    }
+
 }
