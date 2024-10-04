@@ -90,6 +90,23 @@ public class JdbcUserDao implements UserDao {
         return newUser;
     }
 
+    public User getUserByPrincipal(Principal principal) {
+        User user = null;
+        String sql = "SELECT * FROM users WHERE user_id = ?";
+
+        long principalId = getUserIdByUsername(principal.getName());
+
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, principalId);
+            if (results.next()) {
+                user = mapRowToUser(results);
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+        return user;
+    }
+
     // Private methods
     private User mapRowToUser(SqlRowSet rs) {
         User user = new User();
@@ -99,6 +116,20 @@ public class JdbcUserDao implements UserDao {
         user.setAuthorities(Objects.requireNonNull(rs.getString("role")));
         user.setActivated(true);
         return user;
+    }
+
+    private long getUserIdByUsername(String username) {
+        String sql = "SELECT user_id FROM users WHERE username = ?;";
+        long userId = -1;
+
+        try {
+            userId = jdbcTemplate.queryForObject(sql, new Object[]{username}, Long.class);
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("Problem connecting");
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("Data problems");
+        }
+        return userId;
     }
 
 }
