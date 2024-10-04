@@ -44,11 +44,9 @@ export default {
     data() {
         return {
             band: {
-                bandId: null,
                 bandName: '',
                 bandDescription: '',
-                bandHeroImage: '',
-                bandManagerId: null, 
+                bandHeroImage: '', 
             },
         }
     },
@@ -69,7 +67,7 @@ export default {
         .then(response => {
         if (response.status === 201) { 
             this.$emit('band-created');
-            this.$router.push('/band/' + response.data.bandName);
+            this.$router.push('/band/' + this.band.bandName);
         }
         })
         .catch(error => {

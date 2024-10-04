@@ -117,7 +117,7 @@ export default {
 
   }
   #modal-content {
-    background-color:chocolate;
+    background-color:rgba(240, 34, 27, 0.925);
     padding: 20px;
     border-radius: 5px;
   }

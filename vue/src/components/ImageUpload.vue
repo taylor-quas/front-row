@@ -13,6 +13,10 @@ export default {
     admin: {
       type: Boolean,
       required: true
+    },
+    modelValue: {
+      type: String,
+      default: ''
     }
   },
   data() {
@@ -49,6 +53,7 @@ export default {
         }
       );
       widget.open();
+      this.$emit('update:modelValue', this.imageUrl);
     },
     sendImageToServer(imageUrl) {
       ImageService.uploadImage(imageUrl)

@@ -168,7 +168,7 @@ public class JdbcBandDao implements BandDao {
         } catch (CannotGetJdbcConnectionException e) {
             System.out.println("Problem connecting");
         } catch (DataIntegrityViolationException e) {
-            System.out.println("Data problems");
+            System.out.println("Data problems 1" + e.getMessage());
         }
     }
 
@@ -320,7 +320,7 @@ public class JdbcBandDao implements BandDao {
         } catch (CannotGetJdbcConnectionException e) {
             System.out.println("Problem connecting");
         } catch (DataIntegrityViolationException e) {
-            System.out.println("Data problems");
+            System.out.println("Data problems 2");
         }
         return userId;
     }
