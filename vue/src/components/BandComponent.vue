@@ -9,6 +9,7 @@
                 </div>  
             </div>
         </div>
+        <div v-if="hasMessage" class="notification"></div>
     </div>
 </template>
 
@@ -41,26 +42,42 @@ export default {
     width: 200px;
     height: 200px;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
     margin: 1em;
     border-radius: 20px;
     z-index: 1;
 }
 
+.notification {
+    position: absolute;
+    top: -0.5em;
+    right: -0.5em;
+    width: 2em;
+    height: 2em;
+    background-color: gold;
+    border-radius: 50%;
+    z-index: 3;
+}
+
 .highlighted {
     border: 3px solid gold;
+    background-color: rgba(255, 215, 0, 0.4);
+    z-index: 2;
 }
 
 .image-container {
     width: 100%;
     height: 100%;
     position: relative;
+    overflow: hidden;
+    border-radius: 20px;
 }
 
 .image-container img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 20px;
 }
 
 .artistGenre {

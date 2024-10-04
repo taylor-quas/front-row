@@ -7,7 +7,7 @@
             <div id="add-band" @click="searchView">
               <img id="plus-sign" src="../assets/plus-sign-icon-2048x2048-mp0pz4g8.png" alt="Add Band" />
             </div>
-            <BandComponent v-for="band in followedBands" :key="band.bandId" :band="band" :hasMessage="checkIfBandHasMessage(band)"/>
+            <BandComponent v-for="band in followedBands" :key="band.bandId" :band="band" :hasMessage="checkIfBandHasUnreadMessage(band)"/>
           </div>
 
       </div>
@@ -57,6 +57,12 @@
       },
       checkIfBandHasMessage(band) {
         return this.messages.some(message => message.message.messageSender === band.band.bandId);
+      },
+      checkIfBandHasUnreadMessage(band) {
+        const readMessages = JSON.parse(localStorage.getItem('readMessages')) || [];
+
+        return this.messages.some(message => message.message.messageSender === band.band.bandId && !readMessages.includes(message.message.messageId));
+
       }
     }
 

@@ -72,6 +72,16 @@ CREATE TABLE messages (
     CONSTRAINT FK_message_sender FOREIGN KEY (message_sender) REFERENCES bands(band_id)
 );
 
+--CREATE TABLE message_reads (
+--    read_id SERIAL,
+--    user_id int NOT NULL,
+--    message_id int NOT NULL,
+--    CONSTRAINT PK_message_reads PRIMARY KEY (read_id),
+--    CONSTRAINT FK_user_read FOREIGN KEY (user_id) REFERENCES users(user_id),
+--    CONSTRAINT FK_message_message_read FOREIGN KEY (message_id) REFERENCES messages(message_id),
+--    UNIQUE (user_id, message_id)
+--)
+
 CREATE TABLE events (
     event_id SERIAL,
     event_name varchar(100) NOT NULL,
