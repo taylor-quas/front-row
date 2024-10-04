@@ -29,7 +29,7 @@
           </button>
         </div>
         <p>
-          Don't have an account yet? 
+          Don't have an account yet?&nbsp;
           <router-link id="router-link" v-bind:to="{ name: 'register' }">Sign up.</router-link>
         </p>
       </form>
@@ -97,7 +97,7 @@ export default {
     flex-direction: column;
     align-items: center;
     z-index: 50;
-    background-color: green;
+    background-color: rgb(22, 22, 22);
   }
 
   #alert {
