@@ -40,4 +40,10 @@ INSERT INTO genres (genre_name) VALUES ('blues'), ('classical'), ('country'), ('
 
 INSERT INTO band_genre (band_id, genre_id) VALUES (1, 6), (2, 6), (2, 10), (3, 5), (3, 10), (3, 13), (4, 3), (4, 5), (4, 10), (5, 3), (6, 3), (6, 13), (7, 5), (7, 13);
 
+INSERT INTO message_user (message_id, user_id, is_read)
+    SELECT messages.message_id, users.user_id, FALSE
+    FROM messages
+    JOIN user_band ON messages.message_sender = user_band.band_id
+    JOIN users ON user_band.user_id = users.user_id;
+
 COMMIT TRANSACTION;

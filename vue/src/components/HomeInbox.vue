@@ -2,7 +2,7 @@
     <div id="inbox">
       <h2>My Messages</h2>
       <div id="message-card" v-for="message in sortedMessages" :key="message.messageId">
-        <MiniMessageComponent :message="message" @markAsRead="handleMarkAsRead"/>
+        <MiniMessageComponent :message="message" :isRead="message.isRead" @markAsRead="handleMarkAsRead"/>
       </div>
     </div>
   </template>
@@ -10,7 +10,6 @@
   <script>
   import MessageService from "../services/MessageService.js";
   import BandService from "../services/BandService.js";
-  import MessageComponent from "../components/MessageComponent.vue";
   import MiniMessageComponent from "../components/MiniMessageComponent.vue";
   
   export default {
@@ -69,12 +68,7 @@
         }
       },
       created() {
-        MessageService.getUserInbox().then(response => {
-              this.messages = response.data 
-          })
-          .catch(error => {
-              console.error(error);
-          });
+        this.fetchInboxMessages();
         BandService.getFollowedBands().then(response => {
               this.followedBands = response.data;
           })
@@ -85,12 +79,26 @@
       },
       methods: {
         handleMarkAsRead(messageId) {
+          MessageService.markAsRead(messageId).then(() => {
             const message = this.messages.find(message => message.message.messageId === messageId);
             if (message) {
-                message.isRead = true;
+            message.isRead = true;
             }
+          })
+          .catch(error => {
+            console.error(error);
+          });
+        },
+
+        fetchInboxMessages() {
+          MessageService.getUserInbox().then(response => {
+              this.messages = response.data;
+          })
+          .catch(error => {
+              console.error(error);
+          });
         }
-    }
+      }
   }
   </script>
   

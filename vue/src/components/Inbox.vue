@@ -22,7 +22,7 @@
       
     </div>
     <div id="message-card" v-for="message in sortedMessages" :key="message.messageId">
-      <MessageComponent :message="message" @markAsRead="handleMarkAsRead"/>
+      <MessageComponent :message="message" :isRead="message.isRead" @markAsRead="handleMarkAsRead"/>
     </div>
   </div>
 </template>
@@ -88,38 +88,57 @@ export default {
       }
     },
     created() {
-      MessageService.getUserInbox().then(response => {
-            this.messages = response.data 
-        })
-        .catch(error => {
-            console.error(error);
-        });
+      this.fetchInboxMessages();
       BandService.getFollowedBands().then(response => {
             this.followedBands = response.data;
         })
         .catch(error => {
             console.error(error);
         });
+      
 
     },
     methods: {
       handleMarkAsRead(messageId) {
         const message = this.messages.find(message => message.message.messageId === messageId);
-        if (message) {
-          message.isRead = true;
-        }
+          if (message) {
+            message.isRead = true;
+            console.log(message);
+          }
+        MessageService.markAsRead(messageId).then(() => {
+          this.fetchInboxMessages();
+          console.log(message);
+        })
+        .catch(error => {
+          console.error(error);
+        });
+
       },
       markAllAsRead() {
         this.messages.forEach(message => {
-          message.isRead = true;
-          const readMessages = JSON.parse(localStorage.getItem('readMessages')) || [];
-          if (!readMessages.includes(message.message.messageId)) {
-            readMessages.push(message.message.messageId);
-          }
-          localStorage.setItem('readMessages', JSON.stringify(readMessages));
+
+          this.handleMarkAsRead(message.message.messageId);
+
+          // message.isRead = true;
+          // const readMessages = JSON.parse(localStorage.getItem('readMessages')) || [];
+          // if (!readMessages.includes(message.message.messageId)) {
+          //   readMessages.push(message.message.messageId);
+          // }
+          // localStorage.setItem('readMessages', JSON.stringify(readMessages));
 
         });
+      },
+
+      fetchInboxMessages() {
+        MessageService.getUserInbox().then(response => {
+          console.log(response.data);
+          this.messages = response.data;
+        })
+        .catch(error => {
+          console.error(error);
+        });
       }
+
     },
     beforeUnmount() {
       this.markAllAsRead();

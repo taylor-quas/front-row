@@ -1,13 +1,13 @@
 BEGIN TRANSACTION;
 
 DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS emails;
 DROP TABLE IF EXISTS bands;
-DROP TABLE IF EXISTS user_band;
 DROP TABLE IF EXISTS images;
+DROP TABLE IF EXISTS user_band;
 DROP TABLE IF EXISTS genres;
 DROP TABLE IF EXISTS band_genre;
 DROP TABLE IF EXISTS messages;
+DROP TABLE IF EXISTS message_user;
 DROP TABLE IF EXISTS events;
 
 CREATE TABLE users (
@@ -17,13 +17,6 @@ CREATE TABLE users (
 	role varchar(50) NOT NULL,
 	CONSTRAINT PK_user PRIMARY KEY (user_id)
 );
-
---CREATE TABLE emails (
---    email_id SERIAL,
---    email varchar(50) NOT NULL UNIQUE,
---    email_user int NOT NULL,
---    CONSTRAINT FK_email_user FOREIGN KEY (email_user) REFERENCES users(user_id)
---);
 
 CREATE TABLE bands (
     band_id SERIAL,
@@ -69,18 +62,17 @@ CREATE TABLE messages (
     message_time_sent timestamp NOT NULL,
     message_time_expiration timestamp NOT NULL,
     message_sender int NOT NULL,
+    CONSTRAINT PK_message PRIMARY KEY (message_id),
     CONSTRAINT FK_message_sender FOREIGN KEY (message_sender) REFERENCES bands(band_id)
 );
 
---CREATE TABLE message_reads (
---    read_id SERIAL,
---    user_id int NOT NULL,
---    message_id int NOT NULL,
---    CONSTRAINT PK_message_reads PRIMARY KEY (read_id),
---    CONSTRAINT FK_user_read FOREIGN KEY (user_id) REFERENCES users(user_id),
---    CONSTRAINT FK_message_message_read FOREIGN KEY (message_id) REFERENCES messages(message_id),
---    UNIQUE (user_id, message_id)
---)
+CREATE TABLE message_user (
+    message_id int NOT NULL,
+    user_id int NOT NULL,
+    is_read boolean DEFAULT FALSE,
+    CONSTRAINT FK_message_message_user FOREIGN KEY (message_id) REFERENCES messages(message_id),
+    CONSTRAINT FK_user_user_message FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
 
 CREATE TABLE events (
     event_id SERIAL,

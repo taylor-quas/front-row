@@ -13,15 +13,17 @@
 </template>
 
 <script>
+import MessageService from "../services/MessageService.js";
+
 export default {
-    data() {
-        return {
-            isRead: false
-        }
-    },
-    created() {
-        this.isRead = this.checkIfRead();
-    },
+    // data() {
+    //     return {
+    //         isRead: false
+    //     }
+    // },
+    // created() {
+    //     this.isRead = this.checkIfRead();
+    // },
     props: {
         message: {
             type: Object,
@@ -30,19 +32,24 @@ export default {
         band: {
             type: Object,
             required: true
+        },
+        isRead: {
+            type: Boolean,
+            required: true
         }
     },
     methods: {
-        checkIfRead() {
-            const readMessages = JSON.parse(localStorage.getItem('readMessages')) || [];
-            return readMessages.includes(this.message.message.messageId);
-        },
+        // checkIfRead() {
+        //     const readMessages = JSON.parse(localStorage.getItem('readMessages')) || [];
+        //     return readMessages.includes(this.message.message.messageId);
+        // },
         markAsRead() {
             if (!this.isRead) {
-                this.isRead = true;
-                const readMessages = JSON.parse(localStorage.getItem('readMessages')) || [];
-                readMessages.push(this.message.message.messageId);
-                localStorage.setItem('readMessages', JSON.stringify(readMessages));
+                // this.isRead = true;
+                // const readMessages = JSON.parse(localStorage.getItem('readMessages')) || [];
+                // readMessages.push(this.message.message.messageId);
+                // localStorage.setItem('readMessages', JSON.stringify(readMessages));
+                this.$emit('markAsRead', this.message.message.messageId);
             }
         }
     }

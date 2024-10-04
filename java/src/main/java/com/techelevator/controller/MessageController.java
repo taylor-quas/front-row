@@ -4,6 +4,7 @@ import com.techelevator.dao.MessageDao;
 import com.techelevator.model.Message;
 import com.techelevator.model.MessageBandDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,4 +23,11 @@ public class MessageController {
     public List<MessageBandDto> getMyMessages(Principal principal) {
         return messageDao.getInboxMessages(principal);
     }
+
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @PutMapping("/inbox/{messageId}/read")
+    public void markMessageAsRead(@PathVariable long messageId, Principal principal) {
+        messageDao.markMessageAsRead(messageId, principal);
+    }
+
 }

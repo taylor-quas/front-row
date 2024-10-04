@@ -59,9 +59,11 @@
         return this.messages.some(message => message.message.messageSender === band.band.bandId);
       },
       checkIfBandHasUnreadMessage(band) {
-        const readMessages = JSON.parse(localStorage.getItem('readMessages')) || [];
+        // const readMessages = JSON.parse(localStorage.getItem('readMessages')) || [];
 
-        return this.messages.some(message => message.message.messageSender === band.band.bandId && !readMessages.includes(message.message.messageId));
+        // return this.messages.some(message => message.message.messageSender === band.band.bandId && !readMessages.includes(message.message.messageId));
+
+        return this.messages.some(message => message.message.messageSender === band.band.bandId && !message.isRead);
 
       }
     }

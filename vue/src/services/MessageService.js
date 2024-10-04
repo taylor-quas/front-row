@@ -5,4 +5,8 @@ export default {
     return axios.get('/inbox');
   },
 
+  markAsRead(messageId) {
+    return axios.put(`/inbox/${messageId}/read`);
+  }
+
 }

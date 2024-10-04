@@ -1,5 +1,6 @@
 package com.techelevator.dao;
 
+import com.techelevator.exception.DaoException;
 import com.techelevator.model.BandGenreDto;
 import com.techelevator.model.Message;
 import com.techelevator.model.MessageBandDto;
@@ -51,8 +52,10 @@ public class JdbcMessageDao implements MessageDao {
     @Override
     public List<MessageBandDto> getInboxMessages(Principal principal) {
         List<MessageBandDto> messages = new ArrayList<>();
-        String sql = "SELECT * FROM messages m " +
+        String sql = "SELECT m.message_id, message_content, message_time_sent, message_time_expiration, message_sender, mu.is_read " +
+                "FROM messages m " +
                 "JOIN user_band ub ON ub.band_id = m.message_sender " +
+                "JOIN message_user mu ON m.message_id = mu.message_id " +
                 "WHERE ub.user_id = ? " +
                 "ORDER BY message_time_sent DESC;";
 
@@ -61,11 +64,10 @@ public class JdbcMessageDao implements MessageDao {
         try {
             SqlRowSet results = template.queryForRowSet(sql, principalId);
             while (results.next()) {
-                messages.add(mapRowToMessageBandDto(results));
-            }
-            for (MessageBandDto message : messages) {
-                long messageSender = message.getMessage().getMessageSender();
-                message.setBandName(getBandNameByMessageSender(messageSender));
+                MessageBandDto messageBandDto = mapRowToMessageBandDto(results);
+                messageBandDto.setBandName(getBandNameByMessageSender(messageBandDto.getMessage().getMessageSender()));
+                messageBandDto.setIsRead(results.getBoolean("is_read"));
+                messages.add(messageBandDto);
             }
 
         } catch (CannotGetJdbcConnectionException e) {
@@ -79,6 +81,46 @@ public class JdbcMessageDao implements MessageDao {
     @Override
     public Message sendMessage(Message message) {
         return null;
+    }
+
+    public void markMessageAsRead(long messageId, Principal principal) {
+        String sql = "UPDATE message_user " +
+                "SET is_read = TRUE " +
+                "WHERE user_id = ? AND message_id = ?";
+
+        long principalId = getUserIdByUsername(principal.getName());
+
+        try {
+            int rowsAffected = template.update(sql, principalId, messageId);
+            if (rowsAffected == 0) {
+                throw new DaoException("No messages affected.");
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("Problem connecting");
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("Data problems");
+        }
+
+    }
+
+    public boolean getIsReadByMessageIdAndUserId(Principal principal, long messageId) {
+        String sql = "SELECT is_read FROM message_user " +
+                "WHERE user_id = ? AND message_id = ?";
+
+        long principalId = getUserIdByUsername(principal.getName());
+
+        boolean isRead = false;
+
+        try {
+            isRead = template.queryForObject(sql, new Object[]{principalId, messageId}, Boolean.class);
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("Problem connecting");
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("Data problems");
+        }
+
+        return isRead;
+
     }
 
     // Private methods
