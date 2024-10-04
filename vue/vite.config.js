@@ -10,5 +10,13 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
-  }
+  },
+  server: {
+    proxy: {
+      '/bands': {
+        target: 'http://localhost:9000',
+        changeOrigin: true,
+      },
+    },
+  },
 })

@@ -1,7 +1,7 @@
 <template>
   <div class="profile">
     <Profile></Profile>
-    <image-upload></image-upload>
+    <image-upload :admin="true"></image-upload>
   </div>
 </template>
 

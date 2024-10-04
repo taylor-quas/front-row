@@ -18,7 +18,7 @@ export default {
   },
 
   create(band) {
-    return axios.post('/bands', band);
+    return axios.post('/create-band', band);
   },
 
   followBand(bandId) {
