@@ -30,4 +30,7 @@ public class ImageController {
     public void uploadImageToGallery(@RequestBody ImageDto url, Principal principal){
         imageDao.uploadImage(url, principal);
     }
+
+
+
 }

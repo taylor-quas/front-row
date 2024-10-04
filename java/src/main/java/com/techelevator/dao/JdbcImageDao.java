@@ -72,8 +72,6 @@ public class JdbcImageDao implements ImageDao{
         long bandId = -1;
 
         try {
-            System.out.println(bandId);
-            System.out.println(bandName);
             bandId = template.queryForObject(sql, new Object[]{bandName}, Long.class);
         } catch (CannotGetJdbcConnectionException e) {
             System.out.println("Problem connecting");
