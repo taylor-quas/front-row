@@ -1,6 +1,7 @@
 <template>
   <div>
-    <button @click="openWidget">Upload Image</button>
+    <button v-if="admin" @click="openWidget">Upload Image</button>
+    <button v-else @click="setUrl">Upload Image</button>
   </div>
 </template>
 
@@ -8,6 +9,17 @@
 import ImageService from '../services/ImageService';
 
 export default {
+  props: {
+    admin: {
+      type: Boolean,
+      required: true
+    }
+  },
+  data() {
+    return {
+      imageUrl: ''
+    }
+  },
   methods: {
     openWidget() {
       const widget = window.cloudinary.createUploadWidget(
@@ -24,7 +36,20 @@ export default {
       );
       widget.open();
     },
-    
+    setUrl() {
+      const widget = window.cloudinary.createUploadWidget(
+        {
+          cloudName: 'dfxvcpj23',
+          uploadPreset: 'system_uploader_1e2ddab171f769b9_c929acf69d8900b2aaba20b2a4ea4d9459'
+        },
+        (error, result) => {
+          if (!error && result && result.event === 'success') {
+            this.imageUrl = result.info.secure_url;
+          }
+        }
+      );
+      widget.open();
+    },
     sendImageToServer(imageUrl) {
       ImageService.uploadImage(imageUrl)
         .then(response => {

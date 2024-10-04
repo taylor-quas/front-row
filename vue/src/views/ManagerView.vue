@@ -4,7 +4,7 @@
     <div id="managed-band">
       <BandComponent v-for="band in managedBands" :key="band.bandId" :band="band" />
     </div>
-</div>
+    </div>
     
 </template>
 
