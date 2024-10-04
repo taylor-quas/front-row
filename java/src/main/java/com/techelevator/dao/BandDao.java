@@ -32,4 +32,6 @@ public interface BandDao {
 
     RoleDto getRoleAndManagedBands(Principal principal);
 
+    void updateUser(Principal principal, String role);
+
 }

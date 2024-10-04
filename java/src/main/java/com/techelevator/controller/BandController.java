@@ -87,4 +87,11 @@ public class BandController {
         return bandDao.getRoleAndManagedBands(principal);
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @PutMapping("/change-role/{role}")
+    public void updateRole(Principal principal, @PathVariable String role) {
+        bandDao.updateUser(principal, role);
+    }
+
 }

@@ -31,8 +31,8 @@
         ></textarea>
     </div>
     <div>
-        <button @click="saveBand" id="create-button">CREATE BAND</button>
-        <button @click="cancel" id="cancel-button">Cancel</button>
+        <button @click="saveBand()" id="create-button">CREATE BAND</button>
+        <button @click="cancel()" id="cancel-button">Cancel</button>
     </div>
     
   </main>
@@ -43,12 +43,19 @@ import BandService from '../services/BandService';
 import ImageUpload from '../components/ImageUpload.vue';
 
 export default {
+    props: {
+        showCreateBand: {
+            type: Boolean,
+            required: true
+        }
+    },
+    methods: {
     saveBand() {
       BandService
         .create(this.band)
         .then(response => {
           if (response.status === 201) {
-            this.$router.push({name: 'HomeView'});
+            this.$emit('band-created');
           }
         })
         .catch(error => {
@@ -56,7 +63,8 @@ export default {
         });
     },
     cancel() {
-      this.$router.push({name: 'HomeView'});
+      this.$emit('close');
+    }
     }
 }
 </script>
