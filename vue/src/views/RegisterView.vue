@@ -42,7 +42,7 @@
           </button>
         </div>
         <p>
-          Already have an account?
+          Already have an account?&nbsp;
           <router-link id="router-link" v-bind:to="{ name: 'login' }"> Log in.</router-link>
         </p>
       </form>
@@ -136,7 +136,7 @@ export default {
 
   #register {
     padding-top: 100px;
-    background-color: green;
+    background-color: rgb(22, 22, 22);
     z-index: 50;
   }
 
