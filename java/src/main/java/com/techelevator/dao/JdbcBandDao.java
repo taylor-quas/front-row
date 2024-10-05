@@ -3,8 +3,8 @@ package com.techelevator.dao;
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.Band;
 import com.techelevator.model.BandGenreDto;
+import com.techelevator.model.Genre;
 import com.techelevator.model.RoleDto;
-import com.techelevator.model.User;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -15,8 +15,6 @@ import javax.sql.DataSource;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
 
 @Component
 public class JdbcBandDao implements BandDao {
@@ -128,7 +126,6 @@ public class JdbcBandDao implements BandDao {
         return bands;
     }
 
-    // TODO
     @Override
     public void updateBand(Band updatedBand) {
 
@@ -150,26 +147,15 @@ public class JdbcBandDao implements BandDao {
         }
 
     }
-
+//TODO
     @Override
-    public void createBand(Band newBand, Principal principal) {
-
-        String sql = "INSERT INTO bands (band_name,band_description," +
-                "band_manager_id,band_hero_image) VALUES (?,?,?,?);";
+    public void createBand(BandGenreDto newBand, Principal principal) {
 
         long principalId = getUserIdByUsername(principal.getName());
 
-        try {
-            template.update(sql,
-                    newBand.getBandName(),
-                    newBand.getBandDescription(),
-                    principalId,
-                    newBand.getBandHeroImage());
-        } catch (CannotGetJdbcConnectionException e) {
-            System.out.println("Problem connecting");
-        } catch (DataIntegrityViolationException e) {
-            System.out.println("Data problems 1" + e.getMessage());
-        }
+        long newBandId = addBand(newBand, principalId);
+        linkGenres(newBand.getGenreNames(), newBandId);
+
     }
 
     @Override
@@ -419,6 +405,67 @@ public class JdbcBandDao implements BandDao {
         }
 
         return bands;
+    }
+
+    private void linkGenres(List<String> genreNames, long newBandId) {
+        String sql = "INSERT INTO band_genre (band_id, genre_id)\n" +
+                "\tVALUES (?, ?);";
+
+        try {
+            for (String genre : genreNames) {
+                long genreId = getGenreIdByName(genre);
+                template.update(sql, newBandId, genreId);
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("Problem connecting");
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("Data problems" + e.getMessage());
+        }
+    }
+
+    private long getGenreIdByName(String genreName) {
+
+        long genreId = -1;
+        String sql = "SELECT genre_id FROM genres WHERE genre_name = ?;";
+
+        try {
+            SqlRowSet results = template.queryForRowSet(sql, genreName);
+            if (results.next()) {
+                genreId = results.getLong("genre_id");
+            } else {
+                throw new DaoException("Could not find genre.");
+            }
+
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("Problem connecting");
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("Data problems");
+        }
+
+
+        return genreId;
+    }
+
+    private long addBand(BandGenreDto newBand, long managerId) {
+        long newBandId = -1;
+
+        String sql = "INSERT INTO bands (band_name,band_description," +
+                "band_manager_id,band_hero_image) VALUES (?,?,?,?) " +
+                "RETURNING band_id;";
+
+        try {
+            newBandId = template.update(sql,
+                    newBand.getBand().getBandName(),
+                    newBand.getBand().getBandDescription(),
+                    managerId,
+                    newBand.getBand().getBandHeroImage());
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("Problem connecting");
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("Data problems" + e.getMessage());
+        }
+
+        return newBandId;
     }
 
 }

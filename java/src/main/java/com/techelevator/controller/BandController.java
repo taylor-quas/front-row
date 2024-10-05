@@ -52,7 +52,7 @@ public class BandController {
     @PreAuthorize("isAuthenticated()")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/create-band")
-    public void createBand(@RequestBody @Valid Band band, Principal principal) {
+    public void createBand(@RequestBody @Valid BandGenreDto band, Principal principal) {
         bandDao.createBand(band, principal);
     }
 
