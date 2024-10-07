@@ -71,9 +71,9 @@ export default {
     },
     methods: {
         createBand() {
-            this.debugger();
             BandService.create(this.band).then(response => {
-            if (response.status === 201) { 
+            if (response.status === 201) {
+                BandService.updateRole('USER_BAND'); 
                 this.$emit('band-created');
                 this.$router.push('/' + this.band.band.bandName);
             }
@@ -88,9 +88,6 @@ export default {
         cancel() {
         this.$emit('close');
         },
-        debugger() {
-            console.log(this.band);
-        },
         mounted() {
             this.debugger();
         }
@@ -104,7 +101,109 @@ export default {
 }
 </script>
 
+
 <style scoped>
+#title {
+    text-align: center;
+    margin-top: 10vh;
+    background-color: rgba(240, 34, 27, 0.925);
+    color: white; /* Better contrast for the title */
+    padding: 1rem;
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: #f9f9f9; /* Light background */
+}
+
+.header {
+    flex-shrink: 0;
+    padding: 1rem;
+}
+
+.content {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 1rem;
+    background-color: #fff; /* Clean white background */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.input {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem; /* Spacing between inputs */
+}
+
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc; /* Light border */
+    border-radius: 4px; /* Rounded corners */
+    background-color: #f4f4f4; /* Light grey background for inputs */
+    transition: border-color 0.3s; /* Smooth transition */
+    font-size: 1rem; /* Standard font size */
+}
+
+input:focus, textarea:focus {
+    border-color: #555; /* Darker border on focus */
+    outline: none; /* Remove default outline */
+}
+
+#genre-heading {
+    text-align: center;
+    font-weight: bold;
+    margin: 1rem 0; /* Space above and below */
+}
+
+.genre-list {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center; /* Center buttons */
+    margin-top: 1rem; /* Space above buttons */
+}
+
+button {
+    padding: 10px 20px; /* Consistent padding */
+    margin: 0 5px; /* Spacing between buttons */
+    border: none; /* No border */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer on hover */
+    font-size: 1rem; /* Standard font size */
+    transition: background-color 0.3s, transform 0.2s; /* Smooth transition */
+}
+
+#create-button {
+    background-color: #333; /* Dark background */
+    color: white; /* White text */
+}
+
+#create-button:hover {
+    background-color: #555; /* Lighter shade on hover */
+    transform: translateY(-1px); /* Lift effect on hover */
+}
+
+#cancel-button {
+    background-color: #ccc; /* Light grey */
+    color: #333; /* Dark text */
+}
+
+#cancel-button:hover {
+    background-color: #aaa; /* Darker grey on hover */
+    transform: translateY(-1px); /* Lift effect on hover */
+}
+</style>
+
+<!-- <style scoped>
 #title {
     text-align: center;
     position: relative;
@@ -161,4 +260,4 @@ button {
 .text-field {
   width: 50px;
 }
-</style>
+</style> -->

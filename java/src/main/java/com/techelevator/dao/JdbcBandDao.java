@@ -127,14 +127,18 @@ public class JdbcBandDao implements BandDao {
     }
 
     @Override
-    public void updateBand(Band updatedBand) {
+    public void updateBand(BandGenreDto updatedBand) {
 
         String sql = "UPDATE bands " +
                 "SET band_name = ?, band_description = ?, band_hero_image = ?\n" +
                 "\tWHERE band_id = ?;";
 
         try {
-            int rowsAffected = template.update(sql, updatedBand.getBandName(), updatedBand.getBandDescription(), updatedBand.getBandHeroImage(), updatedBand.getBandId());
+            int rowsAffected = template.update(sql,
+                    updatedBand.getBand().getBandName(),
+                    updatedBand.getBand().getBandDescription(),
+                    updatedBand.getBand().getBandHeroImage(),
+                    updatedBand.getBand().getBandId());
             if (rowsAffected == 0) {
                 throw new DaoException("No bands affected. Expected at least one.");
 
@@ -197,6 +201,12 @@ public class JdbcBandDao implements BandDao {
         String sql = "INSERT INTO user_band (user_id, band_id) " +
                 "VALUES (?,?);";
 
+        String sqlMessages = "INSERT INTO message_user (message_id, user_id, is_read) " +
+                "SELECT m.message_id, ?, FALSE " +
+                "FROM messages m " +
+                "LEFT JOIN message_user mu ON m.message_id = mu.message_id AND mu.user_id = ? " +
+                "WHERE m.message_sender = ? AND mu.message_id IS NULL;";
+
         long principalId = getUserIdByUsername(principal.getName());
 
         try {
@@ -205,8 +215,8 @@ public class JdbcBandDao implements BandDao {
                 return;
             } else {
                 template.update(sql, principalId, bandId);
+                template.update(sqlMessages, principalId, principalId, bandId);
             }
-
 
         } catch (CannotGetJdbcConnectionException e) {
             System.out.println("Problem connecting");

@@ -26,29 +26,6 @@ public class JdbcMessageDao implements MessageDao {
         template = new JdbcTemplate(ds);
     }
 
-//    @Override
-//    public List<Message> getInboxMessages(Principal principal) {
-//        List<Message> messages = new ArrayList<>();
-//        String sql = "SELECT * FROM messages m " +
-//                "JOIN user_band ub ON ub.band_id = m.message_sender " +
-//                "WHERE ub.user_id = ? " +
-//                "ORDER BY message_time_sent DESC;";
-//
-//        long principalId = getUserIdByUsername(principal.getName());
-//
-//        try {
-//            SqlRowSet results = template.queryForRowSet(sql, principalId);
-//            while (results.next()) {
-//                messages.add(mapRowToMessage(results));
-//            }
-//        } catch (CannotGetJdbcConnectionException e) {
-//            System.out.println("Problem connecting");
-//        } catch (DataIntegrityViolationException e) {
-//            System.out.println("Data problems");
-//        }
-//        return messages;
-//    }
-
     @Override
     public List<MessageBandDto> getInboxMessages(Principal principal) {
         List<MessageBandDto> messages = new ArrayList<>();

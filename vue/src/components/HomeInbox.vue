@@ -77,6 +77,11 @@
           });
   
       },
+      watch: {
+        followedBands() {
+          this.fetchInboxMessages();
+        }
+      },
       methods: {
         handleMarkAsRead(messageId) {
           MessageService.markAsRead(messageId).then(() => {

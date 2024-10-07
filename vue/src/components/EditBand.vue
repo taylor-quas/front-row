@@ -4,7 +4,7 @@
         <h2>Edit Band</h2>
         <form @submit.prevent="updateItem">
             <input type="text" :placeholder="band.band.bandName" v-model="band.band.bandName" />
-            <input type="text-area" :placeholder="band.band.bandDescription" v-model="band.band.bandDescription" />
+            <textarea type="text" :placeholder="band.band.bandDescription" v-model="band.band.bandDescription"></textarea>
             Image: <img :src="band.band.bandHeroImage" alt="">
             <image-upload-vue @update:modelValue="setImage"></image-upload-vue>
             

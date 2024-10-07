@@ -20,5 +20,8 @@ export default {
 <style>
   .profile {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: grid;
+    grid-template-columns: 
+      1fr;
   }
 </style>
