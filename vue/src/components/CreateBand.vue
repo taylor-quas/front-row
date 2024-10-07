@@ -9,6 +9,7 @@
         <div id="cover-image" >
             <ImageUpload :admin="false" v-model="band.band.bandHeroImage"></ImageUpload>
         </div>
+        <!-- :imageUrl="band.band.bandHeroImage" -->
         <div class="input">
             <input 
             v-model="band.band.bandName"
@@ -43,6 +44,7 @@
 import BandService from '../services/BandService';
 import ImageUpload from '../components/ImageUpload.vue';
 import GenreSearch from './GenreSearch.vue';
+import { watch } from 'vue';
 
 export default {
     data() {
@@ -59,10 +61,9 @@ export default {
         }
     },
     components: {
-        ImageUpload,
-        GenreSearch,
-        BandService
-    },
+            ImageUpload,
+            GenreSearch
+        },
     props: {
         showCreateBand: {
             type: Boolean,
@@ -81,6 +82,11 @@ export default {
         .catch(error => {
         console.error(error);
         });
+    },
+    watch: {
+        'band.band.bandHeroImage'(newValue) {
+            console.log("Band Hero Image updated: ", newValue);
+        }
     },
     cancel() {
       this.$emit('close');

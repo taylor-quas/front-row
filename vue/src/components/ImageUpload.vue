@@ -49,11 +49,11 @@ export default {
         (error, result) => {
           if (!error && result && result.event === 'success') {
             this.imageUrl = result.info.secure_url;
+            this.$emit('update:modelValue', this.imageUrl);
           }
         }
       );
       widget.open();
-      this.$emit('update:modelValue', this.imageUrl);
     },
     sendImageToServer(imageUrl) {
       ImageService.uploadImage(imageUrl)
