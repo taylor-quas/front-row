@@ -125,7 +125,7 @@ public class JdbcBandDao implements BandDao {
 
         return bands;
     }
-
+// TODO
     @Override
     public void updateBand(BandGenreDto updatedBand) {
 
@@ -141,8 +141,9 @@ public class JdbcBandDao implements BandDao {
                     updatedBand.getBand().getBandId());
             if (rowsAffected == 0) {
                 throw new DaoException("No bands affected. Expected at least one.");
-
             }
+            unlinkGenres(updatedBand.getBand().getBandId());
+            linkGenres(updatedBand.getGenreNames(), updatedBand.getBand().getBandId());
 
         } catch (CannotGetJdbcConnectionException e) {
             System.out.println("Problem connecting");
@@ -151,7 +152,7 @@ public class JdbcBandDao implements BandDao {
         }
 
     }
-//TODO
+
     @Override
     public void createBand(BandGenreDto newBand, Principal principal) {
 
@@ -441,15 +442,28 @@ public class JdbcBandDao implements BandDao {
         return bands;
     }
 
-    private void linkGenres(List<String> genreNames, long newBandId) {
+    private void linkGenres(List<String> genreNames, long bandId) {
         String sql = "INSERT INTO band_genre (band_id, genre_id)\n" +
                 "\tVALUES (?, ?);";
 
         try {
             for (String genre : genreNames) {
                 long genreId = getGenreIdByName(genre);
-                template.update(sql, newBandId, genreId);
+                template.update(sql, bandId, genreId);
             }
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("Problem connecting");
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("Data problems" + e.getMessage());
+        }
+    }
+
+    private void unlinkGenres(long bandId) {
+        String sql = "DELETE FROM band_genre\n" +
+                "\tWHERE band_id = ?;";
+
+        try {
+            template.update(sql, bandId);
         } catch (CannotGetJdbcConnectionException e) {
             System.out.println("Problem connecting");
         } catch (DataIntegrityViolationException e) {
