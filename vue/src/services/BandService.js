@@ -42,7 +42,7 @@ export default {
   },
 
   getManagedBands() {
-    return axios.get('/user-role');
+    return axios.get('/managed-bands');
   }
 
 }
