@@ -46,6 +46,7 @@ export default {
     display: grid;
     grid-template-areas: 
       "filter-genre search-results";
+    grid-template-columns: 1fr 4fr;
   }
 
   #filter-genre {
