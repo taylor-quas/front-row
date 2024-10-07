@@ -75,7 +75,7 @@ export default {
             BandService.create(this.band).then(response => {
             if (response.status === 201) { 
                 this.$emit('band-created');
-                this.$router.push('/:' + this.band.band.bandName);
+                this.$router.push('/' + this.band.band.bandName);
             }
             })
             .catch(error => {
