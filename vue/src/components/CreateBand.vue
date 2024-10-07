@@ -7,28 +7,39 @@
     </header>
     <div class="content">
         <div id="cover-image" >
-            <ImageUpload :admin="false" v-model="band.band.bandHeroImage"></ImageUpload>
+            <ImageUpload 
+            class="required" 
+            :admin="false" 
+            v-model="band.band.bandHeroImage" 
+            required
+            ></ImageUpload>
         </div>
         <!-- :imageUrl="band.band.bandHeroImage" -->
         <div class="input">
             <input 
             v-model="band.band.bandName"
-            class="text-field"
+            class="required"
             type="text"
             placeholder="Band Name"
+            required
             >
         </div>
         <div class="input">
             <textarea
             v-model="band.band.bandDescription"
-            class="text-field"
+            class="required"
             placeholder="Band Description"
+            required
             ></textarea>
         </div>
         <div>
             <h3 id="genre-heading">Add genres</h3>
             <div class="genre-list"> 
-                <GenreSearch @update:selectedGenres="updateSelectedGenres"/>
+                <GenreSearch 
+                class="required" 
+                @update:selectedGenres="updateSelectedGenres"
+                required
+                />
             </div>
         </div>
         <div>
@@ -124,7 +135,9 @@ export default {
     height: 100vh;
     display: flex;
     flex-direction: column;
-    background-color: #f0f0f0; /* Light grey background for contrast */
+    background-color: #f9f9f9; /* Light background */
+    justify-content: center;
+    
 }
 
 .header {
@@ -136,9 +149,16 @@ export default {
     flex-grow: 1;
     overflow-y: auto;
     padding: 1rem;
-    background-color: #fff; /* White background for content area */
-    border-radius: 8px; /* Slightly round the corners */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
+    background-color: #fff; /* Clean white background */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    
+}
+
+.input {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem; /* Spacing between inputs */
 }
 
 input, textarea {

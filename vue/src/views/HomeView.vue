@@ -1,30 +1,29 @@
 <template>
   <div class="home">
-      <div id="followed-bands">
-        <followed-bands-vue></followed-bands-vue>
-      </div>
-      <div id="manager-view" v-if="isManager">
-        <ManagerView></ManagerView>
-      </div>    
       
-      <HomeInbox id="inbox" @click="inboxView"></HomeInbox>
-      <followed-bands-vue id="followed-bands"></followed-bands-vue>
-      <button v-if="isButtonVisible" id="create-button" @click="showCreateBand = true, hideButton()">Manage a Band!</button>
-    <div v-if="showCreateBand" id="modal-overlay">
+    <Outbox id="outbox" v-if="isManager"></Outbox>
+    <ManagedBands id="managed-bands" v-if="isManager"></ManagedBands>
+
+    <HomeInbox id="inbox" @click="inboxView"></HomeInbox>
+    <FollowedBands id="followed-bands"></FollowedBands>
+
+    <!-- <button v-if="isButtonVisible" id="create-button" @click="showCreateBand = true, hideButton()">Manage a Band!</button> -->
+
+    <!-- <div v-if="showCreateBand" id="modal-overlay">
       <div id="modal-content">
         <CreateBand id="create-band" @close="closeModal" @band-created="bandCreated"/>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
 import { useRouter } from 'vue-router';
-import FollowedBandsVue from '../components/FollowedBands.vue';
-import ManagerView from './ManagerView.vue';
+import FollowedBands from '../components/FollowedBands.vue';
 import HomeInbox from '../components/HomeInbox.vue';
-import CreateBand from '../components/CreateBand.vue';
 import BandService from '../services/BandService';
+import Outbox from '../components/Outbox.vue';
+import ManagedBands from '../components/ManagedBands.vue';
 
 export default {
   data() {
@@ -39,10 +38,10 @@ export default {
     };
   },
   components: {
-    FollowedBandsVue,
-    ManagerView,
+    FollowedBands,
     HomeInbox,
-    CreateBand,
+    Outbox,
+    ManagedBands
   },
   created() {
     this.checkIfManager();
@@ -87,7 +86,7 @@ export default {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-areas: 
-      "manager-view manager-view manager-view"
+      "outbox managed-bands managed-bands"
       "inbox followed-bands followed-bands";
     background-color: rgb(22, 22, 22);
   }
@@ -117,23 +116,18 @@ export default {
     display: flex;
   }
 
-  #modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(5px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10;
+  #outbox {
+    grid-area: outbox;
+  }
 
+  #managed-bands {
+    grid-area: managed-bands;
+    margin: 5px;
+    border-radius: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
   }
-  #modal-content {
-    background-color:rgba(240, 34, 27, 0.925);
-    padding: 20px;
-    border-radius: 5px;
-  }
+
 </style>

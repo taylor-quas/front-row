@@ -1,16 +1,23 @@
 <template>
     <div id="bands">
       <div>
-        <h2>My Managed Bands</h2>
+        <h2>Bands I Manage</h2>
         
           <div id="managed-bands">
-            <div id="add-band" @click="searchView">
+            <div id="add-band" @click="showCreateBand = true">
               <img id="plus-sign" src="../assets/plus-sign-icon-2048x2048-mp0pz4g8.png" alt="Add Band" />
             </div>
-            <BandComponent v-for="band in managedBands" :key="band.bandId" :band="band" :hasMessage="checkIfBandHasUnreadMessage(band)"/>
+            <BandComponent v-for="band in managedBands" :key="band.bandId" :band="band"/>
           </div>
 
       </div>
+
+      <div v-if="showCreateBand" id="modal-overlay">
+        <div id="modal-content">
+          <CreateBand id="create-band" @close="closeModal" @band-created="bandCreated" />
+        </div>
+      </div>
+
     </div>
   </template>
   
@@ -18,10 +25,12 @@
   import BandService from '../services/BandService';
   import MessageService from '../services/MessageService';
   import BandComponent from './BandComponent.vue';
+  import CreateBand from './CreateBand.vue';
 
   export default {
     components: {
       BandComponent,
+      CreateBand
     },
     data() {
       return {
@@ -66,17 +75,13 @@
             console.error(error);
         });
       },
-      checkIfBandHasMessage(band) {
-        return this.messages.some(message => message.message.messageSender === band.band.bandId);
+      closeModal() {
+        this.showCreateBand = false;
       },
-      checkIfBandHasUnreadMessage(band) {
-        // const readMessages = JSON.parse(localStorage.getItem('readMessages')) || [];
-
-        // return this.messages.some(message => message.message.messageSender === band.band.bandId && !readMessages.includes(message.message.messageId));
-
-        return this.messages.some(message => message.message.messageSender === band.band.bandId && !message.isRead);
-
-      }
+      bandCreated() {
+        this.showCreateBand = false;
+        this.fetchManagedBands();
+      },
     }
 
   };
@@ -84,11 +89,10 @@
   
   <style>
   
-  #manaaged-bands {
+  #managed-bands {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     grid-gap: 0.5em;
-    align-items: center;
   
   }
 
@@ -112,6 +116,29 @@
   #plus-sign {
     width: 50%;
     height: 50%;
+  }
+
+  #modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+  }
+
+  #modal-content {
+    background-color:rgba(240, 34, 27, 0.925);
+    padding: 20px;
+    border-radius: 5px;
+    width: 50%;
+    height: 70%;
+    overflow: scroll;
   }
     
   </style>

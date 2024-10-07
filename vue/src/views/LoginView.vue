@@ -15,7 +15,7 @@
           <label for="username">
             <p>Username</p>
           </label>
-          <input type="text" id="username" v-model="user.username" required autofocus />
+          <input type="username" v-model="user.username" required autofocus/>
         </div>
         <div class="form-input-group">
           <label for="password">
@@ -92,7 +92,7 @@ export default {
   }
 
   #login {
-
+    margin-top: 12vh;
     display: flex;
     flex-direction: column;
     align-items: center;
