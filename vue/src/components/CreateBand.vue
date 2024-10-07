@@ -28,7 +28,7 @@
         <div>
             <h3 id="genre-heading">Add genres</h3>
             <div class="genre-list"> 
-                <GenreSearch v-model="band.genreNames.selectedGenres"/>
+                <GenreSearch @update:selectedGenres="updateSelectedGenres"/>
             </div>
         </div>
         <div>
@@ -54,7 +54,6 @@ export default {
                     bandName: '',
                     bandDescription: '',
                     bandHeroImage: '',  
-                    selectedGenres: [],
                 },
                 genreNames: []
             }
@@ -71,33 +70,36 @@ export default {
         }
     },
     methods: {
-    createBand() {
-        this.debugger();
-        BandService.create(this.band).then(response => {
-        if (response.status === 201) { 
-            this.$emit('band-created');
-            this.$router.push('/:' + this.band.band.bandName);
+        createBand() {
+            this.debugger();
+            BandService.create(this.band).then(response => {
+            if (response.status === 201) { 
+                this.$emit('band-created');
+                this.$router.push('/:' + this.band.band.bandName);
+            }
+            })
+            .catch(error => {
+            console.error(error);
+            });
+        },
+        updateSelectedGenres(genres) {
+            this.band.genreNames = genres;
+        },
+        cancel() {
+        this.$emit('close');
+        },
+        debugger() {
+            console.log(this.band);
+        },
+        mounted() {
+            this.debugger();
         }
-        })
-        .catch(error => {
-        console.error(error);
-        });
     },
     watch: {
         'band.band.bandHeroImage'(newValue) {
             console.log("Band Hero Image updated: ", newValue);
         }
     },
-    cancel() {
-      this.$emit('close');
-    },
-    debugger() {
-        console.log(this.band);
-    },
-    mounted() {
-        this.debugger();
-    }
-}
 
 }
 </script>
