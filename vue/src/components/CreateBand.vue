@@ -72,11 +72,11 @@ export default {
     methods: {
         createBand() {
             BandService.create(this.band).then(response => {
-            if (response.status === 201) { 
+            if (response.status === 201) {
+                BandService.updateRole('USER_BAND'); 
                 this.$emit('band-created');
                 this.$router.push('/' + this.band.band.bandName);
             }
-            BandService.updateRole('USER_BAND');
             })
             .catch(error => {
             console.error(error);
