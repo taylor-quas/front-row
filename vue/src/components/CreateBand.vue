@@ -201,6 +201,66 @@ button {
     background-color: #aaa; /* Darker grey on hover */
     transform: translateY(-1px); /* Lift effect on hover */
 }
+
+
+
+.genre-search {
+    font-family: Montserrat, sans-serif;
+    color: #1a1a1a; /* Darker grey for text */
+    background-color: #e6e6e6; /* Very light grey background */
+    padding: 25px;
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    max-width: 420px; /* Ensure it fits well */
+    margin: 0 auto; /* Center the component */
+}
+
+.genres label {
+    font-size: 18px; /* Maintain readability */
+    color: #1a1a1a; /* Darker grey for "Select All" */
+    font-weight: 600; /* Bold for emphasis */
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px; /* Space below label */
+}
+
+.genre-list {
+    border-top: 1px solid #b3b3b3; /* Medium grey border */
+    padding-top: 15px; /* Space above genres */
+    margin-top: 15px; /* Space above the genre list */
+}
+
+.genre-list label {
+    display: flex;
+    align-items: center;
+    font-size: 16px; /* Consistent font size */
+    color: #333; /* Slightly darker text for better contrast */
+    padding: 10px 0; /* Increased padding for better touch targets */
+    border-bottom: 1px solid #ccc; /* Light grey separator */
+}
+
+.genre-list label:last-of-type {
+    border-bottom: none; /* Remove border for the last item */
+}
+
+input[type="checkbox"] {
+    accent-color: #666; /* Medium grey for checkbox */
+    margin-right: 12px; /* Space between checkbox and label */
+    transform: scale(1.2); /* Slightly larger checkbox for easier clicking */
+}
+
+input[type="checkbox"]:hover {
+    accent-color: #333; /* Darker grey on hover */
+    cursor: pointer; /* Pointer on hover */
+}
+
+/* Additional styling for responsive design */
+@media (max-width: 480px) {
+    .genre-search {
+        padding: 15px; /* Reduced padding for smaller screens */
+        max-width: 90%; /* Responsive width */
+    }
+}
 </style>
 
 <!-- <style scoped>
