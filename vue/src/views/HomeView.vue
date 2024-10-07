@@ -6,6 +6,7 @@
       <div id="manager-view" v-if="isManager">
         <ManagerView></ManagerView>
       </div>    
+      
       <HomeInbox id="inbox" @click="inboxView"></HomeInbox>
       <followed-bands-vue id="followed-bands"></followed-bands-vue>
       <button v-if="isButtonVisible" id="create-button" @click="showCreateBand = true, hideButton()">Manage a Band!</button>
@@ -75,6 +76,7 @@ export default {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-areas: 
+      "manager-view manager-view manager-view"
       "inbox followed-bands followed-bands";
     background-color: rgb(22, 22, 22);
   }
@@ -101,7 +103,9 @@ export default {
     grid-area: manager-view;
     margin: 5px;
     border-radius: 20px;
+    display: flex;
   }
+
   #modal-overlay {
     position: fixed;
     top: 0;
