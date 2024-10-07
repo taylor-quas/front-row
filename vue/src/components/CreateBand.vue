@@ -71,9 +71,9 @@ export default {
     },
     methods: {
         createBand() {
-            this.debugger();
             BandService.create(this.band).then(response => {
-            if (response.status === 201) { 
+            if (response.status === 201) {
+                BandService.updateRole('USER_BAND'); 
                 this.$emit('band-created');
                 this.$router.push('/' + this.band.band.bandName);
             }
@@ -87,9 +87,6 @@ export default {
         },
         cancel() {
         this.$emit('close');
-        },
-        debugger() {
-            console.log(this.band);
         },
         mounted() {
             this.debugger();

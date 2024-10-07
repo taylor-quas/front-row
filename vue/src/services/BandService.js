@@ -31,6 +31,10 @@ export default {
 
   getIsFollowing(bandId) {
     return axios.get(`/is-following/${bandId}`);
+  },
+
+  updateRole(role) {
+    return axios.put(`/change-role/${role}`);
   }
 
 }
