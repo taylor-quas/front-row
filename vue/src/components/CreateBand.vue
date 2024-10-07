@@ -7,28 +7,28 @@
     </header>
     <div class="content">
         <div id="cover-image" >
-        <ImageUpload :admin="false" v-model="band.bandHeroImage"></ImageUpload>
+            <ImageUpload :admin="false" v-model="band.bandHeroImage"></ImageUpload>
         </div>
-        <div>
+        <div class="input">
             <input 
             v-model="band.bandName"
-            id="band-name-input"
+            class="text-field"
             type="text"
             placeholder="Band Name"
             >
         </div>
+        <div class="input">
+            <textarea
+            v-model="band.bandDescription"
+            class="text-field"
+            placeholder="Band Description"
+            ></textarea>
+        </div>
         <div>
             <h3 id="genre-heading">Add genres</h3>
             <div class="genre-list"> 
-                    <GenreSearch />
+                    <GenreSearch v-model="selectedGenres"/>
             </div>
-        </div>
-        <div>
-            <textarea
-            v-model="band.bandDescription"
-            id="band-description-input"
-            placeholder="Band Description"
-            ></textarea>
         </div>
         <div>
             <button @click="createBand()" id="create-button">CREATE BAND</button>
@@ -131,11 +131,25 @@ input, textarea {
     margin-bottom: 1rem;
 }
 
+#genre-heading {
+    text-align: center;
+}
+
 .genre-list {
     margin-bottom: 1rem;
 }
 
 button {
     margin-right: 1rem;
+}
+
+.input {
+  display: flex;
+  flex-direction: column; 
+  align-items: flex-start; 
+}
+
+.text-field {
+  width: 50px;
 }
 </style>

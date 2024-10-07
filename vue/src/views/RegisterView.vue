@@ -135,7 +135,6 @@ export default {
 
 
   #register {
-    padding-top: 100px;
     background-color: rgb(22, 22, 22);
     z-index: 50;
   }
@@ -153,11 +152,10 @@ export default {
   }
 
   #register {
-    padding-top: 12vh;
+    padding-bottom: 12vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    
   }
 
   #router-link {
@@ -194,10 +192,6 @@ export default {
     margin: 20px;
 
     width: 100%;
-  }
-
-  button:hover {
-    background-color: #adadad;
   }
 
   .register-alert {

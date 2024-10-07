@@ -1,7 +1,7 @@
 <template>
   <div id="profile">
     <h2 id="header">Your Profile</h2>
-
+    
     <div id="profile-section">
       <h4>{{ user.username }}</h4>
     </div>
@@ -86,8 +86,8 @@ export default {
 
 <style>
     #profile {
-      margin-top: 6vh;
-      color: white;
+        margin-top: 6vh;
+    color: white;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       display: grid;
       grid-template-areas: 
