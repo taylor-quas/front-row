@@ -18,7 +18,7 @@ public interface BandDao {
     // multiple bands with the same name???
     List<BandGenreDto> getAllBands();
 
-    void updateBand(Band updatedBand);
+    void updateBand(BandGenreDto updatedBand);
 
     void createBand(BandGenreDto newBand, Principal principal);
 
