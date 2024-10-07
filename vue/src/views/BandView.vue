@@ -1,7 +1,6 @@
 <template>
   <div class="band-page">  
     <band-page-vue></band-page-vue>
-    
   </div>
 </template>
 
@@ -17,7 +16,7 @@ export default {
   },
 
   components: {
-    BandPageVue
+    BandPageVue,
   }
 };
 </script>

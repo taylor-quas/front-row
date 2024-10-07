@@ -17,7 +17,7 @@
             v-model="selectedGenres" 
             :value="genre" 
             @change="updateSelectedGenres" 
-          /> {{ genre }}
+          /> <p style="text-transform: capitalize; color: black;">{{ genre }}</p>
         </label>
       </div>
     </div>

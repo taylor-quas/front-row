@@ -74,7 +74,7 @@ export default {
 }
 
 .unread {
-    border-top: 3px solid gold;
+    border-top: 3px solid #ffd700;
     border-bottom: 3px solid gold;
 }
 

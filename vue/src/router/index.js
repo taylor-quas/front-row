@@ -12,6 +12,7 @@ import InboxView from '../views/InboxView.vue';
 import BandView from '../views/BandView.vue';
 import AnonymousSearchView from '../views/AnonymousSearchView.vue';
 import ProfileView from '../views/ProfileView.vue';
+import EditBand from '../components/EditBand.vue';
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -58,6 +59,14 @@ const routes = [
     path: '/:bandName',
     name: 'band',
     component: BandView,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/:bandName/edit',
+    name: 'edit',
+    component: EditBand,
     meta: {
       requiresAuth: true
     }
