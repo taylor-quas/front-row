@@ -1,36 +1,39 @@
 <template>
-  <main>
-    <div>
-        <h1 id="title">Create a Band</h1>
-    </div>
-    <div id="cover-image" >
-       <ImageUpload :admin="false" v-model="band.bandHeroImage"></ImageUpload>
-    </div>
-    <div>
-        <input 
-        v-model="band.bandName"
-        id="band-name-input"
-        type="text"
-        placeholder="Band Name"
-        >
-    </div>
-    <div>
-        <h2>Add Genres</h2>
-        <div v-for="genre in genres" :key="genre">
-            <span>{{ genre }}</span>
-            
+  <main class="main-container">
+    <header class="header">
+        <div>
+            <h1 id="title">Create a Band</h1>
         </div>
-    </div>
-    <div>
-        <textarea
-        v-model="band.bandDescription"
-        id="band-description-input"
-        placeholder="Band Description"
-        ></textarea>
-    </div>
-    <div>
-        <button @click="createBand()" id="create-button">CREATE BAND</button>
-        <button @click="cancel()" id="cancel-button">Cancel</button>
+    </header>
+    <div class="content">
+        <div id="cover-image" >
+        <ImageUpload :admin="false" v-model="band.bandHeroImage"></ImageUpload>
+        </div>
+        <div>
+            <input 
+            v-model="band.bandName"
+            id="band-name-input"
+            type="text"
+            placeholder="Band Name"
+            >
+        </div>
+        <div>
+            <h3 id="genre-heading">Add genres</h3>
+            <div class="genre-list"> 
+                    <GenreSearch />
+            </div>
+        </div>
+        <div>
+            <textarea
+            v-model="band.bandDescription"
+            id="band-description-input"
+            placeholder="Band Description"
+            ></textarea>
+        </div>
+        <div>
+            <button @click="createBand()" id="create-button">CREATE BAND</button>
+            <button @click="cancel()" id="cancel-button">Cancel</button>
+        </div>
     </div>
     
   </main>
@@ -39,6 +42,7 @@
 <script>
 import BandService from '../services/BandService';
 import ImageUpload from '../components/ImageUpload.vue';
+import GenreSearch from './GenreSearch.vue';
 
 export default {
     data() {
@@ -47,11 +51,14 @@ export default {
                 bandName: '',
                 bandDescription: '',
                 bandHeroImage: '', 
+                genres: [], 
+                selectedGenres: [],
             },
         }
     },
     components: {
-        ImageUpload
+        ImageUpload,
+        GenreSearch
     },
     props: {
         showCreateBand: {
@@ -88,9 +95,47 @@ export default {
 }
 </script>
 
-<style>
-    #title {
-        text-align: center;
-        margin-top: 10vh;
-    }
+<style scoped>
+#title {
+    text-align: center;
+    position: relative;
+    margin-top: 10vh;
+    background-color:rgba(240, 34, 27, 0.925);
+}
+
+.genre-list {
+    text-align: center;
+    position: relative;
+    margin-top: 10vh;
+}
+
+.main-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    flex-shrink: 0;
+    padding: 1rem;
+}
+
+.content {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 1rem;
+}
+
+input, textarea {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.genre-list {
+    margin-bottom: 1rem;
+}
+
+button {
+    margin-right: 1rem;
+}
 </style>
