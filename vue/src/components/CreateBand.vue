@@ -116,7 +116,7 @@ export default {
 <style scoped>
 #title {
     text-align: center;
-    margin-top: 10vh;
+    margin-top: 1vh;
     background-color: rgba(240, 34, 27, 0.925);
     color: white; /* Better contrast for the title */
     padding: 1rem;
@@ -127,8 +127,9 @@ export default {
 .main-container {
     display: flex;
     flex-direction: column;
-    height: 100vh;
     background-color: #f9f9f9; /* Light background */
+    justify-content: center;
+    
 }
 
 .header {
@@ -143,6 +144,7 @@ export default {
     background-color: #fff; /* Clean white background */
     border-radius: 8px; /* Rounded corners */
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    
 }
 
 .input {
