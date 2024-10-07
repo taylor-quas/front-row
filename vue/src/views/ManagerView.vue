@@ -2,9 +2,9 @@
   <div id="manager-view">
     <outbox id="outbox"></outbox>
     <div id="managed-bands">
-      <BandComponent v-for="band in managedBands" :key="band.bandId" :band="band" />
+        <ManagedBands></ManagedBands>
     </div>
-    </div>
+  </div>
     
 </template>
 
@@ -12,11 +12,13 @@
 import Outbox from '../components/Outbox.vue';
 import BandComponent from '../components/BandComponent.vue';
 import BandService from '../services/BandService';
+import ManagedBands from '../components/ManagedBands.vue';
 
 export default {
   components: {
       Outbox,
-      BandComponent
+      BandComponent,
+      ManagedBands
   },
   data() {
     return {
@@ -51,10 +53,11 @@ export default {
 
 #managed-bands {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  width: 100%;
+  grid-gap: 0.5em;
   grid-area: managed-bands;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
 }
 
 #outbox {
