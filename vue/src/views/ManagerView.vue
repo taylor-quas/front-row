@@ -21,7 +21,7 @@ export default {
   data() {
     return {
       showCreateBand: false,
-      managedBands: [],
+      managedBands: []
     }
   },
   created() {
@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     fetchManagedBands() {
-      BandService.getBands().then(response => {
+      BandService.getManagedBands().then(response => {
         this.managedBands = response.data;
       })
       .catch(error => {

@@ -24,6 +24,7 @@ import FollowedBandsVue from '../components/FollowedBands.vue';
 import ManagerView from './ManagerView.vue';
 import HomeInbox from '../components/HomeInbox.vue';
 import CreateBand from '../components/CreateBand.vue';
+import BandService from '../services/BandService';
 
 export default {
   data() {
@@ -43,6 +44,9 @@ export default {
     HomeInbox,
     CreateBand,
   },
+  created() {
+    this.checkIfManager();
+  },
   methods: {
     inboxView() {
       this.router.push('/inbox')
@@ -58,6 +62,11 @@ export default {
       this.showCreateBand = false;
       this.isButtonVisible = true;
       // More code to be added here for band creation
+    },
+    checkIfManager() {
+      BandService.getManagedBands().then(response => {
+        this.isManager = response.data.length > 0;
+      });
     }
   },
   computed: {

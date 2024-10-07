@@ -1,11 +1,18 @@
   <template>
     <div class="band-view">
+        {{ band }}
         <h2>Edit Band</h2>
         <form @submit.prevent="updateItem">
             <input type="text" :placeholder="band.band.bandName" v-model="band.band.bandName" />
-            <input type="text-area" :placeholder="band.band.bandDescription" v-model="band.band.bandDescription" />
-            <image-upload-vue @click="setImage"  ref="imageUpload"></image-upload-vue>
-            <button type="submit">Save</button>     
+            <textarea type="text" :placeholder="band.band.bandDescription" v-model="band.band.bandDescription"></textarea>
+            Image: <img :src="band.band.bandHeroImage" alt="">
+            <image-upload-vue @update:modelValue="setImage"></image-upload-vue>
+            
+            <div class="genre-list"> 
+                <GenreSearch @update:selectedGenres="updateSelectedGenres"/>
+            </div>
+            
+            <button type="submit" @click="updateBand">Save</button>
         </form>
     </div>
   </template>
@@ -13,17 +20,19 @@
   <script>
   import BandService from '../services/BandService';
   import ImageUploadVue from './ImageUpload.vue';
+  import GenreSearch from './GenreSearch.vue';
   
   export default {
     components: {
-        ImageUploadVue
+        ImageUploadVue,
+        GenreSearch
     },
     data() {
       return {
           band: '', 
           bandName: this.$route.params.bandName,
           BandService,
-          imageUrl: ''
+          newImageUrl: ''
       }
     },
     created() {
@@ -39,9 +48,15 @@
             console.error(error);
           });
       },
-      setImage(){
-        this.imageUrl = this.imageUpload.imageUrl;
-        console.log(this.imageUrl)
+      setImage(data){
+        this.band.band.bandHeroImage = data;
+      },
+      updateSelectedGenres(genres) {
+            this.band.genreNames = genres;
+      },
+      updateBand(){
+        BandService.updateBand(this.band.band.bandId, this.band)
+        console.log(this.band.band.bandId)
       }
     }
   }

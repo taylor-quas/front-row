@@ -33,8 +33,16 @@ export default {
     return axios.get(`/is-following/${bandId}`);
   },
 
+  updateBand(bandId, band){
+    return axios.put(`${bandId}/update`, band)
+  },
+    
   updateRole(role) {
     return axios.put(`/change-role/${role}`);
+  },
+
+  getManagedBands() {
+    return axios.get('/managed-bands');
   }
 
 }

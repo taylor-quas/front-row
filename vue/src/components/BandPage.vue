@@ -9,7 +9,7 @@
           @click="toggleFollow">
             {{ isFollowing? 'Unfollow' : 'Follow' }}
         </button>
-        <button @click="$router.push(`${bandName}/edit`)">
+        <button v-if="canEdit === true" @click="$router.push(`${bandName}/edit`)">
           Edit Page
         </button>
         <img id="heroImage" :src="band.band.bandHeroImage" alt="Band Hero Image">
@@ -34,6 +34,7 @@
 <script>
 import BandService from '../services/BandService';
 import GalleryImage from './GalleryImage.vue';
+import UserService from '../services/UserService';
 
 export default {
   components: {
@@ -44,11 +45,13 @@ export default {
         band: '',
         bandName: this.$route.params.bandName,
         isFollowing: null,
-        BandService
+        BandService,
+        canEdit: ''
     }
   },
   created() {
     this.getBand();
+    this.checkRole()
   },
   methods: {
     getBand() {
@@ -101,6 +104,13 @@ export default {
           console.error(error);
         });
     },
+    checkRole(){
+      UserService.getRole().then(response => {
+        if (response.data.role == 'ROLE_BAND' && response.data.managedBands.some(band => band.bandId === this.band.band.bandId)) {
+          this.canEdit = true
+        }
+      })
+    }
     
   }
 }
