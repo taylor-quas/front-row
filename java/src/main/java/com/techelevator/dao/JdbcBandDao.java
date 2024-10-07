@@ -127,14 +127,18 @@ public class JdbcBandDao implements BandDao {
     }
 
     @Override
-    public void updateBand(Band updatedBand) {
+    public void updateBand(BandGenreDto updatedBand) {
 
         String sql = "UPDATE bands " +
                 "SET band_name = ?, band_description = ?, band_hero_image = ?\n" +
                 "\tWHERE band_id = ?;";
 
         try {
-            int rowsAffected = template.update(sql, updatedBand.getBandName(), updatedBand.getBandDescription(), updatedBand.getBandHeroImage(), updatedBand.getBandId());
+            int rowsAffected = template.update(sql,
+                    updatedBand.getBand().getBandName(),
+                    updatedBand.getBand().getBandDescription(),
+                    updatedBand.getBand().getBandHeroImage(),
+                    updatedBand.getBand().getBandId());
             if (rowsAffected == 0) {
                 throw new DaoException("No bands affected. Expected at least one.");
 

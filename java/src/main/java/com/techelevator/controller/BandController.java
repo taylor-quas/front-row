@@ -36,8 +36,8 @@ public class BandController {
     @PreAuthorize("isAuthenticated()")
     @ResponseStatus(HttpStatus.ACCEPTED)
     @PutMapping("/{bandId}/update")
-    public void updateBand(@RequestBody @Valid Band band, @PathVariable long bandId) {
-        if (bandId != band.getBandId()) {
+    public void updateBand(@RequestBody @Valid BandGenreDto band, @PathVariable long bandId) {
+        if (bandId != band.getBand().getBandId()) {
             throw new IllegalArgumentException("Band name in the path does not match the request body");
         }
         bandDao.updateBand(band);
