@@ -56,7 +56,6 @@
       },
       updateBand(){
         BandService.updateBand(this.band.band.bandId, this.band)
-        console.log(this.band.band.bandId)
       }
     }
   }
