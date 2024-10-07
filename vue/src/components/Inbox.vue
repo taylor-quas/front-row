@@ -95,9 +95,14 @@ export default {
         .catch(error => {
             console.error(error);
         });
-      
 
     },
+    watch: {
+      followedBands() {
+        this.fetchInboxMessages();
+      }
+    },
+
     methods: {
       handleMarkAsRead(messageId) {
         const message = this.messages.find(message => message.message.messageId === messageId);
@@ -130,6 +135,7 @@ export default {
       },
 
       fetchInboxMessages() {
+        this.message = [];
         MessageService.getUserInbox().then(response => {
           console.log(response.data);
           this.messages = response.data;
