@@ -7,28 +7,39 @@
     </header>
     <div class="content">
         <div id="cover-image" >
-            <ImageUpload :admin="false" v-model="band.band.bandHeroImage"></ImageUpload>
+            <ImageUpload 
+            class="required" 
+            :admin="false" 
+            v-model="band.band.bandHeroImage" 
+            required
+            ></ImageUpload>
         </div>
         <!-- :imageUrl="band.band.bandHeroImage" -->
         <div class="input">
             <input 
             v-model="band.band.bandName"
-            class="text-field"
+            class="required"
             type="text"
             placeholder="Band Name"
+            required
             >
         </div>
         <div class="input">
             <textarea
             v-model="band.band.bandDescription"
-            class="text-field"
+            class="required"
             placeholder="Band Description"
+            required
             ></textarea>
         </div>
         <div>
             <h3 id="genre-heading">Add genres</h3>
             <div class="genre-list"> 
-                <GenreSearch @update:selectedGenres="updateSelectedGenres"/>
+                <GenreSearch 
+                class="required" 
+                @update:selectedGenres="updateSelectedGenres"
+                required
+                />
             </div>
         </div>
         <div>
