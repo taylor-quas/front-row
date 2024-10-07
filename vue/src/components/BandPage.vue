@@ -9,10 +9,12 @@
           @click="toggleFollow">
             {{ isFollowing? 'Unfollow' : 'Follow' }}
         </button>
+        <button @click="$router.push(`${bandName}/edit`)">
+          Edit Page
+        </button>
         <img id="heroImage" :src="band.band.bandHeroImage" alt="Band Hero Image">
         <section class="genres">
-          <p>{{ band.genreNames.join(' • ') }}</p>
-          
+          <p>{{ band.genreNames.join(' • ') }}</p> 
         </section>
         <br>
         <p id="description">{{ band.band.bandDescription }}</p>
@@ -25,7 +27,6 @@
       <div v-else>
         Loading...
       </div>
-      
     </section>
   </div>
 </template>
@@ -36,7 +37,7 @@ import GalleryImage from './GalleryImage.vue';
 
 export default {
   components: {
-    GalleryImage
+    GalleryImage,
   },
   data() {
     return {

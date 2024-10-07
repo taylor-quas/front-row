@@ -5,7 +5,7 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import ImageService from '../services/ImageService';
 
 export default {

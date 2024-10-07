@@ -108,6 +108,7 @@ export default {
   }
 
   #searchbox-wrapper {
+    display: flex;
     width: 20vw;
     height: 1.5rem;
     border: 2px solid black;

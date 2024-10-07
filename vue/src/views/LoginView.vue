@@ -9,7 +9,7 @@
           ⚠ Incorrect username and password!
         </div>
         <div role="alert" v-if="this.$route.query.registration">
-          Thank you for registering, please log in.
+          <p>Thank you for registering, please log in.</p>
         </div>
         <div class="form-input-group">
           <label for="username">
