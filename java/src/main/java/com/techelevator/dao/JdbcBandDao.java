@@ -306,6 +306,30 @@ public class JdbcBandDao implements BandDao {
     }
 
 
+    public List<BandGenreDto> getManagedBands(Principal principal) {
+        List<BandGenreDto> bands = new ArrayList<>();
+        String sql = "SELECT * FROM bands WHERE band_manager_id = ?;";
+        long principalId = getUserIdByUsername(principal.getName());
+
+        try {
+            SqlRowSet results = template.queryForRowSet(sql, principalId);
+            while (results.next()) {
+                bands.add(mapRowToBandGenreDto(results));
+            }
+            for (BandGenreDto band : bands) {
+                String bandName = band.getBand().getBandName();
+                band.setGenreNames(getGenresByBandName(bandName));
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("Problem connecting");
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("Data problems");
+        }
+
+        return bands;
+    }
+
+
     // Private methods below
     private long getUserIdByUsername(String username) {
         String sql = "SELECT user_id FROM users WHERE username = ?;";

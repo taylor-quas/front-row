@@ -94,4 +94,9 @@ public class BandController {
         bandDao.updateUser(principal, role);
     }
 
+    @GetMapping("/managed-bands")
+    public List<BandGenreDto> getManagedBands(Principal principal) {
+        return bandDao.getManagedBands(principal);
+    }
+
 }
