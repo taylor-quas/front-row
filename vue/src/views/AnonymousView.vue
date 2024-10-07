@@ -34,9 +34,7 @@ export default {
 
 <style scoped>
   #bg-image {
-    height: 100%;
-    background-image: url('src/assets/BR.png');
-    background-size: fill;
+    background-image: linear-gradient(to bottom, #ffd90095, #ffffff00), url('src/assets/BR.png');
     background-position: center;
 
     display: flex; 
@@ -47,11 +45,7 @@ export default {
   }
 
   #buttons{
-    display: flex;
-    flex-direction: row;
-    align-content: center;
     margin: auto;
-    
   }
 
   button {
@@ -70,11 +64,9 @@ export default {
   #anonymous-home {
     padding-top: 5vh;
     display: flex;
-    width: 90%;
     flex-direction: column;
-    align-items: center;
-    gap: 50vh;
-    margin: 0;
+    height: 100vh;
+    justify-content: space-between;
   }
 
   .router-button {
@@ -86,13 +78,6 @@ export default {
     font-style: normal;
     font-weight: 600;
     line-height: normal;
-
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-
-  button:hover {
-    background-color: #adadad;
   }
 
   #buttons button h2 {
