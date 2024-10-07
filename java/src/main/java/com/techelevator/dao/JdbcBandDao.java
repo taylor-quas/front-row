@@ -454,11 +454,11 @@ public class JdbcBandDao implements BandDao {
                 "RETURNING band_id;";
 
         try {
-            newBandId = template.update(sql,
+            newBandId = template.queryForObject(sql, new Object[] {
                     newBand.getBand().getBandName(),
                     newBand.getBand().getBandDescription(),
                     managerId,
-                    newBand.getBand().getBandHeroImage());
+                    newBand.getBand().getBandHeroImage()}, Integer.class);
         } catch (CannotGetJdbcConnectionException e) {
             System.out.println("Problem connecting");
         } catch (DataIntegrityViolationException e) {
