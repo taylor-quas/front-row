@@ -41,7 +41,7 @@ export default {
         messages: [],
         followedBands: [],
         selectedBand: 'all',
-        selectedSort: 'newest'
+        selectedSort: localStorage.getItem('selectedSort') || 'newest'
       };
     },
     computed: {
@@ -100,6 +100,9 @@ export default {
     watch: {
       followedBands() {
         this.fetchInboxMessages();
+      },
+      selectedSort(newValue) {
+        localStorage.setItem('selectedSort', newValue);
       }
     },
 

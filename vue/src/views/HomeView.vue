@@ -21,7 +21,6 @@
 import { useRouter } from 'vue-router';
 import FollowedBands from '../components/FollowedBands.vue';
 import HomeInbox from '../components/HomeInbox.vue';
-import CreateBand from '../components/CreateBand.vue';
 import BandService from '../services/BandService';
 import Outbox from '../components/Outbox.vue';
 import ManagedBands from '../components/ManagedBands.vue';
@@ -41,7 +40,6 @@ export default {
   components: {
     FollowedBands,
     HomeInbox,
-    CreateBand,
     Outbox,
     ManagedBands
   },
