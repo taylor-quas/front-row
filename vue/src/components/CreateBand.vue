@@ -7,11 +7,11 @@
     </header>
     <div class="content">
         <div id="cover-image" >
-            <ImageUpload :admin="false" v-model="band.bandHeroImage"></ImageUpload>
+            <ImageUpload :admin="false" v-model="band.band.bandHeroImage"></ImageUpload>
         </div>
         <div class="input">
             <input 
-            v-model="band.bandName"
+            v-model="band.band.bandName"
             class="text-field"
             type="text"
             placeholder="Band Name"
@@ -19,7 +19,7 @@
         </div>
         <div class="input">
             <textarea
-            v-model="band.bandDescription"
+            v-model="band.band.bandDescription"
             class="text-field"
             placeholder="Band Description"
             ></textarea>
@@ -27,7 +27,7 @@
         <div>
             <h3 id="genre-heading">Add genres</h3>
             <div class="genre-list"> 
-                    <GenreSearch v-model="selectedGenres"/>
+                <GenreSearch v-model="band.genreNames.selectedGenres"/>
             </div>
         </div>
         <div>
@@ -48,16 +48,20 @@ export default {
     data() {
         return {
             band: {
-                bandName: '',
-                bandDescription: '',
-                bandHeroImage: '',  
-                selectedGenres: [],
-            },
+                band: {
+                    bandName: '',
+                    bandDescription: '',
+                    bandHeroImage: '',  
+                    selectedGenres: [],
+                },
+                genreNames: []
+            }
         }
     },
     components: {
         ImageUpload,
-        GenreSearch
+        GenreSearch,
+        BandService
     },
     props: {
         showCreateBand: {
@@ -68,12 +72,10 @@ export default {
     methods: {
     createBand() {
         this.debugger();
-        BandService
-        .create(this.band)
-        .then(response => {
+        BandService.create(this.band).then(response => {
         if (response.status === 201) { 
             this.$emit('band-created');
-            this.$router.push('/band/' + this.band.bandName);
+            this.$router.push('/:' + this.band.band.bandName);
         }
         })
         .catch(error => {
