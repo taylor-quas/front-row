@@ -31,6 +31,10 @@ export default {
 
   getIsFollowing(bandId) {
     return axios.get(`/is-following/${bandId}`);
+  },
+
+  updateBand(bandId, band){
+    return axios.put(`${bandId}/update`, band)
   }
 
 }
