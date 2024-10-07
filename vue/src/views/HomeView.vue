@@ -81,7 +81,9 @@ export default {
 <style>
 
   .home {
-    padding-top: 10vh;
+    padding-top: 12vh;
+    padding-right: 2rem;
+    padding-left: 2rem;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-areas: 

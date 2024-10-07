@@ -7,7 +7,8 @@
       <BandComponent v-for="band in filteredBands" :key="band.bandId" :band="band" :hasMessage="false" />
     </div>
     <div v-else>
-      <p>No bands found</p>
+      <br><br><br>
+      <p id="no-bands">No bands found</p>
     </div>
   </div>
 </template>
@@ -103,6 +104,20 @@ export default {
   justify-content: center;
   align-items: flex-start;
   z-index: 1;
+}
+
+#no-bands {
+  font-family: Montserrat, sans-serif;
+  color: #1a1a1a; /* Darker grey for text */
+  background-color: #e6e6e6; /* Very light grey background */
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+  max-width: 420px;
+  margin: 0 auto;
+  justify-content: center;
+  align-items: flex-start;
+  font-weight: bold;
 }
 
 </style>

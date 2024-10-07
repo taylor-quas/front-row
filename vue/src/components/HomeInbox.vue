@@ -112,53 +112,11 @@
   #inbox {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
     flex-basis: 100%;
     width: 100%;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-  }
-  
-  #filter {
-    display: flex;
-    flex-direction: row;
-    margin: 5px;
-    padding: 5px;
-    border-radius: 20px;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .filterByBand {
-    margin: 5px;
-    padding: 5px;
-    border-radius: 20px;
-  }
-  
-  .sort-by {
-    margin: 5px;
-    padding: 5px;
-    border-radius: 20px;
-  }
-  
-  #message-card {
-    display: flex;
-    width: 100%;
-    padding: 5px;
-    align-content: center;
-    justify-content: center;
-  }
-  
-  #filter-box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  #sort-box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
   }
   
   </style>

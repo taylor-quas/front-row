@@ -44,6 +44,7 @@ export default {
     padding-left: 2rem;
     background-color: rgb(22, 22, 22);
     display: grid;
+    grid-template-columns: 1fr 5fr;
     grid-template-areas: 
       "filter-genre search-results";
   }
@@ -77,5 +78,5 @@ export default {
     line-height: normal;
 }
 
-  
+
 </style>

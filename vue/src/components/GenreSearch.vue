@@ -3,6 +3,7 @@
       <div class="genres">
         <label>
           <input 
+            class="select-all-checkbox"
             type="checkbox" 
             v-model="selectAll" 
             @change="toggleSelectAll"
@@ -11,7 +12,6 @@
       </div>
       <div class="genre-list"> 
         <label v-for="genre in genres" :key="genre">
-          <br />
           <input 
             type="checkbox" 
             v-model="selectedGenres" 

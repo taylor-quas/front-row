@@ -105,19 +105,26 @@ export default {
 <style scoped>
 #title {
     text-align: center;
+    position: relative;
     margin-top: 10vh;
     background-color: rgba(240, 34, 27, 0.925);
-    color: white; /* Better contrast for the title */
-    padding: 1rem;
-    border-radius: 5px; /* Rounded corners */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+    color: white; /* Change text color for better contrast */
+    padding: 1rem; /* Add padding for a better look */
+    border-radius: 5px; /* Slightly round the corners */
+    font-size: 5rem;
+}
+
+.genre-list {
+    text-align: center;
+    position: relative;
+    margin-top: 2rem; /* Adjusted for spacing */
 }
 
 .main-container {
+    height: 100vh;
     display: flex;
     flex-direction: column;
-    height: 100vh;
-    background-color: #f9f9f9; /* Light background */
+    background-color: #f0f0f0; /* Light grey background for contrast */
 }
 
 .header {
@@ -129,195 +136,65 @@ export default {
     flex-grow: 1;
     overflow-y: auto;
     padding: 1rem;
-    background-color: #fff; /* Clean white background */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-}
-
-.input {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1rem; /* Spacing between inputs */
+    background-color: #fff; /* White background for content area */
+    border-radius: 8px; /* Slightly round the corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
 }
 
 input, textarea {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc; /* Light border */
-    border-radius: 4px; /* Rounded corners */
-    background-color: #f4f4f4; /* Light grey background for inputs */
-    transition: border-color 0.3s; /* Smooth transition */
-    font-size: 1rem; /* Standard font size */
+    padding: 10px; /* Added padding for better usability */
+    border: 1px solid #ccc; /* Light border for inputs */
+    border-radius: 4px; /* Slightly round the corners */
+    margin-bottom: 1rem;
+    transition: border-color 0.3s; /* Smooth transition on focus */
 }
 
 input:focus, textarea:focus {
     border-color: #555; /* Darker border on focus */
-    outline: none; /* Remove default outline */
 }
 
 #genre-heading {
     text-align: center;
-    font-weight: bold;
-    margin: 1rem 0; /* Space above and below */
-}
-
-.genre-list {
-    text-align: center;
-    margin-bottom: 1rem;
+    font-weight: bold; /* Make heading bold */
 }
 
 .button-container {
-    display: flex;
-    justify-content: center; /* Center buttons */
-    margin-top: 1rem; /* Space above buttons */
+    display: flex; /* Align buttons in a row */
+    justify-content: center; /* Center the buttons */
+    margin-top: 1rem; /* Space above the buttons */
 }
 
 button {
-    padding: 10px 20px; /* Consistent padding */
-    margin: 0 5px; /* Spacing between buttons */
-    border: none; /* No border */
-    border-radius: 4px; /* Rounded corners */
+    padding: 10px 15px; /* Consistent padding for buttons */
+    border: none; /* Remove default border */
+    border-radius: 4px; /* Slightly round the corners */
     cursor: pointer; /* Pointer on hover */
-    font-size: 1rem; /* Standard font size */
-    transition: background-color 0.3s, transform 0.2s; /* Smooth transition */
+    transition: background-color 0.3s; /* Smooth transition on hover */
 }
 
 #create-button {
-    background-color: #333; /* Dark background */
-    color: white; /* White text */
+    background-color: #333; /* Dark background for create button */
+    color: #fff; /* White text */
 }
 
 #create-button:hover {
     background-color: #555; /* Lighter shade on hover */
-    transform: translateY(-1px); /* Lift effect on hover */
 }
 
 #cancel-button {
-    background-color: #ccc; /* Light grey */
+    background-color: #ccc; /* Grey background for cancel button */
     color: #333; /* Dark text */
 }
 
 #cancel-button:hover {
     background-color: #aaa; /* Darker grey on hover */
-    transform: translateY(-1px); /* Lift effect on hover */
-}
-
-
-
-.genre-search {
-    font-family: Montserrat, sans-serif;
-    color: #1a1a1a; /* Darker grey for text */
-    background-color: #e6e6e6; /* Very light grey background */
-    padding: 25px;
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
-    max-width: 420px; /* Ensure it fits well */
-    margin: 0 auto; /* Center the component */
-}
-
-.genres label {
-    font-size: 18px; /* Maintain readability */
-    color: #1a1a1a; /* Darker grey for "Select All" */
-    font-weight: 600; /* Bold for emphasis */
-    display: flex;
-    align-items: center;
-    margin-bottom: 12px; /* Space below label */
-}
-
-.genre-list {
-    border-top: 1px solid #b3b3b3; /* Medium grey border */
-    padding-top: 15px; /* Space above genres */
-    margin-top: 15px; /* Space above the genre list */
-}
-
-.genre-list label {
-    display: flex;
-    align-items: center;
-    font-size: 16px; /* Consistent font size */
-    color: #333; /* Slightly darker text for better contrast */
-    padding: 10px 0; /* Increased padding for better touch targets */
-    border-bottom: 1px solid #ccc; /* Light grey separator */
-}
-
-.genre-list label:last-of-type {
-    border-bottom: none; /* Remove border for the last item */
-}
-
-input[type="checkbox"] {
-    accent-color: #666; /* Medium grey for checkbox */
-    margin-right: 12px; /* Space between checkbox and label */
-    transform: scale(1.2); /* Slightly larger checkbox for easier clicking */
-}
-
-input[type="checkbox"]:hover {
-    accent-color: #333; /* Darker grey on hover */
-    cursor: pointer; /* Pointer on hover */
-}
-
-/* Additional styling for responsive design */
-@media (max-width: 480px) {
-    .genre-search {
-        padding: 15px; /* Reduced padding for smaller screens */
-        max-width: 90%; /* Responsive width */
-    }
-}
-</style>
-
-<!-- <style scoped>
-#title {
-    text-align: center;
-    position: relative;
-    margin-top: 10vh;
-    background-color:rgba(240, 34, 27, 0.925);
-}
-
-.genre-list {
-    text-align: center;
-    position: relative;
-    margin-top: 10vh;
-}
-
-.main-container {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
-.header {
-    flex-shrink: 0;
-    padding: 1rem;
-}
-
-.content {
-    flex-grow: 1;
-    overflow-y: auto;
-    padding: 1rem;
-}
-
-input, textarea {
-    width: 100%;
-    margin-bottom: 1rem;
-}
-
-#genre-heading {
-    text-align: center;
-}
-
-.genre-list {
-    margin-bottom: 1rem;
-}
-
-button {
-    margin-right: 1rem;
 }
 
 .input {
-  display: flex;
-  flex-direction: column; 
-  align-items: flex-start; 
+    display: flex;
+    flex-direction: column; 
+    align-items: flex-start; 
 }
+</style>
 
-.text-field {
-  width: 50px;
-}
-</style> -->
