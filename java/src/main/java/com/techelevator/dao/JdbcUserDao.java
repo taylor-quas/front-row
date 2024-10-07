@@ -29,7 +29,7 @@ public class JdbcUserDao implements UserDao {
     @Override
     public User getUserById(int userId) {
         User user = null;
-        String sql = "SELECT user_id, username, password_hash, role FROM users WHERE user_id = ?";
+        String sql = "SELECT user_id, username, password_hash, role, phone_number FROM users WHERE user_id = ?";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
             if (results.next()) {
@@ -44,7 +44,7 @@ public class JdbcUserDao implements UserDao {
     @Override
     public List<User> getUsers() {
         List<User> users = new ArrayList<>();
-        String sql = "SELECT user_id, username, password_hash, role FROM users";
+        String sql = "SELECT user_id, username, password_hash, role, phone_number FROM users";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
             while (results.next()) {
@@ -61,7 +61,7 @@ public class JdbcUserDao implements UserDao {
     public User getUserByUsername(String username) {
         if (username == null) throw new IllegalArgumentException("Username cannot be null");
         User user = null;
-        String sql = "SELECT user_id, username, password_hash, role FROM users WHERE username = LOWER(TRIM(?));";
+        String sql = "SELECT user_id, username, password_hash, role, phone_number FROM users WHERE username = LOWER(TRIM(?));";
         try {
             SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, username);
             if (rowSet.next()) {
@@ -107,6 +107,26 @@ public class JdbcUserDao implements UserDao {
         return user;
     }
 
+    public void updateUserPhoneNumber(Principal principal, String phoneNumber) {
+        String sql = "UPDATE users SET phone_number = ? WHERE user_id = ?";
+
+        long principalId = getUserIdByUsername(principal.getName());
+
+        try {
+            int rowsAffected = jdbcTemplate.update(sql, phoneNumber, principalId);
+            if (rowsAffected > 0) {
+                System.out.println("Phone number updated.");
+            } else {
+                System.out.println("No update.");
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("Problem connecting");
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("Data problems");
+        }
+
+    }
+
     // Private methods
     private User mapRowToUser(SqlRowSet rs) {
         User user = new User();
@@ -115,6 +135,7 @@ public class JdbcUserDao implements UserDao {
         user.setPassword(rs.getString("password_hash"));
         user.setAuthorities(Objects.requireNonNull(rs.getString("role")));
         user.setActivated(true);
+        user.setPhoneNumber(rs.getString("phone_number"));
         return user;
     }
 

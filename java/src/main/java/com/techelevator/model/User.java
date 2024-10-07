@@ -15,15 +15,17 @@ public class User {
    @JsonIgnore
    private boolean activated;
    private Set<Authority> authorities = new HashSet<>();
+   private String phoneNumber;
 
    public User() { }
 
-   public User(int id, String username, String password, String authorities) {
+   public User(int id, String username, String password, String authorities, String phoneNumber) {
       this.id = id;
       this.username = username;
       this.password = password;
       if (authorities != null) this.setAuthorities(authorities);
       this.activated = true;
+      this.phoneNumber = phoneNumber;
    }
 
    public int getId() {
@@ -73,6 +75,13 @@ public class User {
          this.authorities.add(new Authority(authority));
       }
    }
+   public String getPhoneNumber() {
+      return phoneNumber;
+   }
+
+   public void setPhoneNumber(String phoneNumber) {
+      this.phoneNumber = phoneNumber;
+   }
 
    @Override
    public boolean equals(Object o) {
@@ -83,12 +92,13 @@ public class User {
               activated == user.activated &&
               Objects.equals(username, user.username) &&
               Objects.equals(password, user.password) &&
-              Objects.equals(authorities, user.authorities);
+              Objects.equals(authorities, user.authorities) &&
+              Objects.equals(phoneNumber, user.phoneNumber);
    }
 
    @Override
    public int hashCode() {
-      return Objects.hash(id, username, password, activated, authorities);
+      return Objects.hash(id, username, password, activated, authorities, phoneNumber);
    }
 
    @Override
@@ -98,6 +108,7 @@ public class User {
               ", username='" + username + '\'' +
               ", activated=" + activated +
               ", authorities=" + authorities +
+              ", phone_number=" + phoneNumber +
               '}';
    }
 }
