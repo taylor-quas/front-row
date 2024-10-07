@@ -39,6 +39,10 @@ export default {
     
   updateRole(role) {
     return axios.put(`/change-role/${role}`);
+  },
+
+  getManagedBands() {
+    return axios.get('/user-role');
   }
 
 }
