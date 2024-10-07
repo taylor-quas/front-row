@@ -50,8 +50,7 @@ export default {
             band: {
                 bandName: '',
                 bandDescription: '',
-                bandHeroImage: '', 
-                genres: [], 
+                bandHeroImage: '',  
                 selectedGenres: [],
             },
         }
@@ -69,7 +68,7 @@ export default {
     methods: {
     createBand() {
         this.debugger();
-    BandService
+        BandService
         .create(this.band)
         .then(response => {
         if (response.status === 201) { 

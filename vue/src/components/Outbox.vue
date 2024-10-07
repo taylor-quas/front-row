@@ -19,7 +19,9 @@ import MessageComponent from "../components/MessageComponent.vue";
 
 export default {
     components: {
-        MessageComponent
+        MessageComponent,
+        BandService,
+        MessageService
     },
 }
 </script>
