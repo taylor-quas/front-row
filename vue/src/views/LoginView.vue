@@ -92,12 +92,12 @@ export default {
   }
 
   #login {
-    padding-top: 12vh;
+
     display: flex;
     flex-direction: column;
     align-items: center;
     z-index: 50;
-    background-color: rgb(22, 22, 22);
+    background-color: #161616;
   }
 
   #alert {
@@ -146,10 +146,6 @@ export default {
     margin: 20px;
 
     width: 100%;
-  }
-
-  button:hover {
-    background-color: #adadad;
   }
 
   #login-button {

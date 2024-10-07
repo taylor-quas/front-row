@@ -1,17 +1,21 @@
 <template>
   <div id="capstone-app">
     <div id="nav">
-      <div class="nav-item">
-        <router-link v-bind:to="{ name: 'home' }" v-if="$store.state.token != ''" id="home-button">Home</router-link>
+      <div id="left-nav">
+        <div class="nav-item">
+          <router-link v-bind:to="{ name: 'home' }" id="home-button">Home</router-link>
+        </div>
+        <div class="nav-item">
+            <div id="searchbox-wrapper">&nbsp;🔎 <input id="searchbox" type="text" placeholder="SEARCH" @focus="startSearch" v-model="searchQuery" /></div>
+        </div>
       </div>
-      <div class="nav-item">
-          <input id="searchbox" type="text" placeholder="🔎 SEARCH" @focus="startSearch" v-model="searchQuery" />
-      </div>
-      <div class="nav-item">
-        <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''" id="logout-button">Logout</router-link>
-      </div>
-      <div class="nav-item">
-        <router-link v-bind:to="{ name: 'profile' }" v-if="$store.state.token != ''" id="profile-button">Profile</router-link>
+      <div id="right-nav">
+        <div class="nav-item">
+          <router-link v-bind:to="{ name: 'profile' }" v-if="$store.state.token != ''" id="profile-button">Profile</router-link>
+        </div>
+        <div class="nav-item">
+          <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''" id="logout-button">Logout</router-link>
+        </div>
       </div>
     </div>
     <router-view :searchQuery="searchQuery"/>
@@ -57,19 +61,29 @@ export default {
     position: fixed;
     
     display: flex;
-    flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
 
     background-color: white;
     width: 100%;
     height: 6vh;
-    padding-left: 20px;
     z-index: 1000;
   }
 
   .nav-item {
+    padding: 20px;
+  }
+
+  #left-nav {
+    width: 50%;
     display: flex;
+    justify-content: flex-start;
+  }
+
+  #right-nav {
+    width: 50%;
+    display: flex;
+    justify-content: flex-end;
   }
 
   #home-button{
@@ -77,7 +91,6 @@ export default {
     font-family: Montserrat;
     font-size: 20px;
     font-weight: 600;
-    align-content: center;
     text-decoration-line: none;
   }
 
@@ -86,16 +99,19 @@ export default {
     font-family: Montserrat;
     font-size: 20px;
     font-weight: 600;
-    align-content: center;
     text-decoration-line: none;
   }
 
   #searchbox {
+    outline: none;  
+    border: none;
+  }
+
+  #searchbox-wrapper {
     width: 20vw;
     height: 1.5rem;
+    border: 2px solid black;
     border-radius: 16px;
-    display: flex;
-    align-content: center;
   }
 
   #profile-button {
