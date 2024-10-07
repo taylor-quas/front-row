@@ -19,4 +19,6 @@ public interface UserDao {
 
     User getUserByPrincipal(Principal principal);
 
+    void updateUserPhoneNumber(Principal principal, String phoneNumber);
+
 }

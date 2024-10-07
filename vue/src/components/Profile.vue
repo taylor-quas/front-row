@@ -4,6 +4,11 @@
     
     <div id="profile-section">
       <h4>{{ user.username }}</h4>
+      <h4 v-if="user.phoneNumber">{{ user.phoneNumber }}</h4>
+      <form @submit.prevent="updatePhoneNumber">
+        <input type="text" v-model="user.phoneNumber" placeholder="Phone Number">
+        <button type="submit">Update Phone Number</button>
+      </form>
     </div>
 
     <div id="stats-section">
@@ -78,6 +83,15 @@ export default {
       });
 
       this.followedByGenre = count;
+    },
+
+    updatePhoneNumber() {
+      UserService.updateUserPhoneNumber(this.user.phoneNumber).then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        console.error(error);
+      });
     }
 
   }

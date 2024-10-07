@@ -7,11 +7,12 @@
     </header>
     <div class="content">
         <div id="cover-image" >
-            <ImageUpload :admin="false" v-model="band.bandHeroImage"></ImageUpload>
+            <ImageUpload :admin="false" v-model="band.band.bandHeroImage"></ImageUpload>
         </div>
+        <!-- :imageUrl="band.band.bandHeroImage" -->
         <div class="input">
             <input 
-            v-model="band.bandName"
+            v-model="band.band.bandName"
             class="text-field"
             type="text"
             placeholder="Band Name"
@@ -19,7 +20,7 @@
         </div>
         <div class="input">
             <textarea
-            v-model="band.bandDescription"
+            v-model="band.band.bandDescription"
             class="text-field"
             placeholder="Band Description"
             ></textarea>
@@ -27,7 +28,7 @@
         <div>
             <h3 id="genre-heading">Add genres</h3>
             <div class="genre-list"> 
-                    <GenreSearch v-model="selectedGenres"/>
+                <GenreSearch @update:selectedGenres="updateSelectedGenres"/>
             </div>
         </div>
         <div>
@@ -43,22 +44,25 @@
 import BandService from '../services/BandService';
 import ImageUpload from '../components/ImageUpload.vue';
 import GenreSearch from './GenreSearch.vue';
+import { watch } from 'vue';
 
 export default {
     data() {
         return {
             band: {
-                bandName: '',
-                bandDescription: '',
-                bandHeroImage: '',  
-                selectedGenres: [],
-            },
+                band: {
+                    bandName: '',
+                    bandDescription: '',
+                    bandHeroImage: '',  
+                },
+                genreNames: []
+            }
         }
     },
     components: {
-        ImageUpload,
-        GenreSearch
-    },
+            ImageUpload,
+            GenreSearch
+        },
     props: {
         showCreateBand: {
             type: Boolean,
@@ -66,30 +70,36 @@ export default {
         }
     },
     methods: {
-    createBand() {
-        this.debugger();
-        BandService
-        .create(this.band)
-        .then(response => {
-        if (response.status === 201) { 
-            this.$emit('band-created');
-            this.$router.push('/band/' + this.band.bandName);
+        createBand() {
+            this.debugger();
+            BandService.create(this.band).then(response => {
+            if (response.status === 201) { 
+                this.$emit('band-created');
+                this.$router.push('/' + this.band.band.bandName);
+            }
+            })
+            .catch(error => {
+            console.error(error);
+            });
+        },
+        updateSelectedGenres(genres) {
+            this.band.genreNames = genres;
+        },
+        cancel() {
+        this.$emit('close');
+        },
+        debugger() {
+            console.log(this.band);
+        },
+        mounted() {
+            this.debugger();
         }
-        })
-        .catch(error => {
-        console.error(error);
-        });
     },
-    cancel() {
-      this.$emit('close');
+    watch: {
+        'band.band.bandHeroImage'(newValue) {
+            console.log("Band Hero Image updated: ", newValue);
+        }
     },
-    debugger() {
-        console.log(this.band);
-    },
-    mounted() {
-        this.debugger();
-    }
-}
 
 }
 </script>
