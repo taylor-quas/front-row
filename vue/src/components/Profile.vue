@@ -6,7 +6,12 @@
       <h4>{{ user.username }}</h4>
     </div>
 
-    <p>You are following {{ followedBands.length }} bands</p>
+    <div id="stats-section">
+      <p>You are following {{ followedBands.length }} bands</p>
+      <!-- <p v-for="band in followedBands" :key="band.band.bandId">{{band.band.bandName}}{{ band.genreNames }}</p> -->
+      <p v-for="(count, genre) in followedByGenre" :key="genre">{{ genre }}: {{ count }}</p>
+    </div>
+    
 
   </div>
 </template>
@@ -19,18 +24,21 @@ export default {
   data(){
     return{
       followedBands: [],
-      user: {}
+      user: {},
+      genres: [],
+      followedByGenre: {}
     }
   },
   created() {
     this.fetchFollowedBands();
     this.fetchUser();
+    this.fetchGenres();
   },
   methods: {
     fetchFollowedBands() {
       BandService.getFollowedBands().then(response => {
           this.followedBands = response.data;
-          console.log(this.followedBands);
+          this.getFollowedByGenre();
       })
       .catch(error => {
           console.error(error);
@@ -40,12 +48,38 @@ export default {
     fetchUser() {
       UserService.getUser().then(response => {
           this.user = response.data;
-          console.log(this.user);
       })
       .catch(error => {
           console.error(error);
       });
+    },
+
+    fetchGenres() {
+      BandService.getGenres().then(response => {
+        this.genres = response.data;
+      });
+    },
+
+    getFollowedByGenre() {
+      let count = {};
+      this.followedBands.forEach(band => {
+        let genres = band.genreNames;
+
+        genres.forEach(genre => {
+          genre = genre.trim();
+
+          if (count[genre]) {
+            count[genre]++;
+          } else {
+            count[genre] = 1;
+          }
+
+        });  
+      });
+
+      this.followedByGenre = count;
     }
+
   }
 }
 </script>
@@ -74,15 +108,16 @@ export default {
       display: flex;
       text-align: center;
       justify-content: center;
-      align-items: center;
+      align-items: flex-start;
       margin: 1em;
     }
 
     #stats-section {
       grid-area: stats-section;
       display: flex;
+      flex-direction: column;
       text-align: center;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
       margin: 1em;
     }
