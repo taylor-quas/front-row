@@ -4,7 +4,7 @@
         <form @submit.prevent="updateItem">
             <input type="text" :placeholder="band.band.bandName" v-model="band.band.bandName" />
             <input type="text-area" :placeholder="band.band.bandDescription" v-model="band.band.bandDescription" />
-            <image-upload-vue  ref="imageUpload"></image-upload-vue>
+            <image-upload-vue @click="setImage"  ref="imageUpload"></image-upload-vue>
             <button type="submit">Save</button>     
         </form>
     </div>
@@ -40,7 +40,7 @@
           });
       },
       setImage(){
-        this.imageUrl = this.$imageUpload.imageUrl;
+        this.imageUrl = this.imageUpload.imageUrl;
         console.log(this.imageUrl)
       }
     }
