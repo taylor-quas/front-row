@@ -1,5 +1,5 @@
   <template>
-    <div class="band-view">
+    <div class="band-view" color="white">
         {{ band }}
         <h2>Edit Band</h2>
         <form @submit.prevent="updateItem">

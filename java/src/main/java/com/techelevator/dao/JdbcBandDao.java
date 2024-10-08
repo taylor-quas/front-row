@@ -270,10 +270,9 @@ public class JdbcBandDao implements BandDao {
         RoleDto principalInfo = new RoleDto(role);
 
         if (principalInfo.getRole().equals("ROLE_BAND")) {
-            List<Band> bands = new ArrayList<>();
             long principalId = getUserIdByUsername(principal.getName());
 
-            bands = getBandsManagedByUserId(principalId);
+            List<Band> bands = getBandsManagedByUserId(principalId);
             if (bands.size() == 0){
                 updateUser(principal, "ROLE_USER");
                 principalInfo.setRole("ROLE_USER");

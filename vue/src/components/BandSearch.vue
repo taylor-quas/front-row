@@ -1,8 +1,5 @@
 <template>
   <div class="results">
-    <div v-if="$store.state.token == ''" @click="$router.push('/fbc')">
-      <h4 style="color: red;">X</h4>
-    </div>
     <div :class="['band-results-grid', customClass]" v-if="filteredBands.length > 0">
       <BandComponent 
         v-for="band in filteredBands" 

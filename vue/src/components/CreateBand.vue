@@ -81,7 +81,7 @@ export default {
         createBand() {
             BandService.create(this.band).then(response => {
             if (response.status === 201) {
-                BandService.updateRole('USER_BAND'); 
+                BandService.updateRole('ROLE_BAND'); 
                 this.$emit('band-created');
                 this.$router.push('/' + this.band.band.bandName);
             }
@@ -154,6 +154,7 @@ export default {
     flex-direction: column;
     height: auto; /* Allow height to adjust based on content */
     background-color: #f9f9f9; /* Light background */
+    width: auto;
 }
 
 .header {
@@ -174,16 +175,21 @@ export default {
     display: flex;
     flex-direction: column;
     margin-bottom: 1rem; /* Spacing between inputs */
+    width: 100%;
+}
+
+textarea {
+    width: auto;
 }
 
 input, textarea {
-    width: 100%;
     padding: 10px;
     border: 1px solid #ccc; /* Light border */
     border-radius: 4px; /* Rounded corners */
     background-color: #f4f4f4; /* Light grey background for inputs */
     transition: border-color 0.3s; /* Smooth transition */
     font-size: 1rem; /* Standard font size */
+    font-family: Montserrat, sans-serif;
 }
 
 input:focus, textarea:focus {
@@ -244,7 +250,7 @@ button {
 
 .error-messages {
   color: red;
-  margin-bottom: 10px;
+  margin: 20px;
 }
 
 .genre-search {

@@ -9,7 +9,7 @@
           @click="toggleFollow">
             {{ isFollowing? 'Unfollow' : 'Follow' }}
         </button>
-        <button v-if="canEdit === true" @click="$router.push(`${bandName}/edit`)">
+        <button class="edit-button" v-if="canEdit" @click="$router.push(`${bandName}/edit`)">
           Edit Page
         </button>
         <img id="heroImage" :src="band.band.bandHeroImage" alt="Band Hero Image">
@@ -49,7 +49,7 @@ export default {
         bandName: this.$route.params.bandName,
         isFollowing: null,
         BandService,
-        canEdit: ''
+        canEdit: false
     }
   },
   mounted() {
@@ -109,6 +109,7 @@ export default {
     },
     checkRole(){
       UserService.getRole().then(response => {
+        console.log(response.data);
         if (response.data.role == 'ROLE_BAND' && response.data.managedBands.some(band => band.bandId === this.band.band.bandId)) {
           this.canEdit = true
         }
@@ -212,6 +213,22 @@ section h3 {
   cursor: pointer;            /* Pointer on hover */
   transition: background-color 0.3s ease; /* Smooth transition */
   margin-bottom: 1em;
+}
+
+.edit-button {
+  padding: 10px 20px;
+  background-color: #999999;  /* Light grey */
+  color: white;               /* White text */
+  border: none;               /* Remove default border */
+  border-radius: 5px;         /* Rounded corners */
+  font-size: 16px;            /* Font size */
+  cursor: pointer;            /* Pointer on hover */
+  transition: background-color 0.3s ease; /* Smooth transition */
+  margin-bottom: 1em;
+}
+
+.edit-button:hover {
+  background-color: #808080;  /* Darker light grey on hover */
 }
 
 .follow-button:hover {
