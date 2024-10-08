@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home" :style="gridStyle">
 
     <HomeOutbox id="outbox" v-if="isManager"></HomeOutbox>
     <ManagedBands id="managed-bands" v-if="isManager"></ManagedBands>
@@ -8,7 +8,7 @@
 
     <HomeInbox id="inbox" @click="inboxView"></HomeInbox>
     <div id="manage-band-button">
-      <button v-if="!isManager" id="create-button" @click="showCreateBand = true, hideButton()">Manage a Band!</button>
+      <button v-if="!isManager" id="create-button" @click="handleCreateBand">Manage a Band!</button>
     </div>
     <FollowedBands id="followed-bands"></FollowedBands>
 
@@ -57,7 +57,8 @@ export default {
     inboxView() {
       this.router.push('/inbox')
     },
-    hideButton() {
+    handleCreateBand() {
+      this.showCreateBand = true;
       this.isButtonVisible = false;
     },
     closeModal() {
@@ -78,6 +79,29 @@ export default {
     inboxCount() {
       return this.inboxMessages.length;
     },
+    gridStyle() {
+      if (this.isManager) {
+        return {
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr 1fr',
+          gridTemplateAreas: `
+            "outbox managed-bands managed-bands"
+            "divider divider divider"
+            "inbox followed-bands followed-bands"
+          `
+        }
+      } else {
+        return {
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr 1fr',
+          gridTemplateRows: 'min-content auto',
+          gridTemplateAreas: `
+            ". manage-band-button manage-band-button"
+            "inbox followed-bands followed-bands"
+          `
+        };
+      }
+    }
   },
 
 };
@@ -90,11 +114,11 @@ export default {
   padding-left: 2rem;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-template-areas:
+  /* grid-template-areas:
     "outbox manage-band-button manage-band-button"
     "outbox managed-bands managed-bands"
     "divider divider divider"
-    "inbox followed-bands followed-bands";
+    "inbox followed-bands followed-bands"; */
   background-color: rgb(22, 22, 22);
 }
 
@@ -104,8 +128,9 @@ export default {
   flex-direction: column;
   margin: 5px;
   border-radius: 20px;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+  height: auto;
 }
 
 #followed-bands {
@@ -114,9 +139,8 @@ export default {
   border-radius: 20px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  align-items: flex-start;
   z-index: 1;
+  align-self: flex-start;
 }
 
 #outbox {
@@ -170,7 +194,9 @@ button {
   margin: 5px;
   border-radius: 20px;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  height: auto;
+  
 }
 
 #create-button {
@@ -185,5 +211,29 @@ button {
   /* Lighter shade on hover */
   transform: translateY(-1px);
   /* Lift effect on hover */
+}
+
+
+#modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+#modal-content {
+  background-color: rgba(240, 34, 27, 0.925);
+  padding: 20px;
+  border-radius: 5px;
+  width: 50%;
+  height: 70%;
+  overflow: scroll;
 }
 </style>

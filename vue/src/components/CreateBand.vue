@@ -254,7 +254,6 @@ button {
     padding: 25px;
     border-radius: 10px; /* Rounded corners */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
-    max-width: 420px; /* Ensure it fits well */
     margin: 0 auto; /* Center the component */
 }
 
