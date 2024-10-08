@@ -7,42 +7,31 @@
     </header>
     <div class="content">
         <div id="cover-image" >
-            <ImageUpload 
-            class="required" 
-            :admin="false" 
-            v-model="band.band.bandHeroImage" 
-            required
-            ></ImageUpload>
+            <ImageUpload :admin="false" v-model="band.band.bandHeroImage"></ImageUpload>
         </div>
         <!-- :imageUrl="band.band.bandHeroImage" -->
         <div class="input">
             <input 
             v-model="band.band.bandName"
-            class="required"
+            class="text-field"
             type="text"
             placeholder="Band Name"
-            required
             >
         </div>
         <div class="input">
             <textarea
             v-model="band.band.bandDescription"
-            class="required"
+            class="text-field"
             placeholder="Band Description"
-            required
             ></textarea>
         </div>
         <div>
             <h3 id="genre-heading">Add genres</h3>
             <div class="genre-list"> 
-                <GenreSearch 
-                class="required" 
-                @update:selectedGenres="updateSelectedGenres"
-                required
-                />
+                <GenreSearch class="genre-search" @update:selectedGenres="updateSelectedGenres"/>
             </div>
         </div>
-        <div>
+        <div class="button-container">
             <button @click="createBand()" id="create-button">CREATE BAND</button>
             <button @click="cancel()" id="cancel-button">Cancel</button>
         </div>
@@ -116,28 +105,19 @@ export default {
 <style scoped>
 #title {
     text-align: center;
-    position: relative;
     margin-top: 10vh;
     background-color: rgba(240, 34, 27, 0.925);
-    color: white; /* Change text color for better contrast */
-    padding: 1rem; /* Add padding for a better look */
-    border-radius: 5px; /* Slightly round the corners */
-    font-size: 5rem;
-}
-
-.genre-list {
-    text-align: center;
-    position: relative;
-    margin-top: 2rem; /* Adjusted for spacing */
+    color: white; /* Better contrast for the title */
+    padding: 1rem;
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
 }
 
 .main-container {
-    height: 100vh;
     display: flex;
     flex-direction: column;
+    height: 100vh;
     background-color: #f9f9f9; /* Light background */
-    justify-content: center;
-    
 }
 
 .header {
@@ -152,7 +132,6 @@ export default {
     background-color: #fff; /* Clean white background */
     border-radius: 8px; /* Rounded corners */
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    
 }
 
 .input {
@@ -163,58 +142,192 @@ export default {
 
 input, textarea {
     width: 100%;
-    padding: 10px; /* Added padding for better usability */
-    border: 1px solid #ccc; /* Light border for inputs */
-    border-radius: 4px; /* Slightly round the corners */
-    margin-bottom: 1rem;
-    transition: border-color 0.3s; /* Smooth transition on focus */
+    padding: 10px;
+    border: 1px solid #ccc; /* Light border */
+    border-radius: 4px; /* Rounded corners */
+    background-color: #f4f4f4; /* Light grey background for inputs */
+    transition: border-color 0.3s; /* Smooth transition */
+    font-size: 1rem; /* Standard font size */
 }
 
 input:focus, textarea:focus {
     border-color: #555; /* Darker border on focus */
+    outline: none; /* Remove default outline */
 }
 
 #genre-heading {
     text-align: center;
-    font-weight: bold; /* Make heading bold */
+    font-weight: bold;
+    margin: 1rem 0; /* Space above and below */
+}
+
+.genre-list {
+    text-align: center;
+    margin-bottom: 1rem;
 }
 
 .button-container {
-    display: flex; /* Align buttons in a row */
-    justify-content: center; /* Center the buttons */
-    margin-top: 1rem; /* Space above the buttons */
+    display: flex;
+    justify-content: center; /* Center buttons */
+    margin-top: 1rem; /* Space above buttons */
 }
 
 button {
-    padding: 10px 15px; /* Consistent padding for buttons */
-    border: none; /* Remove default border */
-    border-radius: 4px; /* Slightly round the corners */
+    padding: 10px 20px; /* Consistent padding */
+    margin: 0 5px; /* Spacing between buttons */
+    border: none; /* No border */
+    border-radius: 4px; /* Rounded corners */
     cursor: pointer; /* Pointer on hover */
-    transition: background-color 0.3s; /* Smooth transition on hover */
+    font-size: 1rem; /* Standard font size */
+    transition: background-color 0.3s, transform 0.2s; /* Smooth transition */
 }
 
 #create-button {
-    background-color: #333; /* Dark background for create button */
-    color: #fff; /* White text */
+    background-color: #333; /* Dark background */
+    color: white; /* White text */
 }
 
 #create-button:hover {
     background-color: #555; /* Lighter shade on hover */
+    transform: translateY(-1px); /* Lift effect on hover */
 }
 
 #cancel-button {
-    background-color: #ccc; /* Grey background for cancel button */
+    background-color: #ccc; /* Light grey */
     color: #333; /* Dark text */
 }
 
 #cancel-button:hover {
     background-color: #aaa; /* Darker grey on hover */
+    transform: translateY(-1px); /* Lift effect on hover */
 }
 
-.input {
+
+
+.genre-search {
+    font-family: Montserrat, sans-serif;
+    color: #1a1a1a; /* Darker grey for text */
+    background-color: #e6e6e6; /* Very light grey background */
+    padding: 25px;
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    max-width: 420px; /* Ensure it fits well */
+    margin: 0 auto; /* Center the component */
+}
+
+.genres label {
+    font-size: 18px; /* Maintain readability */
+    color: #1a1a1a; /* Darker grey for "Select All" */
+    font-weight: 600; /* Bold for emphasis */
     display: flex;
-    flex-direction: column; 
-    align-items: flex-start; 
+    align-items: center;
+    margin-bottom: 12px; /* Space below label */
+}
+
+.genre-list {
+    border-top: 1px solid #b3b3b3; /* Medium grey border */
+    padding-top: 15px; /* Space above genres */
+    margin-top: 15px; /* Space above the genre list */
+}
+
+.genre-list label {
+    display: flex;
+    align-items: center;
+    font-size: 16px; /* Consistent font size */
+    color: #333; /* Slightly darker text for better contrast */
+    padding: 10px 0; /* Increased padding for better touch targets */
+    border-bottom: 1px solid #ccc; /* Light grey separator */
+}
+
+.genre-list label:last-of-type {
+    border-bottom: none; /* Remove border for the last item */
+}
+
+input[type="checkbox"] {
+    accent-color: #666; /* Medium grey for checkbox */
+    margin-right: 12px; /* Space between checkbox and label */
+    transform: scale(1.2); /* Slightly larger checkbox for easier clicking */
+}
+
+input[type="checkbox"]:hover {
+    accent-color: #333; /* Darker grey on hover */
+    cursor: pointer; /* Pointer on hover */
+}
+
+/* Additional styling for responsive design */
+@media (max-width: 480px) {
+    .genre-search {
+        padding: 15px; /* Reduced padding for smaller screens */
+        max-width: 90%; /* Responsive width */
+    }
 }
 </style>
 
+
+
+
+
+
+
+
+
+
+
+<!-- <style scoped>
+#title {
+    text-align: center;
+    position: relative;
+    margin-top: 10vh;
+    background-color:rgba(240, 34, 27, 0.925);
+}
+
+.genre-list {
+    text-align: center;
+    position: relative;
+    margin-top: 10vh;
+}
+
+.main-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    flex-shrink: 0;
+    padding: 1rem;
+}
+
+.content {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 1rem;
+}
+
+input, textarea {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+#genre-heading {
+    text-align: center;
+}
+
+.genre-list {
+    margin-bottom: 1rem;
+}
+
+button {
+    margin-right: 1rem;
+}
+
+.input {
+  display: flex;
+  flex-direction: column; 
+  align-items: flex-start; 
+}
+
+.text-field {
+  width: 50px;
+}
+</style> -->

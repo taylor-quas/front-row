@@ -7,13 +7,13 @@
     <HomeInbox id="inbox" @click="inboxView"></HomeInbox>
     <FollowedBands id="followed-bands"></FollowedBands>
 
-    <!-- <button v-if="isButtonVisible" id="create-button" @click="showCreateBand = true, hideButton()">Manage a Band!</button> -->
+    <button v-if="isButtonVisible" id="create-button" @click="showCreateBand = true, hideButton()">Manage a Band!</button>
 
-    <!-- <div v-if="showCreateBand" id="modal-overlay">
+    <div v-if="showCreateBand" id="modal-overlay">
       <div id="modal-content">
         <CreateBand id="create-band" @close="closeModal" @band-created="bandCreated"/>
       </div>
-    </div> -->
+    </div>
   </div>
 </template>
 
@@ -24,6 +24,7 @@ import HomeInbox from '../components/HomeInbox.vue';
 import BandService from '../services/BandService';
 import Outbox from '../components/Outbox.vue';
 import ManagedBands from '../components/ManagedBands.vue';
+import CreateBand from '../components/CreateBand.vue';
 
 export default {
   data() {
@@ -41,7 +42,8 @@ export default {
     FollowedBands,
     HomeInbox,
     Outbox,
-    ManagedBands
+    ManagedBands,
+    CreateBand
   },
   created() {
     this.checkIfManager();
@@ -60,7 +62,6 @@ export default {
     bandCreated() {
       this.showCreateBand = false;
       this.isButtonVisible = true;
-      // More code to be added here for band creation
     },
     checkIfManager() {
       BandService.getManagedBands().then(response => {
@@ -126,5 +127,5 @@ export default {
     justify-content: center;
     align-items: flex-start;
   }
-
+  
 </style>
