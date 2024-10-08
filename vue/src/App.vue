@@ -3,6 +3,7 @@
     <div id="nav">
       <div id="left-nav">
         <div class="nav-item">
+          <img src="src/assets/frlogo.png" alt="Front Row Logo" @click="this.$router.push('/')">
           <router-link v-bind:to="{ name: 'home' }" id="home-button">Home</router-link>
         </div>
         <div class="nav-item">
@@ -71,6 +72,8 @@ export default {
   }
 
   .nav-item {
+    display: flex;
+    align-items: center;
     padding: 20px;
   }
 
@@ -122,6 +125,12 @@ export default {
     font-weight: 600;
     align-content: center;
     text-decoration-line: none;
+  }
+
+  img {
+    height: 3vh;
+    object-fit: fill;
+    padding-right: 12px;
   }
   
 

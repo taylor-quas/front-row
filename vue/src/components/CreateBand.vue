@@ -5,7 +5,7 @@
             <h1 id="title">Create a Band</h1>
         </div>
     </header>
-    <form class="content" @submit="submitForm">
+    <form class="content" @submit.prevent="submitForm">
         <div id="cover-image" >
             <ImageUpload :admin="false" v-model="band.band.bandHeroImage" required ></ImageUpload>
         </div>
