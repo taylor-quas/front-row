@@ -6,8 +6,11 @@ export default {
     return axios.get(`/${bandName}/gallery`)
   },
 
-  uploadImage(url) {
-    return axios.post(`/band/gallery-upload`, { url });
+  uploadImage(url, bandName) {
+    return axios.post(`/band/gallery-upload`, {
+      url: url,
+      bandName: bandName
+  });
   }
 
 }

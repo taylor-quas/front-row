@@ -1,7 +1,7 @@
 <template>
   <div>
-    <button v-if="admin" @click="openWidget">Upload Image</button>
-    <button v-else @click="setUrl">Upload Image</button>
+    <button v-if="admin" @click="openWidget">Upload Image to Gallery</button>
+    <button v-else @click="setUrl">Upload Banner Image</button>
   </div>
 </template>
 
@@ -17,6 +17,10 @@ export default {
     modelValue: {
       type: String,
       default: ''
+    },
+    bandName: {
+      type: String,
+      required: false
     }
   },
   data() {
@@ -34,6 +38,7 @@ export default {
         (error, result) => {
           if (!error && result && result.event === 'success') {
             console.log("Done uploading", result.info.secure_url)
+            console.log(this.bandName)
             this.sendImageToServer(result.info.secure_url);
           }
         }
@@ -56,7 +61,7 @@ export default {
       widget.open();
     },
     sendImageToServer(imageUrl) {
-      ImageService.uploadImage(imageUrl)
+      ImageService.uploadImage(imageUrl, this.bandName)
         .then(response => {
           console.log(response.data);
         })
@@ -67,3 +72,22 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+button {
+  padding: 10px 20px;
+  background-color: #999999;  /* Light grey */
+  color: white;               /* White text */
+  border: none;               /* Remove default border */
+  border-radius: 5px;         /* Rounded corners */
+  font-size: 16px;            /* Font size */
+  cursor: pointer;            /* Pointer on hover */
+  transition: background-color 0.3s ease; /* Smooth transition */
+  margin-bottom: 1em;
+  margin-left: 1rem;
+}
+
+button:hover {
+  background-color: #808080;  /* Darker light grey on hover */
+}
+</style>

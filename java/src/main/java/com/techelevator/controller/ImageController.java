@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin
@@ -27,8 +28,8 @@ public class ImageController {
 
     @ResponseStatus(HttpStatus.ACCEPTED)
     @PostMapping("/band/gallery-upload")
-    public void uploadImageToGallery(@RequestBody ImageDto url, Principal principal){
-        imageDao.uploadImage(url, principal);
+    public void uploadImageToGallery(@RequestBody Map<String, String> body){
+        imageDao.uploadImage(body.get("url"), body.get("bandName"));
     }
 
 

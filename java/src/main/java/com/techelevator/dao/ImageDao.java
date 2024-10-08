@@ -12,7 +12,7 @@ public interface ImageDao {
 
     Image getImage(long imageId);
 
-    void uploadImage(ImageDto url, Principal principal);
+    void uploadImage(String url, String bandName);
 
 
 }
