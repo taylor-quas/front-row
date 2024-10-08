@@ -31,6 +31,7 @@
             <h3 id="genre-heading">Add genres</h3>
             <div class="genre-list"> 
                 <GenreSearch class="genre-search" @update:selectedGenres="updateSelectedGenres" required />
+                <GenreSearch class="create-view" @update:selectedGenres="updateSelectedGenres"/>
             </div>
         </div>
         <div v-if="errors.length" class="error-messages">
@@ -135,23 +136,23 @@ export default {
 <style scoped>
 #title {
     text-align: center;
-    margin-top: 10vh;
+    margin-top: 1rem; /* Reduced margin for better spacing */
     background-color: rgba(240, 34, 27, 0.925);
     color: white; /* Better contrast for the title */
     padding: 1rem;
     border-radius: 5px; /* Rounded corners */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+    font-size: 5rem;
 }
 
 .main-container {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: auto; /* Allow height to adjust based on content */
     background-color: #f9f9f9; /* Light background */
 }
 
 .header {
-    flex-shrink: 0;
     padding: 1rem;
 }
 
@@ -162,6 +163,7 @@ export default {
     background-color: #fff; /* Clean white background */
     border-radius: 8px; /* Rounded corners */
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    margin-top: 1rem; /* Add margin top to separate from header */
 }
 
 .input {
@@ -189,11 +191,15 @@ input:focus, textarea:focus {
     text-align: center;
     font-weight: bold;
     margin: 1rem 0; /* Space above and below */
+    color: #474747;
 }
 
 .genre-list {
     text-align: center;
     margin-bottom: 1rem;
+    width: 100%; /* Set to 100% to use full available width */
+    max-width: 100%; /* Set a maximum width if desired */
+    margin: 0 auto; /* Center the genre list */
 }
 
 .button-container {
@@ -300,67 +306,3 @@ input[type="checkbox"]:hover {
 
 
 
-
-
-
-
-
-
-<!-- <style scoped>
-#title {
-    text-align: center;
-    position: relative;
-    margin-top: 10vh;
-    background-color:rgba(240, 34, 27, 0.925);
-}
-
-.genre-list {
-    text-align: center;
-    position: relative;
-    margin-top: 10vh;
-}
-
-.main-container {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
-.header {
-    flex-shrink: 0;
-    padding: 1rem;
-}
-
-.content {
-    flex-grow: 1;
-    overflow-y: auto;
-    padding: 1rem;
-}
-
-input, textarea {
-    width: 100%;
-    margin-bottom: 1rem;
-}
-
-#genre-heading {
-    text-align: center;
-}
-
-.genre-list {
-    margin-bottom: 1rem;
-}
-
-button {
-    margin-right: 1rem;
-}
-
-.input {
-  display: flex;
-  flex-direction: column; 
-  align-items: flex-start; 
-}
-
-.text-field {
-  width: 50px;
-}
-</style> -->

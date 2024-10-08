@@ -4,7 +4,7 @@
             <h2 id="title">Sent Messages</h2>
             <button id="new-message" @click="toggleNewMessage">NEW MESSAGE</button>
         </div>
-        <div id="message-card" v-for="message in filteredMessages" :key="message.messageId">
+        <div id="message-card" v-for="message in sentMessages" :key="message.messageId">
             <MessageComponent :message="message"/>
         </div>
         <p id="outbox-end">No more Messages!</p>
@@ -19,6 +19,7 @@
 <script>
 import MessageComponent from "../components/MessageComponent.vue";
 import CreateMessage from "../components/CreateMessage.vue";
+import MessageService from "../services/MessageService.js";
 
 
 export default {
@@ -30,8 +31,12 @@ export default {
         return {
             messages: [],
             managedBands: [],
-            showNewMessage: false
+            showNewMessage: false,
+            sentMessages: []
         };
+    },
+    created() {
+        this.fetchSentMessages();
     },
     methods: {
         toggleNewMessage() {
@@ -40,6 +45,12 @@ export default {
 
         handleMessageSent() {
             this.toggleNewMessage();
+        },
+
+        fetchSentMessages() {
+            MessageService.getUserOutbox().then(response => {
+                this.sentMessages = response.data;
+            })
         }
     }
 }

@@ -36,4 +36,12 @@ public class MessageController {
         messageDao.sendMessage(message);
     }
 
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @GetMapping("/outbox")
+    public List<MessageBandDto> getMySentMessages(Principal principal) {
+        return messageDao.getOutboxMessages(principal);
+    }
+
+
+
 }
