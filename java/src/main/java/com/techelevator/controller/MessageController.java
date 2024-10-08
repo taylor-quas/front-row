@@ -30,4 +30,10 @@ public class MessageController {
         messageDao.markMessageAsRead(messageId, principal);
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("/send-message")
+    public void sendMessage(@RequestBody Message message) {
+        messageDao.sendMessage(message);
+    }
+
 }

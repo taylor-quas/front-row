@@ -7,6 +7,10 @@ export default {
 
   markAsRead(messageId) {
     return axios.put(`/inbox/${messageId}/read`);
+  },
+
+  sendMessage(message) {
+    return axios.post('/send-message', message);
   }
 
 }

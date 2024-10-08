@@ -56,10 +56,27 @@ public class JdbcMessageDao implements MessageDao {
     }
 
     @Override
-    public Message sendMessage(Message message) {
-        return null;
+    public void sendMessage(Message message) {
+        String sql = "INSERT INTO messages (message_content,message_time_sent," +
+                "message_time_expiration,message_sender) " +
+                "VALUES (?,?,?,?);";
+
+        try {
+            String messageContent = message.getMessageContent();
+            Timestamp messageTimeSent = Timestamp.valueOf(message.getMessageTimeSent());
+            Timestamp messageTimeExpiration = Timestamp.valueOf(message.getMessageTimeExpiration());
+            long messageSender = message.getMessageSender();
+            template.update(sql, messageContent, messageTimeSent, messageTimeExpiration, messageSender);
+
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("Problem connecting");
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("Data problems");
+        }
+
     }
 
+    @Override
     public void markMessageAsRead(long messageId, Principal principal) {
         String sql = "UPDATE message_user " +
                 "SET is_read = TRUE " +

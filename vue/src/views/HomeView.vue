@@ -109,15 +109,12 @@ export default {
     z-index: 1;
   }
 
-  #manager-view {
-    grid-area: manager-view;
-    margin: 5px;
-    border-radius: 20px;
-    display: flex;
-  }
-
   #outbox {
     grid-area: outbox;
+    margin: 5px;
+    border-radius: 20px;
+    justify-content: center;
+    align-items: center;
   }
 
   #managed-bands {

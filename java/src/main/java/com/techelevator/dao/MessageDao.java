@@ -11,7 +11,7 @@ public interface MessageDao {
     List<MessageBandDto> getInboxMessages(Principal principal);
     // messages from the bands that the principal is subscribed to
 
-    Message sendMessage(Message message);
+    void sendMessage(Message message);
 
     void markMessageAsRead(long messageId, Principal principal);
 

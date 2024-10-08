@@ -1,49 +1,49 @@
 <template>
     <main class="main-container">
       <header class="header">
-        <h1 id="title">New Message</h1>
+        <h2 id="title">New Message</h2>
       </header>
         <div class="content">
             <select v-model="selectedBand" id="selected-band">
                 <option disabled value="">Select Band Sending Message</option>
-                <option v-for="band in managedBands" :key="band.bandId" :band="band"
+                <option v-for="band in managedBands" :key="band.bandId" :value="band"
                 >{{ band.band.bandName }}</option>
             </select>
 
-            <input type="text" placeholder="Message">
+            <input id="message-box" type="text" placeholder="Message" v-model="message.messageContent">
 
             <label for="expiration-date">Expiration Date</label>
             <input type="date" id="expiration-date" name="expiration-date" v-model="expirationDate">
+            <label for="expiration-time">Expiration Time</label>
+            <input type="time" id="expiration-time" name="expiration-time" v-model="expirationTime">
 
           <div>
-              <button @click="createBand()" id="create-button">CREATE BAND</button>
-              <button @click="cancel()" id="cancel-button">Cancel</button>
+              <button @click="sendMessage()" id="send-button">SEND MESSAGE</button>
+              <button @click="cancel()" id="cancel-button">CANCEL</button>
           </div>
       </div>
       
     </main>
   </template>
   
-  <script>
-  import BandService from '../services/BandService';
-  import ImageUpload from '../components/ImageUpload.vue';
-  import GenreSearch from './GenreSearch.vue';
-  import { watch } from 'vue';
+<script>
+import BandService from '../services/BandService';
+import MessageService from '../services/MessageService';
   
-  export default {
+export default {
       data() {
           return {
-              band: {
-                  band: {
-                      bandName: '',
-                      bandDescription: '',
-                      bandHeroImage: '',  
-                  },
-                  genreNames: []
-              },
               managedBands: [],
               selectedBand: '',
-              expirationDate: ''
+              expirationDate: '',
+              expirationTime: '23:59',
+              message: {
+                messageContent: '',
+                messageTimeSent: '',
+                messageTimeExpiration: '',
+                messageSender: null,
+              },
+              band: null
           }
       },
       created() {
@@ -69,236 +69,134 @@
             const today = new Date();
             today.setDate(today.getDate() + 14);
             return today.toISOString().split('T')[0];
-          }
-      },
-      watch: {
-          'band.band.bandHeroImage'(newValue) {
-              console.log("Band Hero Image updated: ", newValue);
-          }
-      },
+          },
+
+          sendMessage() {
+            const currentTime = new Date().toISOString();
+            this.message.messageTimeSent = currentTime;
+
+            const expirationDateTime = `${this.expirationDate}T${this.expirationTime}`;
+            this.message.messageTimeExpiration = expirationDateTime;
+
+            this.message.messageSender = this.selectedBand.bandId;
+            
+            MessageService.sendMessage(this.message).then(response => {
+                if (response.status === 201) {
+                    this.$emit('message-sent');
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            });
+          },
+
+      }
   
   }
   </script>
   
   
-  <style scoped>
-  #title {
-      text-align: center;
-      margin-top: 1vh;
-      background-color: rgba(240, 34, 27, 0.925);
-      color: white; /* Better contrast for the title */
-      padding: 1rem;
-      border-radius: 5px; /* Rounded corners */
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
-  }
-  
-  .main-container {
-      display: flex;
-      flex-direction: column;
-      background-color: #f9f9f9; /* Light background */
-      justify-content: center;
-      
-  }
-  
-  .header {
-      flex-shrink: 0;
-      padding: 1rem;
-  }
-  
-  .content {
-      flex-grow: 1;
-      overflow-y: auto;
-      padding: 1rem;
-      background-color: #fff; /* Clean white background */
-      border-radius: 8px; /* Rounded corners */
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-      
-  }
-  
-  .input {
-      display: flex;
-      flex-direction: column;
-      margin-bottom: 1rem; /* Spacing between inputs */
-  }
-  
-  input, textarea {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ccc; /* Light border */
-      border-radius: 4px; /* Rounded corners */
-      background-color: #f4f4f4; /* Light grey background for inputs */
-      transition: border-color 0.3s; /* Smooth transition */
-      font-size: 1rem; /* Standard font size */
-  }
-  
-  input:focus, textarea:focus {
-      border-color: #555; /* Darker border on focus */
-      outline: none; /* Remove default outline */
-  }
-  
-  #genre-heading {
-      text-align: center;
-      font-weight: bold;
-      margin: 1rem 0; /* Space above and below */
-  }
-  
-  .genre-list {
-      text-align: center;
-      margin-bottom: 1rem;
-  }
-  
-  .button-container {
-      display: flex;
-      justify-content: center; /* Center buttons */
-      margin-top: 1rem; /* Space above buttons */
-  }
-  
-  button {
-      padding: 10px 20px; /* Consistent padding */
-      margin: 0 5px; /* Spacing between buttons */
-      border: none; /* No border */
-      border-radius: 4px; /* Rounded corners */
-      cursor: pointer; /* Pointer on hover */
-      font-size: 1rem; /* Standard font size */
-      transition: background-color 0.3s, transform 0.2s; /* Smooth transition */
-  }
-  
-  #create-button {
-      background-color: #333; /* Dark background */
-      color: white; /* White text */
-  }
-  
-  #create-button:hover {
-      background-color: #555; /* Lighter shade on hover */
-      transform: translateY(-1px); /* Lift effect on hover */
-  }
-  
-  #cancel-button {
-      background-color: #ccc; /* Light grey */
-      color: #333; /* Dark text */
-  }
-  
-  #cancel-button:hover {
-      background-color: #aaa; /* Darker grey on hover */
-      transform: translateY(-1px); /* Lift effect on hover */
-  }
-  
-  
-  
-  .genre-search {
-      font-family: Montserrat, sans-serif;
-      color: #1a1a1a; /* Darker grey for text */
-      background-color: #e6e6e6; /* Very light grey background */
-      padding: 25px;
-      border-radius: 10px; /* Rounded corners */
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
-      max-width: 420px; /* Ensure it fits well */
-      margin: 0 auto; /* Center the component */
-  }
-  
-  .genres label {
-      font-size: 18px; /* Maintain readability */
-      color: #1a1a1a; /* Darker grey for "Select All" */
-      font-weight: 600; /* Bold for emphasis */
-      display: flex;
-      align-items: center;
-      margin-bottom: 12px; /* Space below label */
-  }
-  
-  .genre-list {
-      border-top: 1px solid #b3b3b3; /* Medium grey border */
-      padding-top: 15px; /* Space above genres */
-      margin-top: 15px; /* Space above the genre list */
-  }
-  
-  .genre-list label {
-      display: flex;
-      align-items: center;
-      font-size: 16px; /* Consistent font size */
-      color: #333; /* Slightly darker text for better contrast */
-      padding: 10px 0; /* Increased padding for better touch targets */
-      border-bottom: 1px solid #ccc; /* Light grey separator */
-  }
-  
-  .genre-list label:last-of-type {
-      border-bottom: none; /* Remove border for the last item */
-  }
-  
-  input[type="checkbox"] {
-      accent-color: #666; /* Medium grey for checkbox */
-      margin-right: 12px; /* Space between checkbox and label */
-      transform: scale(1.2); /* Slightly larger checkbox for easier clicking */
-  }
-  
-  input[type="checkbox"]:hover {
-      accent-color: #333; /* Darker grey on hover */
-      cursor: pointer; /* Pointer on hover */
-  }
-  
-  /* Additional styling for responsive design */
-  @media (max-width: 480px) {
-      .genre-search {
-          padding: 15px; /* Reduced padding for smaller screens */
-          max-width: 90%; /* Responsive width */
-      }
-  }
-  </style>
-  
-  <!-- <style scoped>
-  #title {
-      text-align: center;
-      position: relative;
-      margin-top: 10vh;
-      background-color:rgba(240, 34, 27, 0.925);
-  }
-  
-  .genre-list {
-      text-align: center;
-      position: relative;
-      margin-top: 10vh;
-  }
-  
-  .main-container {
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-  }
-  
-  .header {
-      flex-shrink: 0;
-      padding: 1rem;
-  }
-  
-  .content {
-      flex-grow: 1;
-      overflow-y: auto;
-      padding: 1rem;
-  }
-  
-  input, textarea {
-      width: 100%;
-      margin-bottom: 1rem;
-  }
-  
-  #genre-heading {
-      text-align: center;
-  }
-  
-  .genre-list {
-      margin-bottom: 1rem;
-  }
-  
-  button {
-      margin-right: 1rem;
-  }
-  
-  .input {
-    display: flex;
-    flex-direction: column; 
-    align-items: flex-start; 
-  }
-  
-  .text-field {
-    width: 50px;
-  }
-  </style> -->
+<style scoped>
+    #title {
+        text-align: center;
+        color: white; /* Better contrast for the title */
+        border-radius: 5px; /* Rounded corners */
+        margin: 0.5em;
+    }
+
+    label {
+        color: white;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .main-container {
+        display: flex;
+        flex-direction: column;
+        background-color: rgb(27, 27, 27); /* Light background */
+        justify-content: center;
+        border: 1px solid white;
+        border-radius: 20px;
+        width: 90%;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        
+    }
+
+    .content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 1em;
+    }
+
+    #selected-band {
+        margin-bottom: 1em;
+        width: fit-content;
+        min-width: 40%;
+        border-radius: 10px;
+    }
+
+    #message-box {
+        margin-bottom: 1em;
+        width: 90%;
+        
+    }
+
+    #expiration-date {
+        margin-bottom: 1em;
+        width: 90%;
+    }
+
+    #expiration-time {
+        margin-bottom: 1em;
+        width: 90%;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc; /* Light border */
+        border-radius: 10px; /* Rounded corners */
+        background-color: #f4f4f4; /* Light grey background for inputs */
+        transition: border-color 0.3s; /* Smooth transition */
+        font-size: 1rem; /* Standard font size */
+    }
+
+    .button-container {
+        display: flex;
+        justify-content: center; /* Center buttons */
+        margin-top: 1rem; /* Space above buttons */
+    }
+
+    button {
+        padding: 10px 20px; /* Consistent padding */
+        margin: 0.5em; /* Spacing between buttons */
+        border: none; /* No border */
+        border-radius: 10px; /* Rounded corners */
+        cursor: pointer; /* Pointer on hover */
+        font-size: 1rem; /* Standard font size */
+        transition: background-color 0.3s, transform 0.2s; /* Smooth transition */
+    }
+
+    #send-button {
+        background-color: white;
+        color: rgb(27, 27, 27);
+    }
+
+    #send-button:hover {
+        background-color: #aaa; /* Lighter shade on hover */
+        transform: translateY(-1px); /* Lift effect on hover */
+    }
+
+    #cancel-button {
+        background-color: white; /* Light grey */
+        color: rgb(27, 27, 27); /* Dark text */
+    }
+
+    #cancel-button:hover {
+        background-color: #aaa; /* Darker grey on hover */
+        transform: translateY(-1px); /* Lift effect on hover */
+    }
+
+</style>
