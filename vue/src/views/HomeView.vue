@@ -1,8 +1,10 @@
 <template>
   <div class="home">
       
-    <Outbox id="outbox" v-if="isManager"></Outbox>
+    <HomeOutbox id="outbox" v-if="isManager"></HomeOutbox>
     <ManagedBands id="managed-bands" v-if="isManager"></ManagedBands>
+
+    <div id="divider"></div>
 
     <HomeInbox id="inbox" @click="inboxView"></HomeInbox>
     <FollowedBands id="followed-bands"></FollowedBands>
@@ -22,9 +24,9 @@ import { useRouter } from 'vue-router';
 import FollowedBands from '../components/FollowedBands.vue';
 import HomeInbox from '../components/HomeInbox.vue';
 import BandService from '../services/BandService';
-import Outbox from '../components/Outbox.vue';
 import ManagedBands from '../components/ManagedBands.vue';
 import CreateBand from '../components/CreateBand.vue';
+import HomeOutbox from '../components/HomeOutbox.vue';
 
 export default {
   data() {
@@ -41,9 +43,9 @@ export default {
   components: {
     FollowedBands,
     HomeInbox,
-    Outbox,
     ManagedBands,
-    CreateBand
+    CreateBand,
+    HomeOutbox
   },
   created() {
     this.checkIfManager();
@@ -78,7 +80,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 
   .home {
     padding-top: 12vh;
@@ -88,15 +90,19 @@ export default {
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-areas: 
       "outbox managed-bands managed-bands"
+      "divider divider divider"
       "inbox followed-bands followed-bands";
     background-color: rgb(22, 22, 22);
   }
 
   #inbox {
     grid-area: inbox;
+    display: flex;
+    flex-direction: column;
     margin: 5px;
     border-radius: 20px;
-    z-index: 1;
+    justify-content: center;
+    align-items: center;
   }
 
   #followed-bands {
@@ -112,6 +118,8 @@ export default {
 
   #outbox {
     grid-area: outbox;
+    display: flex;
+    flex-direction: column;
     margin: 5px;
     border-radius: 20px;
     justify-content: center;
@@ -126,6 +134,13 @@ export default {
     flex-wrap: wrap;
     justify-content: center;
     align-items: flex-start;
+  }
+
+  #divider {
+    grid-area: divider;
+    border-top: 1px solid white;
+    margin: 2.5em;
+    justify-content: center;
   }
   
 </style>

@@ -6,7 +6,6 @@
 
 <script>
 import Inbox from '../components/Inbox.vue';
-import MessageService from '../services/MessageService';
 
 export default {
   components: {
@@ -16,8 +15,8 @@ export default {
 </script>
 
 <style scoped>
-  .inbox {
-    padding-top: 12vh;
-    background-color: rgb(22, 22, 22);
-  }
+.inbox {
+  padding-top: 12vh;
+  background-color: rgb(22, 22, 22);
+}
 </style>
