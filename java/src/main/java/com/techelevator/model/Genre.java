@@ -3,7 +3,8 @@ package com.techelevator.model;
 public class Genre {
 
     private long genreId;
-    private String genreName;
+    public String genreName;
+    public boolean visible;
 
     public long getGenreId() {
         return genreId;
@@ -21,4 +22,11 @@ public class Genre {
         this.genreName = genreName;
     }
 
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
 }

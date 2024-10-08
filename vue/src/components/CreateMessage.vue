@@ -16,8 +16,6 @@
             <input type="date" id="expiration-date" name="expiration-date" v-model="expirationDate">
             <label for="expiration-time">Expiration Time</label>
             <input type="time" id="expiration-time" name="expiration-time" v-model="expirationTime">
-            <p>{{ message }}</p>
-            <p>{{ selectedBand }}</p>
 
           <div>
               <button @click="sendMessage()" id="send-button">SEND MESSAGE</button>

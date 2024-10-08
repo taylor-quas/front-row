@@ -13,6 +13,8 @@ import BandView from '../views/BandView.vue';
 import AnonymousSearchView from '../views/AnonymousSearchView.vue';
 import ProfileView from '../views/ProfileView.vue';
 import EditBand from '../components/EditBand.vue';
+import AdminPanel from '../components/AdminPanel.vue';
+import OutboxView from '../views/OutboxView.vue';
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -56,6 +58,14 @@ const routes = [
     }
   },
   {
+    path: '/admin',
+    name: 'admin',
+    component: AdminPanel,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
     path: '/:bandName',
     name: 'band',
     component: BandView,
@@ -75,6 +85,14 @@ const routes = [
     path: '/inbox',
     name: 'inbox',
     component: InboxView,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/outbox',
+    name: 'outbox',
+    component: OutboxView,
     meta: {
       requiresAuth: true
     }

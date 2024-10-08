@@ -47,6 +47,7 @@ CREATE TABLE user_band (
 CREATE TABLE genres (
     genre_id SERIAL,
     genre_name VARCHAR(20) NOT NULL UNIQUE,
+    visible boolean DEFAULT TRUE,
     CONSTRAINT PK_genre PRIMARY KEY (genre_id)
 );
 
@@ -72,7 +73,8 @@ CREATE TABLE message_user (
     user_id int NOT NULL,
     is_read boolean DEFAULT FALSE,
     CONSTRAINT FK_message_message_user FOREIGN KEY (message_id) REFERENCES messages(message_id),
-    CONSTRAINT FK_user_user_message FOREIGN KEY (user_id) REFERENCES users(user_id)
+    CONSTRAINT FK_user_user_message FOREIGN KEY (user_id) REFERENCES users(user_id),
+    UNIQUE (message_id, user_id)
 );
 
 CREATE TABLE events (

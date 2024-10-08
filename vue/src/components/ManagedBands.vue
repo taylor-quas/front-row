@@ -87,12 +87,12 @@
   };
   </script>
   
-  <style>
+  <style scoped>
   
   #managed-bands {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    grid-gap: 0.5em;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
   
   }
 

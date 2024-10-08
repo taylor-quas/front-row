@@ -5,9 +5,9 @@
             <h1 id="title">Create a Band</h1>
         </div>
     </header>
-    <div class="content">
+    <form class="content" @submit="submitForm">
         <div id="cover-image" >
-            <ImageUpload :admin="false" v-model="band.band.bandHeroImage"></ImageUpload>
+            <ImageUpload :admin="false" v-model="band.band.bandHeroImage" required ></ImageUpload>
         </div>
         <!-- :imageUrl="band.band.bandHeroImage" -->
         <div class="input">
@@ -16,6 +16,7 @@
             class="text-field"
             type="text"
             placeholder="Band Name"
+            required
             >
         </div>
         <div class="input">
@@ -23,19 +24,26 @@
             v-model="band.band.bandDescription"
             class="text-field"
             placeholder="Band Description"
+            required
             ></textarea>
         </div>
         <div>
             <h3 id="genre-heading">Add genres</h3>
             <div class="genre-list"> 
+                <GenreSearch class="genre-search" @update:selectedGenres="updateSelectedGenres" required />
                 <GenreSearch class="create-view" @update:selectedGenres="updateSelectedGenres"/>
             </div>
         </div>
+        <div v-if="errors.length" class="error-messages">
+            <ul>
+            <li v-for="error in errors" :key="error">{{ error }}</li>
+            </ul>
+         </div>
         <div class="button-container">
-            <button @click="createBand()" id="create-button">CREATE BAND</button>
-            <button @click="cancel()" id="cancel-button">Cancel</button>
+            <button type="submit" id="create-button">CREATE BAND</button>
+            <button @keyup.esc="cancel()" @click="cancel()" id="cancel-button">Cancel</button>
         </div>
-    </div>
+    </form>
     
   </main>
 </template>
@@ -49,6 +57,7 @@ import { watch } from 'vue';
 export default {
     data() {
         return {
+            errors: [],
             band: {
                 band: {
                     bandName: '',
@@ -90,6 +99,29 @@ export default {
         },
         mounted() {
             this.debugger();
+        },
+        checkForm() {
+            this.errors = [];
+
+            if (!this.band.band.bandName) {
+                this.errors.push('Name required.');
+            }
+            if (!this.band.band.bandDescription) {
+                this.errors.push('Description required.');
+            }
+            if (!this.band.band.bandHeroImage) {
+                this.errors.push('Image required.');
+            }
+            if (this.band.genreNames.length === 0) {
+                this.errors.push('At least one genre is required.');
+            }
+
+            return this.errors.length === 0;
+        },
+        submitForm() {
+            if (this.checkForm()) {
+                this.createBand();
+            }
         }
     },
     watch: {
@@ -97,7 +129,6 @@ export default {
             console.log("Band Hero Image updated: ", newValue);
         }
     },
-
 }
 </script>
 
@@ -207,6 +238,68 @@ button {
     transform: translateY(-1px); /* Lift effect on hover */
 }
 
+.error-messages {
+  color: red;
+  margin-bottom: 10px;
+}
+
+.genre-search {
+    font-family: Montserrat, sans-serif;
+    color: #1a1a1a; /* Darker grey for text */
+    background-color: #e6e6e6; /* Very light grey background */
+    padding: 25px;
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    max-width: 420px; /* Ensure it fits well */
+    margin: 0 auto; /* Center the component */
+}
+
+.genres label {
+    font-size: 18px; /* Maintain readability */
+    color: #1a1a1a; /* Darker grey for "Select All" */
+    font-weight: 600; /* Bold for emphasis */
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px; /* Space below label */
+}
+
+.genre-list {
+    border-top: 1px solid #b3b3b3; /* Medium grey border */
+    padding-top: 15px; /* Space above genres */
+    margin-top: 15px; /* Space above the genre list */
+}
+
+.genre-list label {
+    display: flex;
+    align-items: center;
+    font-size: 16px; /* Consistent font size */
+    color: #333; /* Slightly darker text for better contrast */
+    padding: 10px 0; /* Increased padding for better touch targets */
+    border-bottom: 1px solid #ccc; /* Light grey separator */
+}
+
+.genre-list label:last-of-type {
+    border-bottom: none; /* Remove border for the last item */
+}
+
+input[type="checkbox"] {
+    accent-color: #666; /* Medium grey for checkbox */
+    margin-right: 12px; /* Space between checkbox and label */
+    transform: scale(1.2); /* Slightly larger checkbox for easier clicking */
+}
+
+input[type="checkbox"]:hover {
+    accent-color: #333; /* Darker grey on hover */
+    cursor: pointer; /* Pointer on hover */
+}
+
+/* Additional styling for responsive design */
+@media (max-width: 480px) {
+    .genre-search {
+        padding: 15px; /* Reduced padding for smaller screens */
+        max-width: 90%; /* Responsive width */
+    }
+}
 </style>
 
 
