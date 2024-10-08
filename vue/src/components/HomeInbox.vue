@@ -1,7 +1,7 @@
 <template>
   <div id="inbox">
     <h2>My Messages</h2>
-    <div id="message-card" v-for="message in sortedMessages" :key="message.messageId">
+    <div id="message-card" v-for="message in sortedMessages" :key="message.message.messageId">
       <MiniMessageComponent :message="message" :isRead="message.isRead" @markAsRead="handleMarkAsRead" />
     </div>
   </div>
@@ -70,7 +70,7 @@ export default {
   },
   created() {
     this.fetchInboxMessages();
-    this.startPolling();
+    // this.startPolling();
     BandService.getFollowedBands().then(response => {
       this.followedBands = response.data;
     })
@@ -84,9 +84,9 @@ export default {
   //     this.fetchInboxMessages();
   //   }
   // },
-  beforeUnmount() {
-    this.stopPolling();
-  },
+  // beforeUnmount() {
+  //   this.stopPolling();
+  // },
   methods: {
     handleMarkAsRead(messageId) {
       MessageService.markAsRead(messageId).then(() => {
@@ -102,22 +102,24 @@ export default {
 
     fetchInboxMessages() {
       MessageService.getUserInbox().then(response => {
+        console.log(response.data);
         this.messages = response.data;
+        
       })
         .catch(error => {
           console.error(error);
         });
     },
 
-    startPolling() {
-      this.pollInterval = setInterval(() => {
-        this.fetchInboxMessages();
-      }, 30000);
-    },
+    // startPolling() {
+    //   this.pollInterval = setInterval(() => {
+    //     this.fetchInboxMessages();
+    //   }, 30000);
+    // },
 
-    stopPolling() {
-      clearInterval(this.pollInterval);
-    }
+    // stopPolling() {
+    //   clearInterval(this.pollInterval);
+    // }
   }
 }
 </script>
