@@ -17,6 +17,8 @@ public interface MessageDao {
 
     void markMessageAsRead(long messageId, Principal principal);
 
+    void markAllAsRead(Principal principal);
+
     boolean getIsReadByMessageIdAndUserId(Principal principal, long messageId);
 
 }

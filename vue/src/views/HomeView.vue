@@ -4,12 +4,12 @@
     <HomeOutbox id="outbox" v-if="isManager"></HomeOutbox>
     <ManagedBands id="managed-bands" v-if="isManager"></ManagedBands>
 
-    <div id="divider"></div>
+    <div id="divider" v-if="isManager"></div>
 
     <HomeInbox id="inbox" @click="inboxView"></HomeInbox>
     <FollowedBands id="followed-bands"></FollowedBands>
 
-    <button v-if="isButtonVisible" id="create-button" @click="showCreateBand = true, hideButton()">Manage a Band!</button>
+    <button v-if="!isManager" id="create-button" @click="showCreateBand = true, hideButton()">Manage a Band!</button>
 
     <div v-if="showCreateBand" id="modal-overlay">
       <div id="modal-content">
