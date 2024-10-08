@@ -28,7 +28,7 @@
         <div>
             <h3 id="genre-heading">Add genres</h3>
             <div class="genre-list"> 
-                <GenreSearch class="genre-search" @update:selectedGenres="updateSelectedGenres"/>
+                <GenreSearch class="create-view" @update:selectedGenres="updateSelectedGenres"/>
             </div>
         </div>
         <div class="button-container">
@@ -105,23 +105,23 @@ export default {
 <style scoped>
 #title {
     text-align: center;
-    margin-top: 10vh;
+    margin-top: 1rem; /* Reduced margin for better spacing */
     background-color: rgba(240, 34, 27, 0.925);
     color: white; /* Better contrast for the title */
     padding: 1rem;
     border-radius: 5px; /* Rounded corners */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+    font-size: 5rem;
 }
 
 .main-container {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: auto; /* Allow height to adjust based on content */
     background-color: #f9f9f9; /* Light background */
 }
 
 .header {
-    flex-shrink: 0;
     padding: 1rem;
 }
 
@@ -132,6 +132,7 @@ export default {
     background-color: #fff; /* Clean white background */
     border-radius: 8px; /* Rounded corners */
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    margin-top: 1rem; /* Add margin top to separate from header */
 }
 
 .input {
@@ -159,11 +160,15 @@ input:focus, textarea:focus {
     text-align: center;
     font-weight: bold;
     margin: 1rem 0; /* Space above and below */
+    color: #474747;
 }
 
 .genre-list {
     text-align: center;
     margin-bottom: 1rem;
+    width: 100%; /* Set to 100% to use full available width */
+    max-width: 100%; /* Set a maximum width if desired */
+    margin: 0 auto; /* Center the genre list */
 }
 
 .button-container {
@@ -202,132 +207,9 @@ button {
     transform: translateY(-1px); /* Lift effect on hover */
 }
 
-
-
-.genre-search {
-    font-family: Montserrat, sans-serif;
-    color: #1a1a1a; /* Darker grey for text */
-    background-color: #e6e6e6; /* Very light grey background */
-    padding: 25px;
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
-    max-width: 420px; /* Ensure it fits well */
-    margin: 0 auto; /* Center the component */
-}
-
-.genres label {
-    font-size: 18px; /* Maintain readability */
-    color: #1a1a1a; /* Darker grey for "Select All" */
-    font-weight: 600; /* Bold for emphasis */
-    display: flex;
-    align-items: center;
-    margin-bottom: 12px; /* Space below label */
-}
-
-.genre-list {
-    border-top: 1px solid #b3b3b3; /* Medium grey border */
-    padding-top: 15px; /* Space above genres */
-    margin-top: 15px; /* Space above the genre list */
-}
-
-.genre-list label {
-    display: flex;
-    align-items: center;
-    font-size: 16px; /* Consistent font size */
-    color: #333; /* Slightly darker text for better contrast */
-    padding: 10px 0; /* Increased padding for better touch targets */
-    border-bottom: 1px solid #ccc; /* Light grey separator */
-}
-
-.genre-list label:last-of-type {
-    border-bottom: none; /* Remove border for the last item */
-}
-
-input[type="checkbox"] {
-    accent-color: #666; /* Medium grey for checkbox */
-    margin-right: 12px; /* Space between checkbox and label */
-    transform: scale(1.2); /* Slightly larger checkbox for easier clicking */
-}
-
-input[type="checkbox"]:hover {
-    accent-color: #333; /* Darker grey on hover */
-    cursor: pointer; /* Pointer on hover */
-}
-
-/* Additional styling for responsive design */
-@media (max-width: 480px) {
-    .genre-search {
-        padding: 15px; /* Reduced padding for smaller screens */
-        max-width: 90%; /* Responsive width */
-    }
-}
 </style>
 
 
 
 
 
-
-
-
-
-
-
-<!-- <style scoped>
-#title {
-    text-align: center;
-    position: relative;
-    margin-top: 10vh;
-    background-color:rgba(240, 34, 27, 0.925);
-}
-
-.genre-list {
-    text-align: center;
-    position: relative;
-    margin-top: 10vh;
-}
-
-.main-container {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
-.header {
-    flex-shrink: 0;
-    padding: 1rem;
-}
-
-.content {
-    flex-grow: 1;
-    overflow-y: auto;
-    padding: 1rem;
-}
-
-input, textarea {
-    width: 100%;
-    margin-bottom: 1rem;
-}
-
-#genre-heading {
-    text-align: center;
-}
-
-.genre-list {
-    margin-bottom: 1rem;
-}
-
-button {
-    margin-right: 1rem;
-}
-
-.input {
-  display: flex;
-  flex-direction: column; 
-  align-items: flex-start; 
-}
-
-.text-field {
-  width: 50px;
-}
-</style> -->
