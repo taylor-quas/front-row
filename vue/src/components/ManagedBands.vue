@@ -6,6 +6,7 @@
           <div id="managed-bands">
             <div id="add-band" @click="showCreateBand = true">
               <img id="plus-sign" src="../assets/plus-sign-icon-2048x2048-mp0pz4g8.png" alt="Add Band" />
+              <h4>MANAGE A NEW BAND</h4>
             </div>
             <BandComponent v-for="band in managedBands" :key="band.bandId" :band="band"/>
           </div>
