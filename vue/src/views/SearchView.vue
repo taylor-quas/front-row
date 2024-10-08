@@ -5,7 +5,7 @@
       <GenreSearch class="search-view" id="genres" @update:selectedGenres="updateSelectedGenres" />
     </div>
     <div id="search-results"> 
-      <BandSearch id="bands" :searchQuery="searchQuery" :bands="bands" :selectedGenres="selectedGenres"/>
+      <BandSearch class="known" id="bands" :searchQuery="searchQuery" :bands="bands" :selectedGenres="selectedGenres"/>
     </div>
   </div>
 </template>
@@ -78,32 +78,5 @@ h3 {
   font-weight: 500;
   line-height: normal;
 }
-
-
-
-
-
-
-
-/* .search-view .genre-list {
-    border-top: 1px solid #b3b3b3; 
-    padding-top: 15px;
-    margin-top: 15px;
-}
-
-.search-view .genre-list label {
-    display: flex;
-    align-items: center;
-    font-size: 16px;
-    color: #333;
-    padding: 8px 0;
-    border-bottom: 1px solid #ccc; 
-}
-
-.search-view .genre-list label:last-of-type {
-    border-bottom: none; 
-} */
-
-
 
 </style>

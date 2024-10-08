@@ -3,12 +3,17 @@
     <div v-if="$store.state.token == ''" @click="$router.push('/fbc')">
       <h4 style="color: red;">X</h4>
     </div>
-    <div id="band-results-grid" v-if="filteredBands.length > 0">
-      <BandComponent v-for="band in filteredBands" :key="band.bandId" :band="band" :hasMessage="false" />
+    <div :class="['band-results-grid', customClass]" v-if="filteredBands.length > 0">
+      <BandComponent 
+        v-for="band in filteredBands" 
+        :key="band.bandId" 
+        :band="band" 
+        :hasMessage="false" 
+      />
     </div>
     <div v-else>
       <br><br><br>
-      <p id="no-bands">No bands found</p>
+      <p id="no-bands">No Bands Found</p>
     </div>
   </div>
 </template>
@@ -26,6 +31,10 @@ export default {
     selectedGenres: {
       type: Array,
       required: false
+    },
+    customClass: {
+      type: String,
+      default: ''
     }
   },
   components: {
@@ -96,12 +105,23 @@ export default {
 </script>
 
 <style>
-#band-results-grid {
-  margin: 5px;
+.anonymous .band-results-grid {
+  margin: 10px;
+  margin-top: 2rem;
   border-radius: 20px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: flex-start;
+  z-index: 1;
+}
+
+.known .band-results-grid {
+  margin: 5px;
+  margin-top: 2rem;
+  border-radius: 20px;
+  display: flex;
+  flex-wrap: wrap;
   align-items: flex-start;
   z-index: 1;
 }
@@ -119,5 +139,6 @@ export default {
   align-items: flex-start;
   font-weight: bold;
 }
+
 
 </style>
