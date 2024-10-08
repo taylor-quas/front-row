@@ -53,7 +53,7 @@
   }
   </script>
   
-  <style>
+  <style scoped>
   
   .messageComponent {
       display: flex;
@@ -61,7 +61,7 @@
       margin: 5px;
       background-color: rgb(27, 27, 27);
       color: white;
-      padding: 5px;
+      padding: 0.5em;
       align-content: center;
       justify-content: center;
       width: 90%;
@@ -80,7 +80,7 @@
       flex-direction: column;
       align-items: flex-start;
       justify-content: center;
-      margin: 0.5em;
+      margin-bottom: 0.5em;
       text-align: left;
       
   }
@@ -89,6 +89,7 @@
       font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
       font-size: 2em;
       text-align: left;
+      margin-top: 0.2em;
   }
   
   #band-date h4 {
