@@ -29,7 +29,7 @@ public class JdbcMessageDao implements MessageDao {
     @Override
     public List<MessageBandDto> getInboxMessages(Principal principal) {
         List<MessageBandDto> messages = new ArrayList<>();
-        String sql = "SELECT m.message_id, message_content, message_time_sent, message_time_expiration, message_sender, mu.is_read " +
+        String sql = "SELECT DISTINCT m.message_id, message_content, message_time_sent, message_time_expiration, message_sender, mu.is_read " +
                 "FROM messages m " +
                 "JOIN user_band ub ON ub.band_id = m.message_sender " +
                 "JOIN message_user mu ON m.message_id = mu.message_id " +
@@ -95,6 +95,9 @@ public class JdbcMessageDao implements MessageDao {
             Timestamp messageTimeSent = Timestamp.valueOf(message.getMessageTimeSent());
             Timestamp messageTimeExpiration = Timestamp.valueOf(message.getMessageTimeExpiration());
             long messageSender = message.getMessageSender();
+
+            System.out.println("Sending message: " + messageContent + " from Sender ID: " + messageSender);
+
             long messageId = template.queryForObject(sql, new Object[]{messageContent, messageTimeSent, messageTimeExpiration, messageSender}, Long.class);
 
             addMessageToUsers(messageId, messageSender);
@@ -210,6 +213,9 @@ public class JdbcMessageDao implements MessageDao {
 
             while(results.next()) {
                 long userId = results.getLong("user_id");
+
+                System.out.println("Assigning message ID: " + messageId + " to User ID: " + userId);
+
                 String insertSql = "INSERT INTO message_user (message_id, user_id, is_read) " +
                         "VALUES (?, ?, false);";
                 template.update(insertSql, messageId, userId);
