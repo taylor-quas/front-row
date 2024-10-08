@@ -121,22 +121,31 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    margin-bottom: 1rem;
-    
+    margin-bottom: 1.5rem;
+    width: 100%;
   }
 
   label {
-    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 18px;
+    color: white;
   }
 
   h1 {
     font-size: 48px;
+    color: white;
   }
 
 
   #register {
     background-color: rgb(22, 22, 22);
     z-index: 50;
+    padding-bottom: 12vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding-top: 12vh;
   }
 
   #alert {
@@ -149,13 +158,7 @@ export default {
     color: white;
     margin: 20px;
     padding: 20px;
-  }
-
-  #register {
-    padding-bottom: 12vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    border-radius: 10px;
   }
 
   #router-link {
@@ -163,13 +166,18 @@ export default {
   }
 
   #title{
-    margin-bottom: 40px;
+    margin-bottom: 1em;
+    text-align: center;
   }
 
   input {
     width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
+    padding: 12px 15px;
+    margin-bottom: 8px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    border-radius: 10px;
+    font-size: 16px;
     box-sizing: border-box;
   }
 
@@ -194,10 +202,19 @@ export default {
     width: 100%;
   }
 
+  #register-form {
+    width: 100%;
+    max-width: 400px;
+    background-color: rgb(22, 22, 22);
+    padding: 20px;
+    border-radius: 10px;
+  }
+
   .register-alert {
     color: red;
     font-family: Montserrat;
     font-size: 16px;
+    margin-top: 5px;
   }
 
   #register-button {
