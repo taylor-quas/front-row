@@ -15,4 +15,6 @@ public interface GenreDao {
 
     void addGenre(GenreDto genre);
 
+    void updateGenres(List<Genre> genres);
+
 }

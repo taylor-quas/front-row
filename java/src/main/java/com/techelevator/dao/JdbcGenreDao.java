@@ -103,6 +103,22 @@ public class  JdbcGenreDao implements GenreDao {
         }
     }
 
+    @Override
+    public void updateGenres(List<Genre> genres){
+        String sql = "UPDATE genres SET visible = ? WHERE genre_id = ?;";
+
+        try {
+            for (Genre genre : genres) {
+                template.update(sql, genre.visible, genre.getGenreId());
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("Problem connecting");
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("Data problems");
+        }
+
+    }
+
     private Genre mapRowToGenre(SqlRowSet rowSet) {
         Genre genre = new Genre();
         genre.setGenreId(rowSet.getLong("genre_id"));
