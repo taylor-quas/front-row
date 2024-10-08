@@ -3,6 +3,7 @@
     <div id="nav">
       <div id="left-nav">
         <div class="nav-item">
+          <img src="src/assets/frlogo.png" alt="Front Row Logo" @click="this.$router.push('/')">
           <router-link v-bind:to="{ name: 'home' }" id="home-button">Home</router-link>
         </div>
         <div class="nav-item">
@@ -71,7 +72,10 @@ export default {
   }
 
   .nav-item {
+    display: flex;
+    align-items: center;
     padding: 20px;
+    box-sizing: border-box;
   }
 
   #left-nav {
@@ -105,6 +109,9 @@ export default {
   #searchbox {
     outline: none;  
     border: none;
+    width: 100%; 
+    background: transparent; 
+
   }
 
   #searchbox-wrapper {
@@ -113,6 +120,14 @@ export default {
     height: 1.5rem;
     border: 2px solid black;
     border-radius: 16px;
+    padding: 0 10px; 
+    align-items: center; 
+    box-sizing: border-box; 
+  }
+
+  #searchbox::placeholder {
+    color: #999; 
+    font-size: 14px; 
   }
 
   #profile-button {
@@ -122,6 +137,12 @@ export default {
     font-weight: 600;
     align-content: center;
     text-decoration-line: none;
+  }
+
+  img {
+    height: 3vh;
+    object-fit: fill;
+    padding-right: 12px;
   }
   
 

@@ -14,7 +14,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
   .profile {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     display: grid;

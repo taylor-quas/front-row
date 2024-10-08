@@ -101,7 +101,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .anonymous .band-results-grid {
   margin: 10px;
   margin-top: 2rem;
