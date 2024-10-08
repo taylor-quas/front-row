@@ -1,7 +1,7 @@
 <template>
     <div id="bands">
-      <div>
-        <h2>Bands I Manage</h2>
+      <div id="managed-bands-container">
+        <h2>Managed Bands</h2>
         
           <div id="managed-bands">
             <div id="add-band" @click="showCreateBand = true">
@@ -94,7 +94,22 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-  
+    justify-content: center; /* Centers the band components */
+    width: 100%;
+    max-width: 1200px; /* Adjust this value based on your design preferences */
+  }
+
+  #managed-bands-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  #managed-bands-container h2 {
+    text-align: center;
+    width: 100%;
+    margin-bottom: 20px; /* Adjust as needed */
   }
 
   #add-band {
