@@ -56,17 +56,50 @@ public class JdbcMessageDao implements MessageDao {
     }
 
     @Override
+    public List<MessageBandDto> getOutboxMessages(Principal principal) {
+        List<MessageBandDto> messages = new ArrayList<>();
+        String sql = "SELECT message_id, message_content, message_time_sent, message_time_expiration, message_sender " +
+                "FROM messages " +
+                "JOIN bands ON messages.message_sender = bands.band_id " +
+                "WHERE bands.band_manager_id = ? " +
+                "ORDER BY message_time_sent DESC;";
+
+        long principalId = getUserIdByUsername(principal.getName());
+
+        try {
+            SqlRowSet results = template.queryForRowSet(sql, principalId);
+            while (results.next()) {
+                MessageBandDto messageBandDto = mapRowToMessageBandDto(results);
+                messageBandDto.setBandName(getBandNameByMessageSender(messageBandDto.getMessage().getMessageSender()));
+                messageBandDto.setIsRead(true);
+                messages.add(messageBandDto);
+            }
+
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("Problem connecting");
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("Data problems");
+        }
+
+        return messages;
+    }
+
+    @Override
     public void sendMessage(Message message) {
         String sql = "INSERT INTO messages (message_content,message_time_sent," +
                 "message_time_expiration,message_sender) " +
-                "VALUES (?,?,?,?);";
+                "VALUES (?,?,?,?) RETURNING message_id;";
 
         try {
             String messageContent = message.getMessageContent();
             Timestamp messageTimeSent = Timestamp.valueOf(message.getMessageTimeSent());
             Timestamp messageTimeExpiration = Timestamp.valueOf(message.getMessageTimeExpiration());
             long messageSender = message.getMessageSender();
-            template.update(sql, messageContent, messageTimeSent, messageTimeExpiration, messageSender);
+            long messageId = template.queryForObject(sql, new Object[]{messageContent, messageTimeSent, messageTimeExpiration, messageSender}, Long.class);
+
+            addMessageToUsers(messageId, messageSender);
+
+//            template.update(sql, messageContent, messageTimeSent, messageTimeExpiration, messageSender);
 
         } catch (CannotGetJdbcConnectionException e) {
             System.out.println("Problem connecting");
@@ -166,6 +199,26 @@ public class JdbcMessageDao implements MessageDao {
         String bandName = template.queryForObject(sql, new Object[]{messageSender}, String.class);
 
         return bandName;
+
+    }
+
+    private void addMessageToUsers(long messageId, long messageSender) {
+        String sql = "SELECT user_id FROM user_band WHERE band_id = ?";
+
+        try {
+            SqlRowSet results = template.queryForRowSet(sql, messageSender);
+
+            while(results.next()) {
+                long userId = results.getLong("user_id");
+                String insertSql = "INSERT INTO message_user (message_id, user_id, is_read) " +
+                        "VALUES (?, ?, false);";
+                template.update(insertSql, messageId, userId);
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("Problem connecting");
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("Data problems");
+        }
 
     }
 

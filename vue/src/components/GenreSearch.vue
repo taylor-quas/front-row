@@ -1,5 +1,5 @@
 <template>
-    <div class="genre-search">
+    <div :class="['genre-search', customClass]">
       <div class="genres">
         <label>
           <input 
@@ -27,6 +27,12 @@
 import BandService from '../services/BandService';
 
 export default {
+  props: {
+    customClass: {
+      type: String,
+      default: ''
+    }
+  },
   data() {
     return {
       genres: [], 
@@ -67,7 +73,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .genre-search {
     font-family: Montserrat, sans-serif;
     color: #1a1a1a; /* Darker grey for text */
@@ -75,7 +81,6 @@ export default {
     padding: 25px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
-    max-width: 420px;
     margin: 0 auto;
 }
 
@@ -88,25 +93,6 @@ export default {
     margin-bottom: 12px;
 }
 
-.genre-list {
-    border-top: 1px solid #b3b3b3; /* Medium grey border to separate sections */
-    padding-top: 15px;
-    margin-top: 15px;
-}
-
-.genre-list label {
-    display: flex;
-    align-items: center;
-    font-size: 16px;
-    color: #333;
-    padding: 8px 0;
-    border-bottom: 1px solid #ccc; /* Light grey separator between genres */
-}
-
-.genre-list label:last-of-type {
-    border-bottom: none; /* Remove bottom border for the last item */
-}
-
 input[type="checkbox"] {
     accent-color: #666; /* Medium grey for checkbox */
     margin-right: 12px;
@@ -116,6 +102,65 @@ input[type="checkbox"] {
 input[type="checkbox"]:hover {
     accent-color: #333; /* Darker grey on hover */
     cursor: pointer;
+}
+
+.search-view .genre-list {
+    border-top: 1px solid #b3b3b3; /* Medium grey border to separate sections */
+    padding-top: 15px;
+    margin-top: 15px;
+}
+
+.search-view .genre-list label {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    color: #333;
+    padding: 8px 0;
+    border-bottom: 1px solid #ccc; /* Light grey separator between genres */
+}
+
+.search-view .genre-list label:last-of-type {
+    border-bottom: none; /* Remove bottom border for the last item */
+}
+
+.create-view .genre-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px; /* Adjusted spacing between genre items */
+  margin-top: 10px;
+  justify-content: center; /* Center align genres */
+}
+
+.create-view .genre-list label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f0f0; /* Light background */
+  border: 1px solid #d3d3d3; /* Subtle border */
+  border-radius: 8px; /* Rounded corners */
+  padding: 6px 10px; /* Spacing within each genre item */
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  flex: 0 1 calc(25% - 8px); /* Responsive four-column layout */
+  max-width: calc(25% - 8px); /* Adjust max-width for four columns */
+  box-sizing: border-box;
+}
+
+.create-view .genre-list label:hover {
+  background-color: #e0e0e0; /* Slightly darker on hover */
+  transform: scale(1.02); /* Small scaling effect */
+}
+
+.create-view .genre-list input[type="checkbox"] {
+  margin-right: 8px; /* Space between checkbox and label */
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+  .create-view .genre-list label {
+    flex: 0 1 calc(100% - 8px); /* Single-column layout on smaller screens */
+    max-width: calc(100% - 8px);
+  }
 }
 
 </style>

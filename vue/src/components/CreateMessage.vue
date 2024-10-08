@@ -60,10 +60,10 @@ export default {
               });
           },
           cancel() {
-          this.$emit('close');
+            this.$emit('close');
           },
           mounted() {
-              this.debugger();
+            this.debugger();
           },
           getDefaultExpirationDate() {
             const today = new Date();
@@ -72,13 +72,17 @@ export default {
           },
 
           sendMessage() {
+            console.log('Selected Band: ', this.selectedBand);
+
             const currentTime = new Date().toISOString();
             this.message.messageTimeSent = currentTime;
 
-            const expirationDateTime = `${this.expirationDate}T${this.expirationTime}`;
+            const expirationDateTime = `${this.expirationDate}T${this.expirationTime}:00`;
             this.message.messageTimeExpiration = expirationDateTime;
 
-            this.message.messageSender = this.selectedBand.bandId;
+            this.message.messageSender = this.selectedBand.band.bandId;
+
+            console.log('Message: ', this.message);
             
             MessageService.sendMessage(this.message).then(response => {
                 if (response.status === 201) {

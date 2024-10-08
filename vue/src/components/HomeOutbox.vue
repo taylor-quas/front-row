@@ -2,38 +2,48 @@
     <div id="outbox">
         <div id="header">
             <h2 id="title">Sent Messages</h2>
-            <button id="new-message" @click="toggleNewMessage">NEW MESSAGE</button>
+            <div id="buttons">
+                <button id="new-message" @click="toggleNewMessage">NEW MESSAGE</button>
+            </div>
         </div>
         <div v-if="showNewMessage" id="new-message-form">
             <CreateMessage @message-sent="handleMessageSent" @close="toggleNewMessage"></CreateMessage>
         </div>
-        <div id="message-card" v-for="message in sentMessages" :key="message.messageId">
-            <MessageComponent :message="message" :isRead="true"/>
+        <div id="message-card" v-for="message in limitedMessages" :key="message.messageId" @click="outboxView">
+            <mini-message-component :message="message" :isRead="true" />
         </div>
+        <button id="to-outbox" @click="outboxView">SEE ALL SENT MESSAGES</button>
+
     </div>
 </template>
 
 <script>
-import MessageComponent from "../components/MessageComponent.vue";
 import CreateMessage from "../components/CreateMessage.vue";
 import MessageService from "../services/MessageService.js";
+import MiniMessageComponent from './MiniMessageComponent.vue';
 
 
 export default {
     components: {
-        MessageComponent,
-        CreateMessage
+        CreateMessage,
+        MiniMessageComponent
     },
     data() {
         return {
             messages: [],
             managedBands: [],
             showNewMessage: false,
-            sentMessages: []
+            sentMessages: [],
+            messageLimit: 3
         };
     },
     created() {
         this.fetchSentMessages();
+    },
+    computed: {
+        limitedMessages() {
+            return this.sentMessages.slice(0, this.messageLimit);
+        }
     },
     methods: {
         toggleNewMessage() {
@@ -48,7 +58,10 @@ export default {
             MessageService.getUserOutbox().then(response => {
                 this.sentMessages = response.data;
             })
-        }
+        },
+        outboxView() {
+            this.$router.push('/outbox');
+        },
     }
 }
 
@@ -56,7 +69,6 @@ export default {
 
 <style scoped>
 #message-card {
-    display: flex;
     width: 100%;
     padding: 5px;
 }
@@ -78,7 +90,8 @@ export default {
     padding: 5px;
 }
 
-#new-message {
+#new-message,
+#to-outbox {
     background-color: white;
     color: rgb(27, 27, 27);
     padding: 10px 20px;
@@ -97,7 +110,8 @@ export default {
     /* Smooth transition */
 }
 
-#new-message:hover {
+#new-message:hover,
+#to-outbox:hover {
     background-color: #aaa;
     /* Lighter shade on hover */
     transform: translateY(-1px);
@@ -105,7 +119,6 @@ export default {
 }
 
 #header {
-    margin-top: 10vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
