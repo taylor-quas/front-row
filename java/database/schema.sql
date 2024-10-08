@@ -47,6 +47,7 @@ CREATE TABLE user_band (
 CREATE TABLE genres (
     genre_id SERIAL,
     genre_name VARCHAR(20) NOT NULL UNIQUE,
+    visible boolean DEFAULT TRUE,
     CONSTRAINT PK_genre PRIMARY KEY (genre_id)
 );
 

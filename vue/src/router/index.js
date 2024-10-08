@@ -13,6 +13,7 @@ import BandView from '../views/BandView.vue';
 import AnonymousSearchView from '../views/AnonymousSearchView.vue';
 import ProfileView from '../views/ProfileView.vue';
 import EditBand from '../components/EditBand.vue';
+import AdminPanel from '../components/AdminPanel.vue';
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -51,6 +52,14 @@ const routes = [
     path: '/profile',
     name: 'profile',
     component: ProfileView,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/admin',
+    name: 'admin',
+    component: AdminPanel,
     meta: {
       requiresAuth: true
     }

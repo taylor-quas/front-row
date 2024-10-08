@@ -56,6 +56,7 @@
       },
       updateBand(){
         BandService.updateBand(this.band.band.bandId, this.band)
+        this.$router.push(`/${this.band.band.bandName}`)
       }
     }
   }

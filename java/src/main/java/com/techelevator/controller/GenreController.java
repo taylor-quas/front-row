@@ -2,12 +2,14 @@ package com.techelevator.controller;
 
 import com.techelevator.dao.GenreDao;
 import com.techelevator.model.Genre;
+import com.techelevator.model.GenreDto;
+import com.techelevator.model.ImageDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -21,6 +23,17 @@ public class GenreController {
     @GetMapping("/genres")
     public List<String> getAllGenres() {
         return genreDao.getAllGenreNames();
+    }
+
+    @GetMapping("/manage-genres")
+    public List<Genre> getGenresToManage(){
+        return genreDao.getAllGenres();
+    }
+
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @PostMapping("/add-genre")
+    public void addGenre(@RequestBody GenreDto genre){
+        genreDao.addGenre(genre);
     }
 
 }
