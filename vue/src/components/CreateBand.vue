@@ -5,9 +5,9 @@
             <h1 id="title">Create a Band</h1>
         </div>
     </header>
-    <div class="content">
+    <form class="content" @submit="submitForm">
         <div id="cover-image" >
-            <ImageUpload :admin="false" v-model="band.band.bandHeroImage"></ImageUpload>
+            <ImageUpload :admin="false" v-model="band.band.bandHeroImage" required ></ImageUpload>
         </div>
         <!-- :imageUrl="band.band.bandHeroImage" -->
         <div class="input">
@@ -16,6 +16,7 @@
             class="text-field"
             type="text"
             placeholder="Band Name"
+            required
             >
         </div>
         <div class="input">
@@ -23,19 +24,25 @@
             v-model="band.band.bandDescription"
             class="text-field"
             placeholder="Band Description"
+            required
             ></textarea>
         </div>
         <div>
             <h3 id="genre-heading">Add genres</h3>
             <div class="genre-list"> 
-                <GenreSearch class="genre-search" @update:selectedGenres="updateSelectedGenres"/>
+                <GenreSearch class="genre-search" @update:selectedGenres="updateSelectedGenres" required />
             </div>
         </div>
+        <div v-if="errors.length" class="error-messages">
+            <ul>
+            <li v-for="error in errors" :key="error">{{ error }}</li>
+            </ul>
+         </div>
         <div class="button-container">
-            <button @click="createBand()" id="create-button">CREATE BAND</button>
-            <button @click="cancel()" id="cancel-button">Cancel</button>
+            <button type="submit" id="create-button">CREATE BAND</button>
+            <button @keyup.esc="cancel()" @click="cancel()" id="cancel-button">Cancel</button>
         </div>
-    </div>
+    </form>
     
   </main>
 </template>
@@ -49,6 +56,7 @@ import { watch } from 'vue';
 export default {
     data() {
         return {
+            errors: [],
             band: {
                 band: {
                     bandName: '',
@@ -90,6 +98,29 @@ export default {
         },
         mounted() {
             this.debugger();
+        },
+        checkForm() {
+            this.errors = [];
+
+            if (!this.band.band.bandName) {
+                this.errors.push('Name required.');
+            }
+            if (!this.band.band.bandDescription) {
+                this.errors.push('Description required.');
+            }
+            if (!this.band.band.bandHeroImage) {
+                this.errors.push('Image required.');
+            }
+            if (this.band.genreNames.length === 0) {
+                this.errors.push('At least one genre is required.');
+            }
+
+            return this.errors.length === 0;
+        },
+        submitForm() {
+            if (this.checkForm()) {
+                this.createBand();
+            }
         }
     },
     watch: {
@@ -97,7 +128,6 @@ export default {
             console.log("Band Hero Image updated: ", newValue);
         }
     },
-
 }
 </script>
 
@@ -202,7 +232,10 @@ button {
     transform: translateY(-1px); /* Lift effect on hover */
 }
 
-
+.error-messages {
+  color: red;
+  margin-bottom: 10px;
+}
 
 .genre-search {
     font-family: Montserrat, sans-serif;
