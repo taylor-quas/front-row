@@ -5,7 +5,7 @@
       <GenreSearch class="search-view" id="genres" @update:selectedGenres="updateSelectedGenres" />
     </div>
     <div id="search-results"> 
-      <BandSearch id="bands" :searchQuery="searchQuery" :bands="bands" :selectedGenres="selectedGenres"/>
+      <BandSearch class="known" id="bands" :searchQuery="searchQuery" :bands="bands" :selectedGenres="selectedGenres"/>
     </div>
   </div>
 </template>
@@ -38,17 +38,6 @@ export default {
 </script>
 
 <style scoped>
-<<<<<<< HEAD
-  .search {
-    padding-top: 12vh;
-    padding-right: 2rem;
-    padding-left: 2rem;
-    background-color: rgb(22, 22, 22);
-    display: grid;
-    grid-template-areas: 
-      "filter-genre search-results";
-  }
-=======
 .search {
   padding-top: 12vh;
   padding-right: 2rem;
@@ -60,7 +49,6 @@ export default {
     "filter-genre search-results";
   grid-template-columns: 1fr 4fr;
 }
->>>>>>> 9fd7bc02da0fad84100a46e09a3463aa5cddb528
 
 #filter-genre {
   grid-area: filter-genre;
@@ -90,32 +78,5 @@ h3 {
   font-weight: 500;
   line-height: normal;
 }
-
-
-
-
-
-
-
-/* .search-view .genre-list {
-    border-top: 1px solid #b3b3b3; 
-    padding-top: 15px;
-    margin-top: 15px;
-}
-
-.search-view .genre-list label {
-    display: flex;
-    align-items: center;
-    font-size: 16px;
-    color: #333;
-    padding: 8px 0;
-    border-bottom: 1px solid #ccc; 
-}
-
-.search-view .genre-list label:last-of-type {
-    border-bottom: none; 
-} */
-
-
 
 </style>

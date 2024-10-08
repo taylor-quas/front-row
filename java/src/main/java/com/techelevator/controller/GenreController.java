@@ -25,7 +25,7 @@ public class GenreController {
         return genreDao.getAllGenreNames();
     }
 
-    @GetMapping("/manage-genres")
+    @GetMapping("/all-genres")
     public List<Genre> getGenresToManage(){
         return genreDao.getAllGenres();
     }
@@ -34,6 +34,12 @@ public class GenreController {
     @PostMapping("/add-genre")
     public void addGenre(@RequestBody GenreDto genre){
         genreDao.addGenre(genre);
+    }
+
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @PutMapping("/update-genres")
+    public void updateGenres(@RequestBody List<Genre> genres){
+        genreDao.updateGenres(genres);
     }
 
 }

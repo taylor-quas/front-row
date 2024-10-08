@@ -13,7 +13,7 @@
                 v-model="genre.visible"
               /> <p style="text-transform: capitalize; color: black;">{{ genre.genreName }}</p>
             </label>
-            <button type="submit">Update Genres</button>
+            <button type="submit" @click="updateGenres">Update Genres</button>
         </form>
       </div>
       <div>
@@ -47,7 +47,10 @@ export default {
     },
     methods: {
         updateGenres(){
-            console.log(this.genres)
+            GenreService.updateGenres(this.genres)
+            .then(response => {
+                console.log
+            })
         },
         addGenre(){
             GenreService.addGenre(this.genreToAdd)

@@ -10,14 +10,14 @@
         </label>
       </div>
       <div class="genre-list"> 
-        <label v-for="genre in genres" :key="genre">
+        <label v-for="genre in visibleGenres" :key="genre">
           <br />
           <input 
             type="checkbox" 
             v-model="selectedGenres" 
-            :value="genre" 
+            :value="genre.genreName" 
             @change="updateSelectedGenres" 
-          /> <p style="text-transform: capitalize; color: black;">{{ genre }}</p>
+          /> <p style="text-transform: capitalize; color: black;">{{ genre.genreName }}</p>
         </label>
       </div>
     </div>
@@ -25,6 +25,7 @@
   
 <script>
 import BandService from '../services/BandService';
+import GenreService from '../services/GenreService';
 
 export default {
   props: {
@@ -36,6 +37,7 @@ export default {
   data() {
     return {
       genres: [], 
+      visibleGenres: [],
       selectedGenres: [],
       selectAll: true, 
     };
@@ -47,6 +49,11 @@ export default {
         this.selectedGenres = this.genres.map(genre => genre);
         this.updateSelectedGenres();
       });
+      GenreService.getGenresToManage().then(response => {
+        this.visibleGenres = response.data
+        this.visibleGenres = this.visibleGenres.filter(item => item.visible)
+      }
+      )
     },
     toggleSelectAll() {
       this.selectedGenres = this.selectAll ? this.genres.map(genre => genre) : [];
