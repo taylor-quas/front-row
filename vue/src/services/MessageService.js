@@ -11,6 +11,10 @@ export default {
 
   sendMessage(message) {
     return axios.post('/send-message', message);
+  },
+
+  getUserOutbox() {
+    return axios.get('/outbox');
   }
 
 }

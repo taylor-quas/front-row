@@ -56,6 +56,35 @@ public class JdbcMessageDao implements MessageDao {
     }
 
     @Override
+    public List<MessageBandDto> getOutboxMessages(Principal principal) {
+        List<MessageBandDto> messages = new ArrayList<>();
+        String sql = "SELECT message_id, message_content, message_time_sent, message_time_expiration, message_sender " +
+                "FROM messages " +
+                "JOIN bands ON messages.message_sender = bands.band_id " +
+                "WHERE bands.band_manager_id = ? " +
+                "ORDER BY message_time_sent DESC;";
+
+        long principalId = getUserIdByUsername(principal.getName());
+
+        try {
+            SqlRowSet results = template.queryForRowSet(sql, principalId);
+            while (results.next()) {
+                MessageBandDto messageBandDto = mapRowToMessageBandDto(results);
+                messageBandDto.setBandName(getBandNameByMessageSender(messageBandDto.getMessage().getMessageSender()));
+                messageBandDto.setIsRead(true);
+                messages.add(messageBandDto);
+            }
+
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("Problem connecting");
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("Data problems");
+        }
+
+        return messages;
+    }
+
+    @Override
     public void sendMessage(Message message) {
         String sql = "INSERT INTO messages (message_content,message_time_sent," +
                 "message_time_expiration,message_sender) " +

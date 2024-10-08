@@ -16,6 +16,8 @@
             <input type="date" id="expiration-date" name="expiration-date" v-model="expirationDate">
             <label for="expiration-time">Expiration Time</label>
             <input type="time" id="expiration-time" name="expiration-time" v-model="expirationTime">
+            <p>{{ message }}</p>
+            <p>{{ selectedBand }}</p>
 
           <div>
               <button @click="sendMessage()" id="send-button">SEND MESSAGE</button>
@@ -60,10 +62,10 @@ export default {
               });
           },
           cancel() {
-          this.$emit('close');
+            this.$emit('close');
           },
           mounted() {
-              this.debugger();
+            this.debugger();
           },
           getDefaultExpirationDate() {
             const today = new Date();
@@ -72,13 +74,17 @@ export default {
           },
 
           sendMessage() {
+            console.log('Selected Band: ', this.selectedBand);
+
             const currentTime = new Date().toISOString();
             this.message.messageTimeSent = currentTime;
 
-            const expirationDateTime = `${this.expirationDate}T${this.expirationTime}`;
+            const expirationDateTime = `${this.expirationDate}T${this.expirationTime}:00`;
             this.message.messageTimeExpiration = expirationDateTime;
 
-            this.message.messageSender = this.selectedBand.bandId;
+            this.message.messageSender = this.selectedBand.band.bandId;
+
+            console.log('Message: ', this.message);
             
             MessageService.sendMessage(this.message).then(response => {
                 if (response.status === 201) {
