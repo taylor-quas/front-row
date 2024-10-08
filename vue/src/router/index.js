@@ -13,11 +13,8 @@ import BandView from '../views/BandView.vue';
 import AnonymousSearchView from '../views/AnonymousSearchView.vue';
 import ProfileView from '../views/ProfileView.vue';
 import EditBand from '../components/EditBand.vue';
-<<<<<<< HEAD
 import AdminPanel from '../components/AdminPanel.vue';
-=======
 import OutboxView from '../views/OutboxView.vue';
->>>>>>> 9fd7bc02da0fad84100a46e09a3463aa5cddb528
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component

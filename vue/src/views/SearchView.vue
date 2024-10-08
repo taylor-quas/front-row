@@ -103,9 +103,6 @@ h3 {
     margin-top: 15px;
 }
 
-<<<<<<< HEAD
-  
-=======
 .search-view .genre-list label {
     display: flex;
     align-items: center;
@@ -121,5 +118,4 @@ h3 {
 
 
 
->>>>>>> 9fd7bc02da0fad84100a46e09a3463aa5cddb528
 </style>
