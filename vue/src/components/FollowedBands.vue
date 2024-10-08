@@ -6,6 +6,7 @@
           <div id="followed-bands">
             <div id="add-band" @click="searchView">
               <img id="plus-sign" src="../assets/plus-sign-icon-2048x2048-mp0pz4g8.png" alt="Add Band" />
+              <h4>FOLLOW A NEW BAND</h4>
             </div>
             <BandComponent v-for="band in followedBands" :key="band.bandId" :band="band" :hasMessage="checkIfBandHasUnreadMessage(band)"/>
           </div>
