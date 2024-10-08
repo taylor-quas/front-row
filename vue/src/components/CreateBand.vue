@@ -5,7 +5,7 @@
             <h1 id="title">Create a Band</h1>
         </div>
     </header>
-    <form class="content" @submit="submitForm">
+    <form class="content" @submit.prevent="submitForm">
         <div id="cover-image" >
             <ImageUpload :admin="false" v-model="band.band.bandHeroImage" required ></ImageUpload>
         </div>
@@ -30,15 +30,14 @@
         <div>
             <h3 id="genre-heading">Add genres</h3>
             <div class="genre-list"> 
-                <GenreSearch class="genre-search" @update:selectedGenres="updateSelectedGenres" required />
-                <GenreSearch class="create-view" @update:selectedGenres="updateSelectedGenres"/>
+                <GenreSearch class="create-view" @update:selectedGenres="updateSelectedGenres" required/>
             </div>
         </div>
         <div v-if="errors.length" class="error-messages">
             <ul>
             <li v-for="error in errors" :key="error">{{ error }}</li>
             </ul>
-         </div>
+        </div>
         <div class="button-container">
             <button type="submit" id="create-button">CREATE BAND</button>
             <button @keyup.esc="cancel()" @click="cancel()" id="cancel-button">Cancel</button>
@@ -88,7 +87,8 @@ export default {
             }
             })
             .catch(error => {
-            console.error(error);
+                console.error("Error creating band:", error);
+                this.errors.push("An error occurred while creating the band. Please try again.");
             });
         },
         updateSelectedGenres(genres) {
@@ -103,10 +103,10 @@ export default {
         checkForm() {
             this.errors = [];
 
-            if (!this.band.band.bandName) {
+            if (!this.band.band.bandName.trim()) {
                 this.errors.push('Name required.');
             }
-            if (!this.band.band.bandDescription) {
+            if (!this.band.band.bandDescription.trim()) {
                 this.errors.push('Description required.');
             }
             if (!this.band.band.bandHeroImage) {
@@ -119,8 +119,12 @@ export default {
             return this.errors.length === 0;
         },
         submitForm() {
+            console.log("Form submitted");
             if (this.checkForm()) {
+                console.log("Form is valid, creating band");
                 this.createBand();
+            } else {
+                console.log("Form is invalid, errors:", this.errors);
             }
         }
     },
