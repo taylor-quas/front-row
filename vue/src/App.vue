@@ -75,6 +75,7 @@ export default {
     display: flex;
     align-items: center;
     padding: 20px;
+    box-sizing: border-box;
   }
 
   #left-nav {
@@ -108,6 +109,9 @@ export default {
   #searchbox {
     outline: none;  
     border: none;
+    width: 100%; 
+    background: transparent; 
+
   }
 
   #searchbox-wrapper {
@@ -116,6 +120,14 @@ export default {
     height: 1.5rem;
     border: 2px solid black;
     border-radius: 16px;
+    padding: 0 10px; 
+    align-items: center; 
+    box-sizing: border-box; 
+  }
+
+  #searchbox::placeholder {
+    color: #999; 
+    font-size: 14px; 
   }
 
   #profile-button {
