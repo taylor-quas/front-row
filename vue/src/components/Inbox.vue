@@ -123,18 +123,19 @@ export default {
 
       },
       markAllAsRead() {
-        this.messages.forEach(message => {
+        const unreadMessages = this.messages.filter(message => !message.isRead);
+        const unreadMessageIds = unreadMessages.map(message => message.message.messageId);
 
-          this.handleMarkAsRead(message.message.messageId);
-
-          // message.isRead = true;
-          // const readMessages = JSON.parse(localStorage.getItem('readMessages')) || [];
-          // if (!readMessages.includes(message.message.messageId)) {
-          //   readMessages.push(message.message.messageId);
-          // }
-          // localStorage.setItem('readMessages', JSON.stringify(readMessages));
-
-        });
+        if (unreadMessageIds.length > 0) {
+          MessageService.markAllAsRead(unreadMessageIds).then(() => {
+            unreadMessages.forEach(message => {
+              message.isRead = true;
+            });
+          })
+          .catch(error => {
+            console.error(error);
+          });
+        }
       },
 
       fetchInboxMessages() {

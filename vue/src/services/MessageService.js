@@ -9,6 +9,10 @@ export default {
     return axios.put(`/inbox/${messageId}/read`);
   },
 
+  markAllAsRead() {
+    return axios.put('/inbox/read-all');
+  },
+
   sendMessage(message) {
     return axios.post('/send-message', message);
   },

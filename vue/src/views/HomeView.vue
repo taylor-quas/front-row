@@ -4,12 +4,18 @@
     <HomeOutbox id="outbox" v-if="isManager"></HomeOutbox>
     <ManagedBands id="managed-bands" v-if="isManager"></ManagedBands>
 
-    <div id="divider"></div>
+    <div id="divider" v-if="isManager"></div>
 
     <HomeInbox id="inbox" @click="inboxView"></HomeInbox>
     <FollowedBands id="followed-bands"></FollowedBands>
 
-    <button v-if="isButtonVisible" id="create-button" @click="showCreateBand = true, hideButton()">Manage a Band!</button>
+    <button 
+      v-if="!isManager" 
+      id="create-button" 
+      @click="handleCreateBand"
+      >
+      Manage a Band!
+    </button>
 
     <div v-if="showCreateBand" id="modal-overlay">
       <div id="modal-content">
@@ -54,7 +60,8 @@ export default {
     inboxView() {
       this.router.push('/inbox')
     },
-    hideButton() {
+    handleCreateBand() {
+      this.showCreateBand = true;
       this.isButtonVisible = false;
     },
     closeModal() {
@@ -141,6 +148,29 @@ export default {
     border-top: 1px solid white;
     margin: 2.5em;
     justify-content: center;
+  }
+  
+  #modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+  }
+
+  #modal-content {
+    background-color:rgba(240, 34, 27, 0.925);
+    padding: 20px;
+    border-radius: 5px;
+    width: 50%;
+    height: 70%;
+    overflow: scroll;
   }
   
 </style>

@@ -42,6 +42,11 @@ public class MessageController {
         return messageDao.getOutboxMessages(principal);
     }
 
+    @PutMapping("/inbox/read-all")
+    public void markAllAsRead(Principal principal) {
+        messageDao.markAllAsRead(principal);
+    }
+
 
 
 }

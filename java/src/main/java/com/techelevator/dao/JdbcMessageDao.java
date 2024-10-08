@@ -133,6 +133,27 @@ public class JdbcMessageDao implements MessageDao {
 
     }
 
+    @Override
+    public void markAllAsRead(Principal principal) {
+        String sql = "UPDATE message_user " +
+                "SET is_read = TRUE " +
+                "WHERE user_id = ?;";
+
+        long principalId = getUserIdByUsername(principal.getName());
+
+        try {
+            int rowsAffected = template.update(sql, principalId);
+            if (rowsAffected == 0) {
+                throw new DaoException("No messages affected.");
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("Problem connecting");
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("Data problems");
+        }
+
+    }
+
     public boolean getIsReadByMessageIdAndUserId(Principal principal, long messageId) {
         String sql = "SELECT is_read FROM message_user " +
                 "WHERE user_id = ? AND message_id = ?";
