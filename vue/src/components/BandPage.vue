@@ -21,6 +21,7 @@
         <br><br><br>
         <section id="gallery">
           <h3 id="gallery-header">Gallery</h3>
+          <image-upload v-if="canEdit === true" :admin="true"></image-upload>
           <gallery-image :bandName="bandName"/>
         </section>
       </div>
@@ -35,10 +36,12 @@
 import BandService from '../services/BandService';
 import GalleryImage from './GalleryImage.vue';
 import UserService from '../services/UserService';
+import ImageUpload from './ImageUpload.vue';
 
 export default {
   components: {
     GalleryImage,
+    ImageUpload
   },
   data() {
     return {
@@ -49,7 +52,7 @@ export default {
         canEdit: ''
     }
   },
-  created() {
+  mounted() {
     this.getBand();
     this.checkRole()
   },

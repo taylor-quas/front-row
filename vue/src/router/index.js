@@ -13,6 +13,7 @@ import BandView from '../views/BandView.vue';
 import AnonymousSearchView from '../views/AnonymousSearchView.vue';
 import ProfileView from '../views/ProfileView.vue';
 import EditBand from '../components/EditBand.vue';
+import AdminPanel from '../components/AdminPanel.vue';
 import OutboxView from '../views/OutboxView.vue';
 
 /**
@@ -52,6 +53,14 @@ const routes = [
     path: '/profile',
     name: 'profile',
     component: ProfileView,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/admin',
+    name: 'admin',
+    component: AdminPanel,
     meta: {
       requiresAuth: true
     }

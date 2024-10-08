@@ -1,7 +1,8 @@
 <template>
   <div id="profile">
     <h2 id="header">Your Profile</h2>
-    
+    <button v-if="isAdmin" @click="this.$router.push('/admin')">Admin Panel</button>
+
     <div id="profile-section">
       <h4 id="username">{{ user.username }}</h4>
       <h4 id="phone-number" v-if="user.phoneNumber">{{ user.phoneNumber }}</h4>
@@ -34,13 +35,15 @@ export default {
       user: {},
       genres: [],
       followedByGenre: {},
-      showUpdateForm: false
+      showUpdateForm: false,
+      isAdmin: ''
     }
   },
-  created() {
+  mounted() {
     this.fetchFollowedBands();
     this.fetchUser();
     this.fetchGenres();
+    this.checkRole();
   },
   methods: {
     fetchFollowedBands() {
@@ -99,6 +102,14 @@ export default {
 
     toggleUpdateForm() {
       this.showUpdateForm = !this.showUpdateForm;
+    },
+
+    checkRole(){
+      UserService.getRole().then(response => {
+        if (response.data.role == 'ROLE_ADMIN') {
+          this.isAdmin = true
+        }
+      })
     }
 
   }

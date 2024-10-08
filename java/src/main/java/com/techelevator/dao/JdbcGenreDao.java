@@ -2,6 +2,7 @@ package com.techelevator.dao;
 
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.Genre;
+import com.techelevator.model.GenreDto;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class JdbcGenreDao implements GenreDao {
+public class  JdbcGenreDao implements GenreDao {
 
     private JdbcTemplate template;
 
@@ -37,7 +38,6 @@ public class JdbcGenreDao implements GenreDao {
         } catch (DataIntegrityViolationException e) {
             System.out.println("Data problems");
         }
-
         return genres;
     }
 
@@ -88,10 +88,26 @@ public class JdbcGenreDao implements GenreDao {
         return genre;
     }
 
+    @Override
+    public void addGenre(GenreDto genre) {
+        String sql = "INSERT INTO genres (genre_name, visible) VALUES (?, true)";
+        String newGenreName = genre.getName();
+
+        try {
+            System.out.println(newGenreName);
+            template.update(sql, newGenreName);
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("Problem connecting");
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("Data problems");
+        }
+    }
+
     private Genre mapRowToGenre(SqlRowSet rowSet) {
         Genre genre = new Genre();
         genre.setGenreId(rowSet.getLong("genre_id"));
         genre.setGenreName(rowSet.getString("genre_name"));
+        genre.setVisible(rowSet.getBoolean("visible"));
         return genre;
     }
 

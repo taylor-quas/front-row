@@ -43,6 +43,7 @@ export default {
 
   getManagedBands() {
     return axios.get('/managed-bands');
-  }
+  },
+
 
 }

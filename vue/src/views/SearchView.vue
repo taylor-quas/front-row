@@ -38,6 +38,17 @@ export default {
 </script>
 
 <style scoped>
+<<<<<<< HEAD
+  .search {
+    padding-top: 12vh;
+    padding-right: 2rem;
+    padding-left: 2rem;
+    background-color: rgb(22, 22, 22);
+    display: grid;
+    grid-template-areas: 
+      "filter-genre search-results";
+  }
+=======
 .search {
   padding-top: 12vh;
   padding-right: 2rem;
@@ -49,6 +60,7 @@ export default {
     "filter-genre search-results";
   grid-template-columns: 1fr 4fr;
 }
+>>>>>>> 9fd7bc02da0fad84100a46e09a3463aa5cddb528
 
 #filter-genre {
   grid-area: filter-genre;
