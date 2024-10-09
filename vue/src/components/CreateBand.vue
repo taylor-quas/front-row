@@ -30,7 +30,11 @@
         <div>
             <h3 id="genre-heading">Add genres</h3>
             <div class="genre-list"> 
-                <GenreSearch class="create-view" @update:selectedGenres="updateSelectedGenres" required/>
+                <GenreSearch class="create-view" 
+                @update:selectedGenres="updateSelectedGenres" 
+                required
+                :initialSelectAll="false"
+                />
             </div>
         </div>
         <div v-if="errors.length" class="error-messages">

@@ -35,6 +35,7 @@
           <GenreSearch 
             class="edit" 
             @update:selectedGenres="updateSelectedGenres"
+            :initialSelectAll="false"
           />
         </div>
         

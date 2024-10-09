@@ -32,6 +32,10 @@ export default {
     customClass: {
       type: String,
       default: ''
+    },
+    initialSelectAll: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
@@ -39,14 +43,16 @@ export default {
       genres: [], 
       visibleGenres: [],
       selectedGenres: [],
-      selectAll: true, 
+      selectAll: this.initialSelectAll 
     };
   },
   methods: {
     fetchGenres() {
       BandService.getGenres().then(response => {
         this.genres = response.data;
-        this.selectedGenres = this.genres.map(genre => genre);
+        if (this.initialSelectAll) {
+          this.selectedGenres = this.genres.map(genre => genre);
+        }
         this.updateSelectedGenres();
       });
       GenreService.getGenresToManage().then(response => {
