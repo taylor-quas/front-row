@@ -59,24 +59,18 @@ export default {
         addEvent() {
             const formattedEventTime = `${this.eventDate}T${this.eventTime}:00`;
             this.event.eventTime = formattedEventTime;
-
             this.event.eventHost = this.bandId;
-
-            console.log(this.event, this.bandName);
 
             BandService.addEvent({
                 event: this.event,
                 bandName: this.bandName,
             }).then(response => {
                 console.log(response.data);
-                this.$emit('event-created');
+                this.$emit('event-created', response.data);
             })
                 .catch(error => {
                     console.error(error);
                 });
-        },
-        mounted() {
-            this.debugger();
         },
     }
 }
