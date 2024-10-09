@@ -1,6 +1,6 @@
 <template>
   <div id="profile">
-    <h2 id="header">Your Profile</h2>
+    <h2 id="header">Profile</h2>
     <button v-if="isAdmin" @click="this.$router.push('/admin')">Admin Panel</button>
 
     <div id="profile-section">
