@@ -94,9 +94,9 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: center; /* Centers the band components */
+    justify-content: center;
     width: 100%;
-    max-width: 1200px; /* Adjust this value based on your design preferences */
+    max-width: 1200px;
   }
 
   #managed-bands-container {
@@ -109,7 +109,7 @@
   #managed-bands-container h2 {
     text-align: center;
     width: 100%;
-    margin-bottom: 20px; /* Adjust as needed */
+    margin-bottom: 20px;
   }
 
   #add-band {
