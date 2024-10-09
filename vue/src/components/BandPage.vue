@@ -1,28 +1,35 @@
 <template>
   <div class="band-view">
-    
-    <section class="content">  
+
+    <section class="content">
       <div v-if="band && roleChecked">
         <h2 id="name">{{ bandName }}</h2>
-        <button :class="{'follow-button': true, 'unfollow': isFollowing}" 
-          v-if="band && isFollowing !== null" 
+        <button :class="{ 'follow-button': true, 'unfollow': isFollowing }" v-if="band && isFollowing !== null"
           @click="toggleFollow">
-            {{ isFollowing? 'Unfollow' : 'Follow' }}
+          {{ isFollowing ? 'Unfollow' : 'Follow' }}
         </button>
         <button class="edit-button" v-if="canEdit" @click="$router.push(`${bandName}/edit`)">
           Edit Page
         </button>
         <img id="heroImage" :src="band.band.bandHeroImage" alt="Band Hero Image">
         <section class="genres">
-          <p>{{ band.genreNames.join(' • ') }}</p> 
+          <p>{{ band.genreNames.join(' • ') }}</p>
         </section>
         <br>
         <p id="description">{{ band.band.bandDescription }}</p>
+
+        <div id="events" v-if="bandEvents.length > 0">
+          <h3>Upcoming Events</h3>
+          <div id="event-component-list"> 
+            <EventComponent v-for="event in bandEvents" :key="event.event.eventId" :event="event"></EventComponent>
+          </div>
+        </div>
+
         <br><br><br>
         <section id="gallery">
           <h3 id="gallery-header">Gallery</h3>
           <image-upload v-if="canEdit === true" :admin="true" :bandName="bandName"></image-upload>
-          <gallery-image :bandName="bandName"/>
+          <gallery-image :bandName="bandName" />
         </section>
       </div>
       <div v-else>
@@ -37,33 +44,38 @@ import BandService from '../services/BandService';
 import GalleryImage from './GalleryImage.vue';
 import UserService from '../services/UserService';
 import ImageUpload from './ImageUpload.vue';
+import EventComponent from './EventComponent.vue';
 
 export default {
   components: {
     GalleryImage,
-    ImageUpload
+    ImageUpload,
+    EventComponent
   },
   data() {
     return {
-        band: '',
-        bandName: this.$route.params.bandName,
-        isFollowing: null,
-        BandService,
-        canEdit: false,
-        roleChecked: false
+      band: '',
+      bandName: this.$route.params.bandName,
+      isFollowing: null,
+      BandService,
+      canEdit: false,
+      roleChecked: false,
+      bandEvents: []
     }
   },
   mounted() {
     this.getBand();
-    this.checkRole()
+    this.checkRole();
   },
   methods: {
     getBand() {
       this.BandService.getBand(this.bandName)
         .then(response => {
+          console.log(response.data);
           this.band = response.data;
           if (this.band && this.band.band.bandId) {
             this.getIsFollowing(this.band.band.bandId);
+            this.fetchBandEvents();
           } else {
             console.error("Band not found");
           }
@@ -109,7 +121,7 @@ export default {
           console.error(error);
         });
     },
-    checkRole(){
+    checkRole() {
       UserService.getRole().then(response => {
         console.log(response.data);
         if (response.data.role == 'ROLE_BAND' && response.data.managedBands.some(band => band.bandId === this.band.band.bandId)) {
@@ -117,14 +129,22 @@ export default {
         }
         this.roleChecked = true;
       })
+    },
+    fetchBandEvents() {
+      BandService.getBandEvents(this.band.band.bandId)
+        .then(response => {
+          this.bandEvents = response.data;
+        })
+        .catch(error => {
+          console.error(error);
+        });
     }
-    
+
   }
 }
 </script>
 
 <style scoped>
-
 #description {
   grid-area: content;
   color: white;
@@ -133,17 +153,19 @@ export default {
   line-height: 1.6;
   padding: 15px 20px;
   border-radius: 8px;
-  border: 1px solid #ddd;    /* Light grey border for emphasis */
-  max-width: 90%;            /* Keep within content width */
+  border: 1px solid #ddd;
+  /* Light grey border for emphasis */
+  max-width: 90%;
+  /* Keep within content width */
   margin: 1em auto;
   text-align: justify;
 }
 
-.band-view{
+.band-view {
   margin: 10vh;
   display: grid;
   grid-template-columns: 1fr 5fr 1fr;
-  grid-template-areas: 
+  grid-template-areas:
     ". name ."
     ". content ."
     ". content ."
@@ -151,22 +173,22 @@ export default {
     ". content ."
     "gallery gallery gallery"
     "gallery gallery gallery"
-    "gallery gallery gallery"; 
+    "gallery gallery gallery";
 }
 
-#name{
+#name {
   grid-area: name;
   font-size: 2em;
   margin-bottom: 1em;
   text-align: left;
 }
 
-#description{
+#description {
   font-size: 1.2em;
   margin-top: 1em;
 }
 
-#heroImage{
+#heroImage {
   width: 100%;
   height: 500px;
   object-fit: cover;
@@ -174,23 +196,23 @@ export default {
   align-items: center;
 }
 
-.genres{
+.genres {
   display: flex;
   flex-direction: row;
 }
 
-.content{
+.content {
   grid-area: content;
   display: flex;
   /* flex-direction: column;
   align-items: center; */
 }
 
-#gallery{
+#gallery {
   grid-area: gallery;
 }
 
-#gallery-header{
+#gallery-header {
   font-size: 1.5em;
   margin-bottom: 1em;
   justify-content: center;
@@ -208,51 +230,81 @@ section h3 {
 
 .follow-button {
   padding: 10px 20px;
-  background-color: #999999;  /* Light grey */
-  color: white;               /* White text */
-  border: none;               /* Remove default border */
-  border-radius: 5px;         /* Rounded corners */
-  font-size: 16px;            /* Font size */
-  cursor: pointer;            /* Pointer on hover */
-  transition: background-color 0.3s ease; /* Smooth transition */
+  background-color: #999999;
+  /* Light grey */
+  color: white;
+  /* White text */
+  border: none;
+  /* Remove default border */
+  border-radius: 5px;
+  /* Rounded corners */
+  font-size: 16px;
+  /* Font size */
+  cursor: pointer;
+  /* Pointer on hover */
+  transition: background-color 0.3s ease;
+  /* Smooth transition */
   margin-bottom: 1em;
 }
 
 .edit-button {
   padding: 10px 20px;
-  background-color: #999999;  /* Light grey */
-  color: white;               /* White text */
-  border: none;               /* Remove default border */
-  border-radius: 5px;         /* Rounded corners */
-  font-size: 16px;            /* Font size */
-  cursor: pointer;            /* Pointer on hover */
-  transition: background-color 0.3s ease; /* Smooth transition */
+  background-color: #999999;
+  /* Light grey */
+  color: white;
+  /* White text */
+  border: none;
+  /* Remove default border */
+  border-radius: 5px;
+  /* Rounded corners */
+  font-size: 16px;
+  /* Font size */
+  cursor: pointer;
+  /* Pointer on hover */
+  transition: background-color 0.3s ease;
+  /* Smooth transition */
   margin-bottom: 1em;
   margin-left: 1rem;
 }
 
 .edit-button:hover {
-  background-color: #808080;  /* Darker light grey on hover */
+  background-color: #808080;
+  /* Darker light grey on hover */
 }
 
 .follow-button:hover {
-  background-color: #808080;  /* Darker light grey on hover */
+  background-color: #808080;
+  /* Darker light grey on hover */
 }
 
 .follow-button:active {
-  background-color: #333333;  /* Even darker grey when clicked */
+  background-color: #333333;
+  /* Even darker grey when clicked */
 }
 
 .follow-button:focus {
-  outline: none;              /* Remove focus outline */
+  outline: none;
+  /* Remove focus outline */
 }
 
 .follow-button.unfollow {
-  background-color: #666666;  /* Darker grey for unfollow */
+  background-color: #666666;
+  /* Darker grey for unfollow */
 }
 
 .follow-button.unfollow:hover {
-  background-color: #4d4d4d;  /* Darker grey on hover */
+  background-color: #4d4d4d;
+  /* Darker grey on hover */
 }
 
+#event-component-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+#events {
+  margin-top: 2em;
+}
 </style>

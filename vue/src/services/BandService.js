@@ -45,5 +45,9 @@ export default {
     return axios.get('/managed-bands');
   },
 
+  getBandEvents(bandId) {
+    return axios.get(`/${bandId}/events`);
+  }
+
 
 }

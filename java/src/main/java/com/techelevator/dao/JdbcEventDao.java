@@ -98,6 +98,7 @@ public class JdbcEventDao implements EventDao {
         event.setEventId(rowSet.getLong("event_id"));
         event.setEventTime((rowSet.getTimestamp("event_time")).toLocalDateTime());
         event.setEventVenue(rowSet.getString("event_venue"));
+        event.setEventAddress(rowSet.getString("event_address"));
         event.setEventHost(rowSet.getLong("event_host"));
         event.setEventName(rowSet.getString("event_name"));
 
