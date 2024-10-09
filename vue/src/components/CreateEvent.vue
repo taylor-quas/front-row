@@ -104,4 +104,49 @@ export default {
     justify-content: center;
     margin: 1em;
 }
+
+label {
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width: 90%;
+    margin: 0.2em;
+}
+
+input {
+    width: 90%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    /* Light border */
+    border-radius: 10px;
+    /* Rounded corners */
+    background-color: #f4f4f4;
+    /* Light grey background for inputs */
+    transition: border-color 0.3s;
+    /* Smooth transition */
+    font-size: 1rem;
+}
+
+button {
+    padding: 10px 20px;
+    /* Consistent padding */
+    margin: 0.5em;
+    /* Spacing between buttons */
+    border: none;
+    /* No border */
+    border-radius: 10px;
+    /* Rounded corners */
+    cursor: pointer;
+    /* Pointer on hover */
+    font-size: 1rem;
+    /* Standard font size */
+    transition: background-color 0.3s, transform 0.2s;
+    /* Smooth transition */
+}
+
+button:hover {
+    background-color: #aaa;
+    /* Lighter shade on hover */
+    transform: translateY(-1px);
+}
+
 </style>

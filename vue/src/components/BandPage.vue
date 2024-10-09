@@ -141,7 +141,11 @@ export default {
     fetchBandEvents() {
       BandService.getBandEvents(this.band.band.bandId)
         .then(response => {
-          this.bandEvents = response.data;
+          const now = new Date();
+          this.bandEvents = response.data.filter(event => {
+            const eventDate = new Date(event.event.eventTime);
+            return eventDate > now;
+          });
         })
         .catch(error => {
           console.error(error);
@@ -201,6 +205,16 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  align-content: center;
+}
+
+#new-event-form {
+  width: 75%;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  margin: 1em;
 }
 
 #description {
