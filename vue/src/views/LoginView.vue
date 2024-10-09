@@ -75,82 +75,95 @@ export default {
 </script>
 
 <style scoped>
-  .form-input-group {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-bottom: 1rem;
-    
-  }
+.form-input-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+  width: 100%;
   
-  label {
-    margin-right: 0.5rem;
-  }
+}
+
+label {
+  margin-right: 0.5rem;
+}
+
+h1 {
+  font-size: 48px;
+}
+
+#login {
+  margin-top: 12vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 50;
+  background-color: #161616;
+}
+
+#login-form {
+  width: 100%;
+  max-width: 400px;
+  background-color: rgb(22, 22, 22);
+  padding: 20px;
+  border-radius: 10px;
+}
+
+#alert {
+  display: flex;
+  font-family: Montserrat;
   
-  h1 {
-    font-size: 48px;
-  }
+  justify-content: center;
 
-  #login {
-    margin-top: 12vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    z-index: 50;
-    background-color: #161616;
-  }
+  background-color: red;
+  color: white;
+  margin: 20px;
+  padding: 20px;
+}
 
-  #alert {
-    display: flex;
-    font-family: Montserrat;
-    
-    justify-content: center;
+#router-link {
+  color: white;
+}
 
-    background-color: red;
-    color: white;
-    margin: 20px;
-    padding: 20px;
-  }
+#title{
+  margin-bottom: 40px;
+}
 
-  #router-link {
-    color: white;
-  }
+input {
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 8px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  border-radius: 10px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
 
-  #title{
-    margin-bottom: 40px;
-  }
+button h2 {
+  color: black;
+  
+  font-family: Montserrat;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
 
-  input {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    box-sizing: border-box;
-  }
+  margin: 12px;
+}
 
-  button h2 {
-    color: black;
-    
-    font-family: Montserrat;
-    font-size: 28px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
+button {
+  color: white;
+  border-radius: 24px;
+  border: none;
+  margin: 20px;
 
-    margin: 12px;
-  }
+  width: 100%;
+}
 
-  button {
-    color: white;
-    border-radius: 24px;
-    border: none;
-    margin: 20px;
-
-    width: 100%;
-  }
-
-  #login-button {
-    display: flex;
-    justify-content: center;
-  }
+#login-button {
+  display: flex;
+  justify-content: center;
+}
 
 </style>

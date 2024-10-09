@@ -30,13 +30,17 @@
           </image-upload-vue>
         </div>
         
-        <div class="genre-list">
+        <button id="show-genres" @click="toggleGenres">Edit Genres</button> <!-- Add button to toggle genre list/selection -->
+        <div class="genre-list" v-if="editGenres">
           <label class="form-label">Genres</label>
           <GenreSearch 
             class="edit" 
             @update:selectedGenres="updateSelectedGenres"
             :initialSelectAll="false"
           />
+        </div>
+        <div v-else>
+          <br><br>
         </div>
         
         <button type="submit" class="save-button" @click="updateBand">Save</button>
@@ -65,7 +69,8 @@ export default {
       editedBand: '', 
       bandName: this.$route.params.bandName,
       BandService,
-      newImageUrl: ''
+      newImageUrl: '',
+      editGenres: false
     }
   },
   created() {
@@ -78,11 +83,9 @@ export default {
       this.BandService.getBand(this.bandName)
         .then(response => {
           this.band = response.data;
-          this.editedBand = response.data;
-          console.log(this.band);
-          console.log(this.editedBand);
-        })
-        .catch(error => {
+          this.editedBand = JSON.parse(JSON.stringify(this.band));
+
+        }).catch(error => {
           console.error(error);
         });
     
@@ -104,11 +107,14 @@ export default {
         .catch(error => {
           console.error(error);
         });
-      },
+    },
     cancel() {
       console.log(this.band);
       console.log(this.editedBand);
       this.$router.push(`/${this.bandName}`)
+    },
+    toggleGenres() {
+      this.editGenres = !this.editGenres;
     }
   }
 }
@@ -197,6 +203,23 @@ h2 {
   cursor: pointer;
   font-size: 18px;
   transition: background-color 0.3s;
+}
+
+#show-genres {
+  padding: 10px 20px;
+  background-color: #999999;  /* Light grey */
+  color: white;               /* White text */
+  border: none;               /* Remove default border */
+  border-radius: 5px;         /* Rounded corners */
+  font-size: 16px;            /* Font size */
+  cursor: pointer;            /* Pointer on hover */
+  transition: background-color 0.3s ease; /* Smooth transition */
+  margin-bottom: 1em;
+  margin-left: 1rem;
+}
+
+#show-genres:hover {
+  background-color: #808080;  /* Darker light grey on hover */
 }
 
 .save-button:hover, #cancel-button:hover {

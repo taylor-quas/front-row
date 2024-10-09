@@ -117,109 +117,109 @@ export default {
 </script>
 
 <style scoped>
-  .form-input-group {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-bottom: 1.5rem;
-    width: 100%;
-  }
+.form-input-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
 
-  label {
-    margin-bottom: 0.5rem;
-    font-size: 18px;
-    color: white;
-  }
+label {
+  margin-bottom: 0.5rem;
+  font-size: 18px;
+  color: white;
+}
 
-  h1 {
-    font-size: 48px;
-    color: white;
-  }
+h1 {
+  font-size: 48px;
+  color: white;
+}
 
 
-  #register {
-    background-color: rgb(22, 22, 22);
-    z-index: 50;
-    padding-bottom: 12vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
-    padding-top: 12vh;
-  }
+#register {
+  background-color: rgb(22, 22, 22);
+  z-index: 50;
+  padding-bottom: 12vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding-top: 12vh;
+}
 
-  #alert {
-    display: flex;
-    font-family: Montserrat;
-    
-    justify-content: center;
+#alert {
+  display: flex;
+  font-family: Montserrat;
+  
+  justify-content: center;
 
-    background-color: red;
-    color: white;
-    margin: 20px;
-    padding: 20px;
-    border-radius: 10px;
-  }
+  background-color: red;
+  color: white;
+  margin: 20px;
+  padding: 20px;
+  border-radius: 10px;
+}
 
-  #router-link {
-    color: white;
-  }
+#router-link {
+  color: white;
+}
 
-  #title{
-    margin-bottom: 1em;
-    text-align: center;
-  }
+#title{
+  margin-bottom: 1em;
+  text-align: center;
+}
 
-  input {
-    width: 100%;
-    padding: 12px 15px;
-    margin-bottom: 8px;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-    border-radius: 10px;
-    font-size: 16px;
-    box-sizing: border-box;
-  }
+input {
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 8px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  border-radius: 10px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
 
-  button h2 {
-    color: black;
-    
-    font-family: Montserrat;
-    font-size: 28px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
+button h2 {
+  color: black;
+  
+  font-family: Montserrat;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
 
-    margin: 12px;
-  }
+  margin: 12px;
+}
 
-  button {
-    color: white;
-    border-radius: 24px;
-    border: none;
-    margin: 20px;
+button {
+  color: white;
+  border-radius: 24px;
+  border: none;
+  margin: 20px;
 
-    width: 100%;
-  }
+  width: 100%;
+}
 
-  #register-form {
-    width: 100%;
-    max-width: 400px;
-    background-color: rgb(22, 22, 22);
-    padding: 20px;
-    border-radius: 10px;
-  }
+#register-form {
+  width: 100%;
+  max-width: 400px;
+  background-color: rgb(22, 22, 22);
+  padding: 20px;
+  border-radius: 10px;
+}
 
-  .register-alert {
-    color: red;
-    font-family: Montserrat;
-    font-size: 16px;
-    margin-top: 5px;
-  }
+.register-alert {
+  color: red;
+  font-family: Montserrat;
+  font-size: 16px;
+  margin-top: 5px;
+}
 
-  #register-button {
-    display: flex;
-    justify-content: center;
-  }
+#register-button {
+  display: flex;
+  justify-content: center;
+}
 
 </style>
