@@ -34,7 +34,7 @@ export default {
   },
 
   updateBand(bandId, band){
-    return axios.put(`${bandId}/update`, band)
+    return axios.put(`/${bandId}/update`, band)
   },
     
   updateRole(role) {

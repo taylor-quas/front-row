@@ -18,7 +18,7 @@
         </section>
         <br>
         <p id="description">{{ band?.band?.bandDescription }}</p>
-        <br><br><br>
+        <br><br>
         <section id="gallery">
           <h3 id="gallery-header">Gallery</h3>
           <image-upload v-if="canEdit === true" :admin="true" :bandName="bandName"></image-upload>
@@ -133,13 +133,13 @@ export default {
   line-height: 1.6;
   padding: 15px 20px;
   border-radius: 8px;
-  border: 1px solid #ddd;    /* Light grey border for emphasis */
-  max-width: 90%;            /* Keep within content width */
+  border: 1px solid #ddd;    
+  max-width: 90%;            
   margin: 1em auto;
   text-align: justify;
 }
 
-.band-view{
+.band-view {
   margin: 10vh;
   display: grid;
   grid-template-columns: 1fr 5fr 1fr;
@@ -177,13 +177,13 @@ export default {
 .genres{
   display: flex;
   flex-direction: row;
+  margin-top: 1em;
 }
 
 .content{
   grid-area: content;
   display: flex;
-  /* flex-direction: column;
-  align-items: center; */
+ 
 }
 
 #gallery{
@@ -208,51 +208,51 @@ section h3 {
 
 .follow-button {
   padding: 10px 20px;
-  background-color: #999999;  /* Light grey */
-  color: white;               /* White text */
-  border: none;               /* Remove default border */
-  border-radius: 5px;         /* Rounded corners */
-  font-size: 16px;            /* Font size */
-  cursor: pointer;            /* Pointer on hover */
-  transition: background-color 0.3s ease; /* Smooth transition */
+  background-color: #999999;  
+  color: white;               
+  border: none;               
+  border-radius: 5px;         
+  font-size: 16px;            
+  cursor: pointer;            
+  transition: background-color 0.3s ease;
   margin-bottom: 1em;
 }
 
 .edit-button {
   padding: 10px 20px;
-  background-color: #999999;  /* Light grey */
-  color: white;               /* White text */
-  border: none;               /* Remove default border */
-  border-radius: 5px;         /* Rounded corners */
-  font-size: 16px;            /* Font size */
-  cursor: pointer;            /* Pointer on hover */
-  transition: background-color 0.3s ease; /* Smooth transition */
+  background-color: #999999;  
+  color: white;               
+  border: none;               
+  border-radius: 5px;         
+  font-size: 16px;            
+  cursor: pointer;            
+  transition: background-color 0.3s ease; 
   margin-bottom: 1em;
   margin-left: 1rem;
 }
 
 .edit-button:hover {
-  background-color: #808080;  /* Darker light grey on hover */
+  background-color: #808080;  
 }
 
 .follow-button:hover {
-  background-color: #808080;  /* Darker light grey on hover */
+  background-color: #808080; 
 }
 
 .follow-button:active {
-  background-color: #333333;  /* Even darker grey when clicked */
+  background-color: #333333;  
 }
 
 .follow-button:focus {
-  outline: none;              /* Remove focus outline */
+  outline: none;             
 }
 
 .follow-button.unfollow {
-  background-color: #666666;  /* Darker grey for unfollow */
+  background-color: #666666;  
 }
 
 .follow-button.unfollow:hover {
-  background-color: #4d4d4d;  /* Darker grey on hover */
+  background-color: #4d4d4d; 
 }
 
 </style>

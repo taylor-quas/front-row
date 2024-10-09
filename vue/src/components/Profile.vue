@@ -7,8 +7,8 @@
       <h4 id="username">{{ user.username }}</h4>
       <h4 id="phone-number" v-if="user.phoneNumber">{{ user.phoneNumber }}</h4>
       <form id="update-form" v-if="showUpdateForm" @submit.prevent="updatePhoneNumber">
-        <input type="text" v-model="user.phoneNumber" placeholder="00-000-000-0000">
-        <button id="submit-button" type="submit">Update</button>
+        <input type="text" v-model.lazy="user.phoneNumber" placeholder="00-000-000-0000">
+        <button id="submit-button" type="submit" @click="showUpdateForm = false">Update</button>
       </form>
       <button id="update-button" @click="toggleUpdateForm">{{ showUpdateForm ? 'Cancel' : 'Update Profile' }}</button>
 
@@ -16,7 +16,6 @@
 
     <div id="stats-section">
       <p>You are following {{ followedBands.length }} bands</p>
-      <!-- <p v-for="band in followedBands" :key="band.band.bandId">{{band.band.bandName}}{{ band.genreNames }}</p> -->
       <p v-for="(count, genre) in followedByGenre" :key="genre">{{ genre }}: {{ count }}</p>
     </div>
 

@@ -1,6 +1,7 @@
 <template>
   <div class="band-view">
     <div v-if="band" class="page-setup">
+      <button @click="cancel()" id="cancel-button">Back</button>
       <h2>Edit {{ band?.band.bandName }} Fan Page</h2>
       <form @submit.prevent="updateItem" class="edit-form">
         <label for="bandName" class="form-label">Band Name</label>
@@ -22,7 +23,7 @@
         
         <div class="image-section">
           <label for="heroImage" class="form-label">Image</label>
-          <img :src="band.band.bandHeroImage" alt="Band Hero Image" class="hero-image">
+          <img :src="band.band.bandHeroImage" alt="Band Hero Image" class="hero-image" id="heroImage">
           <image-upload-vue 
             :admin="false" 
             v-model="band.band.bandHeroImage">
@@ -38,6 +39,7 @@
         </div>
         
         <button type="submit" class="save-button" @click="updateBand">Save</button>
+        <button @click="cancel()" id="cancel-button">Cancel</button>
       </form>
     </div>
     <div v-else>
@@ -85,6 +87,9 @@ export default {
     },
     updateBand(){
       BandService.updateBand(this.band.band.bandId, this.band)
+      this.$router.push(`/${this.band.band.bandName}`)
+    },
+    cancel() {
       this.$router.push(`/${this.band.band.bandName}`)
     }
   }
@@ -165,7 +170,7 @@ h2 {
   margin-bottom: 30px;
 }
 
-.save-button {
+.save-button, #cancel-button {
   background-color: #5a5a5a;
   color: white;
   padding: 12px 24px;
@@ -176,8 +181,12 @@ h2 {
   transition: background-color 0.3s;
 }
 
-.save-button:hover {
+.save-button:hover, #cancel-button:hover {
   background-color: #6f6f6f;
+}
+
+#cancel-button {
+  margin-left: 10px;
 }
 
 .loading {
