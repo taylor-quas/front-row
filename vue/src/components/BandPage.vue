@@ -18,6 +18,7 @@
         <br>
         <p id="description">{{ band.band.bandDescription }}</p>
 
+        <button class="add-event-button" v-if="canEdit">Add Event</button>
         <div id="events" v-if="bandEvents.length > 0">
           <h3>Upcoming Events</h3>
           <div id="event-component-list"> 
@@ -267,11 +268,28 @@ section h3 {
   margin-left: 1rem;
 }
 
-.edit-button:hover {
-  background-color: #808080;
-  /* Darker light grey on hover */
+.add-event-button {
+  padding: 10px 20px;
+  background-color: #999999;
+  /* Light grey */
+  color: white;
+  /* White text */
+  border: none;
+  /* Remove default border */
+  border-radius: 5px;
+  /* Rounded corners */
+  font-size: 16px;
+  /* Font size */
+  cursor: pointer;
+  /* Pointer on hover */
+  transition: background-color 0.3s ease;
+  /* Smooth transition */
+  margin-bottom: 1em;
+  margin-left: 1rem;
 }
 
+.edit-button:hover,
+.add-event-button:hover,
 .follow-button:hover {
   background-color: #808080;
   /* Darker light grey on hover */
