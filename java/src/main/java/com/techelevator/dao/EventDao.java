@@ -8,5 +8,6 @@ public interface EventDao {
 
     List<EventBandDto> getAllEvents();
     List<EventBandDto> getEventsByEventHost(long eventHost);
+    void createEvent(EventBandDto newEvent);
 
 }

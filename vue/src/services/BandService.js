@@ -47,6 +47,10 @@ export default {
 
   getBandEvents(bandId) {
     return axios.get(`/${bandId}/events`);
+  },
+
+  addEvent(newEvent) {
+    return axios.post('/create-event', newEvent);
   }
 
 

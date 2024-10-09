@@ -18,10 +18,17 @@
         <br>
         <p id="description">{{ band?.band?.bandDescription }}</p>
 
-        <div id="events" v-if="bandEvents.length > 0">
-          <h3>Upcoming Events</h3>
-          <div id="event-component-list"> 
-            <EventComponent v-for="event in bandEvents" :key="event.event.eventId" :event="event"></EventComponent>
+        <div id="events-section">
+          <button class="add-event-button" v-if="canEdit" @click="toggleCreateEvent">{{ showCreateEvent ? 'Cancel' :
+        'Add Event' }}</button>
+          <div v-if="showCreateEvent" id="new-event-form">
+            <CreateEvent></CreateEvent>
+          </div>
+          <div id="events" v-if="bandEvents.length > 0">
+            <h3>Upcoming Events</h3>
+            <div id="event-component-list">
+              <EventComponent v-for="event in bandEvents" :key="event.event.eventId" :event="event"></EventComponent>
+            </div>
           </div>
         </div>
 
@@ -45,12 +52,14 @@ import GalleryImage from './GalleryImage.vue';
 import UserService from '../services/UserService';
 import ImageUpload from './ImageUpload.vue';
 import EventComponent from './EventComponent.vue';
+import CreateEvent from './CreateEvent.vue';
 
 export default {
   components: {
     GalleryImage,
     ImageUpload,
-    EventComponent
+    EventComponent,
+    CreateEvent
   },
   data() {
     return {
@@ -60,7 +69,8 @@ export default {
       BandService,
       canEdit: false,
       roleChecked: false,
-      bandEvents: []
+      bandEvents: [],
+      showCreateEvent: false
     }
   },
   mounted() {
@@ -71,7 +81,6 @@ export default {
     getBand() {
       this.BandService.getBand(this.bandName)
         .then(response => {
-          console.log(response.data);
           this.band = response.data;
           if (this.band && this.band?.band?.bandId) {
             this.getIsFollowing(this.band.band.bandId);
@@ -133,11 +142,18 @@ export default {
     fetchBandEvents() {
       BandService.getBandEvents(this.band.band.bandId)
         .then(response => {
-          this.bandEvents = response.data;
+          const now = new Date();
+          this.bandEvents = response.data.filter(event => {
+            const eventDate = new Date(event.event.eventTime);
+            return eventDate > now;
+          });
         })
         .catch(error => {
           console.error(error);
         });
+    },
+    toggleCreateEvent() {
+      this.showCreateEvent = !this.showCreateEvent;
     }
 
   }
@@ -169,6 +185,7 @@ export default {
     ". content ."
     ". content ."
     ". content ."
+    ". events ."
     "gallery gallery gallery"
     "gallery gallery gallery"
     "gallery gallery gallery";
@@ -179,6 +196,24 @@ export default {
   font-size: 2em;
   margin-bottom: 1em;
   text-align: left;
+}
+
+#events-section {
+  grid-area: events;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+
+#new-event-form {
+  width: 75%;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  margin: 1em;
 }
 
 #description {
@@ -203,7 +238,8 @@ export default {
 .content {
   grid-area: content;
   display: flex;
- 
+  flex-direction: column;
+  align-items: center;
 }
 
 #gallery {
@@ -251,11 +287,26 @@ section h3 {
   margin-left: 1rem;
 }
 
-.edit-button:hover {
-  background-color: #808080;
-  /* Darker light grey on hover */
+.add-event-button {
+  padding: 10px 20px;
+  background-color: #999999;
+  /* Light grey */
+  color: white;
+  /* White text */
+  border: none;
+  /* Remove default border */
+  border-radius: 5px;
+  /* Rounded corners */
+  font-size: 16px;
+  /* Font size */
+  cursor: pointer;
+  /* Pointer on hover */
+  transition: background-color 0.3s ease;
+  /* Smooth transition */
 }
 
+.edit-button:hover,
+.add-event-button:hover,
 .follow-button:hover {
   background-color: #808080;
   /* Darker light grey on hover */
@@ -290,5 +341,6 @@ section h3 {
 
 #events {
   margin-top: 2em;
+  width: 100%;
 }
 </style>

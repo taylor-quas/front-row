@@ -24,9 +24,6 @@ public class BandController {
     @Autowired
     private BandDao bandDao;
 
-    @Autowired
-    private EventDao eventDao;
-
     @GetMapping("/bands")
     public List<BandGenreDto> getAllBands() {
         return bandDao.getAllBands();
@@ -102,13 +99,6 @@ public class BandController {
     @GetMapping("/managed-bands")
     public List<BandGenreDto> getManagedBands(Principal principal) {
         return bandDao.getManagedBands(principal);
-    }
-
-    @PreAuthorize("isAuthenticated()")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    @GetMapping("/{bandId}/events")
-    public List<EventBandDto> getEventsByBandId(@PathVariable long bandId) {
-        return eventDao.getEventsByEventHost(bandId);
     }
 
 }
