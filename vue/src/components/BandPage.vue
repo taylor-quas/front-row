@@ -18,15 +18,17 @@
         <br>
         <p id="description">{{ band.band.bandDescription }}</p>
 
-
-        <button class="add-event-button" v-if="canEdit" @click="toggleCreateEvent">Add Event</button>
-        <div v-if="showCreateEvent" id="new-event-form">
-          <CreateEvent></CreateEvent>
-        </div>
-        <div id="events" v-if="bandEvents.length > 0">
-          <h3>Upcoming Events</h3>
-          <div id="event-component-list"> 
-            <EventComponent v-for="event in bandEvents" :key="event.event.eventId" :event="event"></EventComponent>
+        <div id="events-section">
+          <button class="add-event-button" v-if="canEdit" @click="toggleCreateEvent">{{ showCreateEvent ? 'Cancel' :
+        'Add Event' }}</button>
+          <div v-if="showCreateEvent" id="new-event-form">
+            <CreateEvent></CreateEvent>
+          </div>
+          <div id="events" v-if="bandEvents.length > 0">
+            <h3>Upcoming Events</h3>
+            <div id="event-component-list">
+              <EventComponent v-for="event in bandEvents" :key="event.event.eventId" :event="event"></EventComponent>
+            </div>
           </div>
         </div>
 
@@ -79,7 +81,6 @@ export default {
     getBand() {
       this.BandService.getBand(this.bandName)
         .then(response => {
-          console.log(response.data);
           this.band = response.data;
           if (this.band && this.band.band.bandId) {
             this.getIsFollowing(this.band.band.bandId);
@@ -131,7 +132,6 @@ export default {
     },
     checkRole() {
       UserService.getRole().then(response => {
-        console.log(response.data);
         if (response.data.role == 'ROLE_BAND' && response.data.managedBands.some(band => band.bandId === this.band.band.bandId)) {
           this.canEdit = true
         }
@@ -182,6 +182,7 @@ export default {
     ". content ."
     ". content ."
     ". content ."
+    ". events ."
     "gallery gallery gallery"
     "gallery gallery gallery"
     "gallery gallery gallery";
@@ -192,6 +193,14 @@ export default {
   font-size: 2em;
   margin-bottom: 1em;
   text-align: left;
+}
+
+#events-section {
+  grid-area: events;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 #description {
@@ -215,8 +224,8 @@ export default {
 .content {
   grid-area: content;
   display: flex;
-  /* flex-direction: column;
-  align-items: center; */
+  flex-direction: column;
+  align-items: center;
 }
 
 #gallery {
@@ -294,8 +303,6 @@ section h3 {
   /* Pointer on hover */
   transition: background-color 0.3s ease;
   /* Smooth transition */
-  margin-bottom: 1em;
-  margin-left: 1rem;
 }
 
 .edit-button:hover,
@@ -334,5 +341,6 @@ section h3 {
 
 #events {
   margin-top: 2em;
+  width: 100%;
 }
 </style>
