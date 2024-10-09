@@ -2,7 +2,7 @@
   <div class="band-view">
     <div v-if="band" class="page-setup">
       <button @click="cancel()" id="cancel-button">Back</button>
-      <h2>Edit {{ band?.band.bandName }} Fan Page</h2>
+      <h2>Edit {{ bandName }} Fan Page</h2>
       <form @submit.prevent="updateItem" class="edit-form">
         <label for="bandName" class="form-label">Band Name</label>
         <input 
@@ -10,7 +10,7 @@
           id="bandName"
           class="input-field" 
           :placeholder="band?.band.bandName" 
-          v-model="band.band.bandName" 
+          v-model="editedBand.band.bandName" 
         />
         
         <label for="bandDescription" class="form-label">Band Description</label>
@@ -18,7 +18,7 @@
           id="bandDescription"
           class="textarea-field"
           :placeholder="band.band.bandDescription" 
-          v-model="band.band.bandDescription">
+          v-model="editedBand.band.bandDescription">
         </textarea>
         
         <div class="image-section">
@@ -26,7 +26,7 @@
           <img :src="band.band.bandHeroImage" alt="Band Hero Image" class="hero-image" id="heroImage">
           <image-upload-vue 
             :admin="false" 
-            v-model="band.band.bandHeroImage">
+            v-model="editedBand.band.bandHeroImage">
           </image-upload-vue>
         </div>
         
@@ -60,7 +60,8 @@ export default {
   },
   data() {
     return {
-      band: '', 
+      band: '',
+      editedBand: '', 
       bandName: this.$route.params.bandName,
       BandService,
       newImageUrl: ''
@@ -71,26 +72,42 @@ export default {
   },
   methods: {
     getBand() {
+      console.log(this.band);
+      console.log(this.editedBand);
       this.BandService.getBand(this.bandName)
         .then(response => {
           this.band = response.data;
+          this.editedBand = response.data;
+          console.log(this.band);
+          console.log(this.editedBand);
         })
         .catch(error => {
           console.error(error);
         });
+    
     },
     setImage(data){
-      this.band.band.bandHeroImage = data;
+      this.editedBand.band.bandHeroImage = data;
     },
     updateSelectedGenres(genres) {
-      this.band.genreNames = genres;
+      this.editedBand.genreNames = genres;
     },
     updateBand(){
+      console.log(this.editedBand);
+      console.log(this.band);
+      this.band = this.editedBand;
       BandService.updateBand(this.band.band.bandId, this.band)
-      this.$router.push(`/${this.band.band.bandName}`)
-    },
+        .then(response => {
+          this.$router.push(`/${this.band.band.bandName}`)
+        })
+        .catch(error => {
+          console.error(error);
+        });
+      },
     cancel() {
-      this.$router.push(`/${this.band.band.bandName}`)
+      console.log(this.band);
+      console.log(this.editedBand);
+      this.$router.push(`/${this.bandName}`)
     }
   }
 }
