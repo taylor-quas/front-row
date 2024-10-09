@@ -50,7 +50,7 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
   #capstone-app{
     background-color: rgb(22, 22, 22);
     min-height: 100vh;
@@ -111,16 +111,15 @@ export default {
     border: none;
     width: 100%; 
     background: transparent; 
-
   }
 
   #searchbox-wrapper {
     display: flex;
     width: 20vw;
-    height: 1.5rem;
+    height: 2em;
     border: 2px solid black;
     border-radius: 16px;
-    padding: 0 10px; 
+    padding: 10px; 
     align-items: center; 
     box-sizing: border-box; 
   }

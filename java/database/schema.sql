@@ -79,10 +79,11 @@ CREATE TABLE message_user (
 
 CREATE TABLE events (
     event_id SERIAL,
-    event_name varchar(100) NOT NULL,
     event_time timestamp NOT NULL,
+    event_venue varchar(100) NOT NULL,
     event_address varchar(100) NOT NULL,
     event_host int NOT NULL,
+    event_name varchar(100) NULL,
     CONSTRAINT FK_event_host FOREIGN KEY (event_host) REFERENCES bands(band_id)
 );
 

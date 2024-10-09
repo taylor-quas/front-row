@@ -57,8 +57,13 @@ export default {
 <style scoped>
 #message-card {
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-basis: 100%;
     width: 100%;
-    padding: 5px;
+    color: rgba(255, 255, 255, 0.743);
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 #new-message-form {

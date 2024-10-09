@@ -13,17 +13,7 @@
 </template>
 
 <script>
-import MessageService from "../services/MessageService.js";
-
 export default {
-    // data() {
-    //     return {
-    //         isRead: false
-    //     }
-    // },
-    // created() {
-    //     this.isRead = this.checkIfRead();
-    // },
     props: {
         message: {
             type: Object,
@@ -39,16 +29,8 @@ export default {
         }
     },
     methods: {
-        // checkIfRead() {
-        //     const readMessages = JSON.parse(localStorage.getItem('readMessages')) || [];
-        //     return readMessages.includes(this.message.message.messageId);
-        // },
         markAsRead() {
             if (!this.isRead) {
-                // this.isRead = true;
-                // const readMessages = JSON.parse(localStorage.getItem('readMessages')) || [];
-                // readMessages.push(this.message.message.messageId);
-                // localStorage.setItem('readMessages', JSON.stringify(readMessages));
                 this.$emit('markAsRead', this.message.message.messageId);
             }
         }

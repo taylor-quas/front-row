@@ -1,25 +1,24 @@
 <template>
   <div id="profile">
-    <h2 id="header">Your Profile</h2>
-    <button v-if="isAdmin" @click="this.$router.push('/admin')">Admin Panel</button>
-
+    <h2 id="header">Profile</h2>  
     <div id="profile-section">
-      <h4 id="username">{{ user.username }}</h4>
-      <h4 id="phone-number" v-if="user.phoneNumber">{{ user.phoneNumber }}</h4>
+      <h3>Email:</h3>
+      <h4 id="username">Email:</h4>{{ user.username }}
+      <h4 id="phone-number">Phone number:</h4>{{ user.phoneNumber }}
       <form id="update-form" v-if="showUpdateForm" @submit.prevent="updatePhoneNumber">
-        <input type="text" v-model.lazy="user.phoneNumber" placeholder="00-000-000-0000">
-        <button id="submit-button" type="submit" @click="showUpdateForm = false">Update</button>
+        <input type="text" pattern="\d{3}-\d{3}-\d{4}" title="Phone number format: 123-456-7890" v-model.lazy="phoneNumber" placeholder="000-000-0000">
+        <button id="submit-button" type="submit">Update</button>
       </form>
-      <button id="update-button" @click="toggleUpdateForm">{{ showUpdateForm ? 'Cancel' : 'Update Profile' }}</button>
-
+      <button id="update-button" @click="toggleUpdateForm">{{ showUpdateForm ? 'Cancel' : 'Update Phone Number' }}</button>
     </div>
 
     <div id="stats-section">
-      <p>You are following {{ followedBands.length }} bands</p>
-      <p v-for="(count, genre) in followedByGenre" :key="genre">{{ genre }}: {{ count }}</p>
+      <h3>Following: {{ followedBands.length }} bands</h3>
+      <p v-for="(count, genre) in followedByGenre" :key="genre" style="text-transform: capitalize; margin-top: 0.5em;">{{ genre }}: {{ count }}</p>
     </div>
-
-
+    <div id="admin">
+      <button v-if="isAdmin" @click="this.$router.push('/admin')">Admin Panel</button>
+    </div>
   </div>
 </template>
 
@@ -35,7 +34,8 @@ export default {
       genres: [],
       followedByGenre: {},
       showUpdateForm: false,
-      isAdmin: ''
+      isAdmin: '',
+      phoneNumber: ''
     }
   },
   mounted() {
@@ -91,12 +91,16 @@ export default {
     },
 
     updatePhoneNumber() {
+      this.user.phoneNumber = this.phoneNumber;
+      this.phoneNumber = '';
+      this.showUpdateForm = false;
+      
       UserService.updateUserPhoneNumber(this.user.phoneNumber).then(response => {
         console.log(response);
       })
-        .catch(error => {
-          console.error(error);
-        });
+      .catch(error => {
+        console.error(error);
+      });
     },
 
     toggleUpdateForm() {
@@ -117,44 +121,37 @@ export default {
 
 <style scoped>
 #profile {
+  margin: 4rem;
   margin-top: 6vh;
   color: white;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   display: grid;
+  grid-template-columns: 3fr 1fr 3fr;
   grid-template-areas:
-    "header header"
-    "profile-section stats-section";
+    "header header header"
+    "profile-section . stats-section"
+    "admin admin admin";
 }
 
 #header {
   grid-area: header;
   margin: 1em;
-  text-align: center;
   justify-content: center;
-  align-items: center;
 }
 
 #profile-section {
   grid-area: profile-section;
   display: flex;
   flex-direction: column;
-  text-align: center;
-  justify-content: flex-start;
-  align-items: center;
-  margin: 1em;
+  align-items:flex-start;
+  margin-left: 50%;
 }
 
 #username {
-  margin: 1em;
+  margin-top: 1em;
 }
 
 #phone-number {
-  margin: 1em;
-}
-
-#update-button {
-  margin: 1em;
-  width: fit-content;
+  margin-top: 1em;
 }
 
 #update-form {
@@ -169,18 +166,14 @@ export default {
   margin: 1em;
   color: black;
   border-radius: 20px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   align-content: center;
   justify-content: center;
-
 }
 
 button {
-  margin: 1em;
+  margin-top: 1em;
   color: black;
   border-radius: 20px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  align-content: center;
   justify-content: center;
   width: fit-content;
   min-width: 120px;
@@ -192,9 +185,14 @@ button {
   grid-area: stats-section;
   display: flex;
   flex-direction: column;
-  text-align: center;
-  justify-content: flex-start;
-  align-items: center;
-  margin: 1em;
+  align-items:flex-start;
 }
+
+#admin {
+  grid-area: admin;
+  margin-top: 0;
+  margin-left: 10vw;
+}
+
+
 </style>
