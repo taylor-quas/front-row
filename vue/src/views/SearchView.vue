@@ -41,7 +41,7 @@ export default {
 .search {
   padding-top: 12vh;
   padding-right: 2rem;
-  padding-left: 2rem;
+  padding-left: 5rem;
   background-color: rgb(22, 22, 22);
   display: grid;
   grid-template-columns: 1fr 5fr;
