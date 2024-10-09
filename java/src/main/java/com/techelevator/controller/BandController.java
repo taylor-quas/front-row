@@ -1,8 +1,10 @@
 package com.techelevator.controller;
 
 import com.techelevator.dao.BandDao;
+import com.techelevator.dao.EventDao;
 import com.techelevator.model.Band;
 import com.techelevator.model.BandGenreDto;
+import com.techelevator.model.EventBandDto;
 import com.techelevator.model.RoleDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +23,9 @@ public class BandController {
 
     @Autowired
     private BandDao bandDao;
+
+    @Autowired
+    private EventDao eventDao;
 
     @GetMapping("/bands")
     public List<BandGenreDto> getAllBands() {
@@ -97,6 +102,13 @@ public class BandController {
     @GetMapping("/managed-bands")
     public List<BandGenreDto> getManagedBands(Principal principal) {
         return bandDao.getManagedBands(principal);
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @GetMapping("/{bandId}/events")
+    public List<EventBandDto> getEventsByBandId(@PathVariable long bandId) {
+        return eventDao.getEventsByEventHost(bandId);
     }
 
 }

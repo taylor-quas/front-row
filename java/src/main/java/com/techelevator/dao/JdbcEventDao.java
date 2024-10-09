@@ -6,11 +6,13 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class JdbcEventDao implements EventDao {
 
     private JdbcTemplate template;
@@ -39,7 +41,7 @@ public class JdbcEventDao implements EventDao {
         } catch (CannotGetJdbcConnectionException e) {
             System.out.println("Problem connecting");
         } catch (DataIntegrityViolationException e) {
-            System.out.println("Data problems 2");
+            System.out.println("Data problems");
         }
 
         return events;
@@ -47,7 +49,24 @@ public class JdbcEventDao implements EventDao {
 
     @Override
     public List<EventBandDto> getEventsByEventHost(long eventHost) {
-        return null;
+        List<EventBandDto> events = new ArrayList<>();
+        String sql = "SELECT * FROM events WHERE event_host = ?;";
+
+        try {
+            SqlRowSet results = template.queryForRowSet(sql, eventHost);
+            while (results.next()) {
+                events.add(mapRowToEventBandDto(results));
+            }
+            for (EventBandDto event : events) {
+                event.setBandName(getBandNameByEventHost(eventHost));
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("Problem connecting");
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("Data problems");
+        }
+
+        return events;
     }
 
 
@@ -61,7 +80,7 @@ public class JdbcEventDao implements EventDao {
         try {
             SqlRowSet results = template.queryForRowSet(sql, eventHost);
             if (results.next()) {
-                bandName = results.getString("event_host");
+                bandName = results.getString("band_name");
             }
         } catch (CannotGetJdbcConnectionException e) {
             System.out.println("Problem connecting");
