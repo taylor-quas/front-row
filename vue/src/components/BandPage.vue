@@ -14,10 +14,10 @@
         </button>
         <img id="heroImage" :src="band.band.bandHeroImage" alt="Band Hero Image">
         <section class="genres">
-          <p>{{ band.genreNames.join(' • ') }}</p> 
+          <p>{{ band?.genreNames?.join(' • ') }}</p> 
         </section>
         <br>
-        <p id="description">{{ band.band.bandDescription }}</p>
+        <p id="description">{{ band?.band?.bandDescription }}</p>
         <br><br><br>
         <section id="gallery">
           <h3 id="gallery-header">Gallery</h3>
@@ -62,10 +62,10 @@ export default {
       this.BandService.getBand(this.bandName)
         .then(response => {
           this.band = response.data;
-          if (this.band && this.band.band.bandId) {
+          if (this.band && this.band?.band?.bandId) {
             this.getIsFollowing(this.band.band.bandId);
           } else {
-            console.error("Band not found");
+            console.error("Band not found or missing bandId");
           }
           this.checkRole()
         })
@@ -112,7 +112,7 @@ export default {
     checkRole(){
       UserService.getRole().then(response => {
         console.log(response.data);
-        if (response.data.role == 'ROLE_BAND' && response.data.managedBands.some(band => band.bandId === this.band.band.bandId)) {
+        if (response.data.role == 'ROLE_BAND' && response.data.managedBands.some(band => band.bandId === this.band?.band?.bandId)) {
           this.canEdit = true
         }
         this.roleChecked = true;

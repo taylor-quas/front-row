@@ -1,14 +1,14 @@
 <template>
   <div class="band-view">
     <div v-if="band" class="page-setup">
-      <h2>Edit {{ band.band.bandName }} Fan Page</h2>
+      <h2>Edit {{ band?.band.bandName }} Fan Page</h2>
       <form @submit.prevent="updateItem" class="edit-form">
         <label for="bandName" class="form-label">Band Name</label>
         <input 
           type="text" 
           id="bandName"
           class="input-field" 
-          :placeholder="band.band.bandName" 
+          :placeholder="band?.band.bandName" 
           v-model="band.band.bandName" 
         />
         
@@ -58,10 +58,10 @@ export default {
   },
   data() {
     return {
-        band: '', 
-        bandName: this.$route.params.bandName,
-        BandService,
-        newImageUrl: ''
+      band: '', 
+      bandName: this.$route.params.bandName,
+      BandService,
+      newImageUrl: ''
     }
   },
   created() {
@@ -81,7 +81,7 @@ export default {
       this.band.band.bandHeroImage = data;
     },
     updateSelectedGenres(genres) {
-          this.band.genreNames = genres;
+      this.band.genreNames = genres;
     },
     updateBand(){
       BandService.updateBand(this.band.band.bandId, this.band)
@@ -134,7 +134,7 @@ h2 {
 
 .input-field,
 .textarea-field {
-  width: 100%;
+  width: 97%;
   padding: 12px;
   margin-bottom: 20px;
   border: 1px solid #777;
@@ -183,6 +183,10 @@ h2 {
 .loading {
   font-size: 20px;
   color: #bbb;
+}
+
+input, textarea {
+  font-family: 'Montserrat', sans-serif;
 }
 
 </style>
