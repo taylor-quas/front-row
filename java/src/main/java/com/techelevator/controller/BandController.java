@@ -111,4 +111,9 @@ public class BandController {
         return eventDao.getEventsByEventHost(bandId);
     }
 
+    @PostMapping("/create-event")
+    public void createEvent(@RequestBody @Valid EventBandDto eventBandDto) {
+        eventDao.createEvent(eventBandDto);
+    }
+
 }
