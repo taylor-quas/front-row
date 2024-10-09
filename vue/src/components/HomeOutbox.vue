@@ -3,7 +3,7 @@
         <div id="header">
             <h2 id="title">Sent Messages</h2>
             <div id="buttons">
-                <button id="new-message" @click="toggleNewMessage">NEW MESSAGE</button>
+                <button id="new-message" @click="toggleNewMessage">{{ showNewMessage ? 'CANCEL' : 'NEW MESSAGE' }}</button>
             </div>
         </div>
         <div v-if="showNewMessage" id="new-message-form">
@@ -75,7 +75,7 @@ export default {
 
 #new-message-form {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-content: center;
     justify-content: center;
     width: 100%;

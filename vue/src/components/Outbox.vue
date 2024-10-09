@@ -2,10 +2,10 @@
     <div id="outbox">
         <div id="header">
             <h2 id="title">Sent Messages</h2>
-            <button id="new-message" @click="toggleNewMessage">NEW MESSAGE</button>
+            <button id="new-message" @click="toggleNewMessage">{{ showNewMessage ? 'CANCEL' : 'NEW MESSAGE' }}</button>
         </div>
         <div v-if="showNewMessage" id="new-message-form">
-            <CreateMessage @message-sent="handleMessageSent" @close="toggleNewMessage"></CreateMessage>
+            <CreateMessage id="create-message" @message-sent="handleMessageSent" @close="toggleNewMessage"></CreateMessage>
         </div>
         <div id="message-card" v-for="message in sentMessages" :key="message.messageId">
             <MessageComponent :message="message" :isRead="true"/>
@@ -68,17 +68,26 @@ export default {
 
 #new-message-form {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-content: center;
     justify-content: center;
     width: 100%;
     padding: 5px;
 }
 
-#outbox {
+#create-message {
     display: flex;
     flex-direction: column;
     align-content: center;
+    justify-content: center;
+    width: 50%;
+}
+
+#outbox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     width: 100%;
     padding: 5px;
 }

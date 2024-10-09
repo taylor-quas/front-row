@@ -11,16 +11,16 @@
             <input type="time" id="event-time" name="event-time" v-model="eventTime">
 
             <label for="event-venue">Event Venue</label>
-            <input type="text" id="event-venue" name="event-venue" v-model="event.event.eventVenue">
+            <input type="text" id="event-venue" name="event-venue" v-model="event.eventVenue">
 
             <label for="event-address">Event Address</label>
-            <input type="text" id="event-address" name="event-address" v-model="event.event.eventAddress">
+            <input type="text" id="event-address" name="event-address" v-model="event.eventAddress">
 
             <label for="event-name">Event Name (Optional)</label>
-            <input type="text" id="event-name" name="event-name" v-model="event.event.eventName">
+            <input type="text" id="event-name" name="event-name" v-model="event.eventName">
 
-            <button @click="createEvent()" id="create-event-button">CREATE EVENT</button>
-            {{ event }}
+            <button @click="addEvent()" id="create-event-button">CREATE EVENT</button>
+            
         </div>
     </main>
 </template>
@@ -34,15 +34,13 @@ export default {
             eventDate: '',
             eventTime: '',
             event: {
-                event: {
-                    eventTime: '',
-                    eventVenue: '',
-                    eventAddress: '',
-                    eventHost: '',
-                    eventName: '',
-                },
-                bandName: this.$route.params.bandName
+                eventTime: '',
+                eventVenue: '',
+                eventAddress: '',
+                eventHost: '',
+                eventName: '',
             },
+            bandName: this.$route.params.bandName,
             bandId: null,
         }
     },
@@ -51,27 +49,35 @@ export default {
     },
     methods: {
         fetchBand() {
-            BandService.getBand(this.event.bandName).then(response => {
+            BandService.getBand(this.bandName).then(response => {
                 this.bandId = response.data.band.bandId;
             })
                 .catch(error => {
                     console.error(error);
                 });
         },
-        createEvent() {
-            const eventTime = `${this.eventDate}T${this.eventTime}:00`;
-            this.event.event.eventTime = eventTime;
+        addEvent() {
+            const formattedEventTime = `${this.eventDate}T${this.eventTime}:00`;
+            this.event.eventTime = formattedEventTime;
 
-            this.event.event.eventHost = this.bandId;
+            this.event.eventHost = this.bandId;
 
-                BandService.addEvent(this.event).then(response => {
-                    console.log(response.data);
-                    this.$emit('event-created');
-                })
+            console.log(this.event, this.bandName);
+
+            BandService.addEvent({
+                event: this.event,
+                bandName: this.bandName,
+            }).then(response => {
+                console.log(response.data);
+                this.$emit('event-created');
+            })
                 .catch(error => {
                     console.error(error);
                 });
-        }
+        },
+        mounted() {
+            this.debugger();
+        },
     }
 }
 </script>

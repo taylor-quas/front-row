@@ -9,6 +9,7 @@
                 <option v-for="band in managedBands" :key="band.bandId" :value="band">{{ band.band.bandName }}</option>
             </select>
 
+            <label for="message-box">Message</label>
             <textarea id="message-box" type="text" placeholder="Hey fans..." v-model="message.messageContent"
                 rows="5"></textarea>
 
@@ -114,6 +115,8 @@ export default {
 label {
     color: white;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width: 90%;
+    margin: 0.2em;
 }
 
 .main-container {
@@ -144,6 +147,7 @@ label {
     min-width: 40%;
     border-radius: 10px;
     padding: 5px;
+    
 }
 
 #message-box {
