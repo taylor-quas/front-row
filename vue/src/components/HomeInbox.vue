@@ -1,6 +1,6 @@
 <template>
   <div id="inbox">
-    <h2>My Messages</h2>
+    <h2>Inbox</h2>
     <div id="message-card" v-for="message in sortedMessages" :key="message.message.messageId">
       <MiniMessageComponent :message="message" :isRead="message.isRead" @markAsRead="handleMarkAsRead" />
     </div>

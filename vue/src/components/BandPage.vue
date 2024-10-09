@@ -2,7 +2,7 @@
   <div class="band-view">
     
     <section class="content">  
-      <div v-if="band">
+      <div v-if="band && roleChecked">
         <h2 id="name">{{ bandName }}</h2>
         <button :class="{'follow-button': true, 'unfollow': isFollowing}" 
           v-if="band && isFollowing !== null" 
@@ -21,7 +21,7 @@
         <br><br><br>
         <section id="gallery">
           <h3 id="gallery-header">Gallery</h3>
-          <image-upload v-if="canEdit === true" :admin="true"></image-upload>
+          <image-upload v-if="canEdit === true" :admin="true" :bandName="bandName"></image-upload>
           <gallery-image :bandName="bandName"/>
         </section>
       </div>
@@ -49,7 +49,8 @@ export default {
         bandName: this.$route.params.bandName,
         isFollowing: null,
         BandService,
-        canEdit: false
+        canEdit: false,
+        roleChecked: false
     }
   },
   mounted() {
@@ -66,6 +67,7 @@ export default {
           } else {
             console.error("Band not found");
           }
+          this.checkRole()
         })
         .catch(error => {
           console.error(error);
@@ -113,6 +115,7 @@ export default {
         if (response.data.role == 'ROLE_BAND' && response.data.managedBands.some(band => band.bandId === this.band.band.bandId)) {
           this.canEdit = true
         }
+        this.roleChecked = true;
       })
     }
     
@@ -194,13 +197,13 @@ export default {
 }
 
 section h3 {
-    color: #FFF;
-    text-align: start;
-    font-family: Montserrat;
-    font-size: 28px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
+  color: #FFF;
+  text-align: start;
+  font-family: Montserrat;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
 }
 
 .follow-button {
@@ -225,6 +228,7 @@ section h3 {
   cursor: pointer;            /* Pointer on hover */
   transition: background-color 0.3s ease; /* Smooth transition */
   margin-bottom: 1em;
+  margin-left: 1rem;
 }
 
 .edit-button:hover {

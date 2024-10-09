@@ -170,4 +170,44 @@ input[type="checkbox"]:hover {
   }
 }
 
+.edit .genre-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px; /* Adjusted spacing between genre items */
+  margin-top: 10px;
+  justify-content: center; /* Center align genres */
+}
+
+.edit .genre-list label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f0f0; /* Light background */
+  border: 1px solid #d3d3d3; /* Subtle border */
+  border-radius: 8px; /* Rounded corners */
+  padding: 6px 10px; /* Spacing within each genre item */
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  flex: 0 1 calc(25% - 8px); /* Responsive four-column layout */
+  max-width: calc(25% - 8px); /* Adjust max-width for four columns */
+  box-sizing: border-box;
+}
+
+.edit .genre-list label:hover {
+  background-color: #e0e0e0; /* Slightly darker on hover */
+  transform: scale(1.02); /* Small scaling effect */
+}
+
+.edit .genre-list input[type="checkbox"] {
+  margin-right: 8px; /* Space between checkbox and label */
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+  .edit .genre-list label {
+    flex: 0 1 calc(100% - 8px); /* Single-column layout on smaller screens */
+    max-width: calc(100% - 8px);
+  }
+}
+
 </style>

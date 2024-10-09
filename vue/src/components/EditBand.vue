@@ -1,70 +1,188 @@
-  <template>
-    <div class="band-view" color="white">
-        {{ band }}
-        <h2>Edit Band</h2>
-        <form @submit.prevent="updateItem">
-            <input type="text" :placeholder="band.band.bandName" v-model="band.band.bandName" />
-            <textarea type="text" :placeholder="band.band.bandDescription" v-model="band.band.bandDescription"></textarea>
-            Image: <img :src="band.band.bandHeroImage" alt="">
-            <image-upload-vue @update:modelValue="setImage"></image-upload-vue>
-            
-            <div class="genre-list"> 
-                <GenreSearch @update:selectedGenres="updateSelectedGenres"/>
-            </div>
-            
-            <button type="submit" @click="updateBand">Save</button>
-        </form>
+<template>
+  <div class="band-view">
+    <div v-if="band" class="page-setup">
+      <h2>Edit {{ band.band.bandName }} Fan Page</h2>
+      <form @submit.prevent="updateItem" class="edit-form">
+        <label for="bandName" class="form-label">Band Name</label>
+        <input 
+          type="text" 
+          id="bandName"
+          class="input-field" 
+          :placeholder="band.band.bandName" 
+          v-model="band.band.bandName" 
+        />
+        
+        <label for="bandDescription" class="form-label">Band Description</label>
+        <textarea 
+          id="bandDescription"
+          class="textarea-field"
+          :placeholder="band.band.bandDescription" 
+          v-model="band.band.bandDescription">
+        </textarea>
+        
+        <div class="image-section">
+          <label for="heroImage" class="form-label">Image</label>
+          <img :src="band.band.bandHeroImage" alt="Band Hero Image" class="hero-image">
+          <image-upload-vue 
+            :admin="false" 
+            v-model="band.band.bandHeroImage">
+          </image-upload-vue>
+        </div>
+        
+        <div class="genre-list">
+          <label class="form-label">Genres</label>
+          <GenreSearch 
+            class="edit" 
+            @update:selectedGenres="updateSelectedGenres"
+          />
+        </div>
+        
+        <button type="submit" class="save-button" @click="updateBand">Save</button>
+      </form>
     </div>
-  </template>
-  
-  <script>
-  import BandService from '../services/BandService';
-  import ImageUploadVue from './ImageUpload.vue';
-  import GenreSearch from './GenreSearch.vue';
-  
-  export default {
-    components: {
-        ImageUploadVue,
-        GenreSearch
+    <div v-else>
+      <p>Loading...</p>
+    </div>
+  </div>
+</template>
+
+<script>
+import BandService from '../services/BandService';
+import ImageUploadVue from './ImageUpload.vue';
+import GenreSearch from './GenreSearch.vue';
+
+export default {
+  components: {
+      ImageUploadVue,
+      GenreSearch
+  },
+  data() {
+    return {
+        band: '', 
+        bandName: this.$route.params.bandName,
+        BandService,
+        newImageUrl: ''
+    }
+  },
+  created() {
+    this.getBand();
+  },
+  methods: {
+    getBand() {
+      this.BandService.getBand(this.bandName)
+        .then(response => {
+          this.band = response.data;
+        })
+        .catch(error => {
+          console.error(error);
+        });
     },
-    data() {
-      return {
-          band: '', 
-          bandName: this.$route.params.bandName,
-          BandService,
-          newImageUrl: ''
-      }
+    setImage(data){
+      this.band.band.bandHeroImage = data;
     },
-    created() {
-      this.getBand();
+    updateSelectedGenres(genres) {
+          this.band.genreNames = genres;
     },
-    methods: {
-      getBand() {
-        this.BandService.getBand(this.bandName)
-          .then(response => {
-            this.band = response.data;
-          })
-          .catch(error => {
-            console.error(error);
-          });
-      },
-      setImage(data){
-        this.band.band.bandHeroImage = data;
-      },
-      updateSelectedGenres(genres) {
-            this.band.genreNames = genres;
-      },
-      updateBand(){
-        BandService.updateBand(this.band.band.bandId, this.band)
-        this.$router.push(`/${this.band.band.bandName}`)
-      }
+    updateBand(){
+      BandService.updateBand(this.band.band.bandId, this.band)
+      this.$router.push(`/${this.band.band.bandName}`)
     }
   }
-  </script>
-  
-  <style scoped>
-    .band-view {
-        margin-top: 12vh;
-    }
+}
+</script>
 
-  </style>
+<style scoped>
+.edit-form {
+  padding: 30px;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: rgb(43, 43, 43);
+  color: white;
+  filter: grayscale(100%);
+}
+
+.band-view {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+.page-setup {
+  width: 90%;
+  max-width: 1200px;
+  background-color: #2c2c2c;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+h2 {
+  color: white;
+  margin-bottom: 20px;
+  font-size: 28px;
+}
+
+.form-label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  display: block;
+  color: #e0e0e0;
+}
+
+.input-field,
+.textarea-field {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #777;
+  background-color: #444;
+  color: white;
+  border-radius: 4px;
+}
+
+.textarea-field {
+  height: 120px;
+}
+
+.image-section {
+  margin-bottom: 30px;
+}
+
+.hero-image {
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  border-radius: 4px;
+}
+
+.genre-list {
+  margin-bottom: 30px;
+}
+
+.save-button {
+  background-color: #5a5a5a;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background-color 0.3s;
+}
+
+.save-button:hover {
+  background-color: #6f6f6f;
+}
+
+.loading {
+  font-size: 20px;
+  color: #bbb;
+}
+
+</style>

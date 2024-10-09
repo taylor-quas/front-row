@@ -1,7 +1,7 @@
 <template>
     <div id="bands">
       <div>
-        <h2>My Bands</h2>
+        <h2>Following</h2>
         
           <div id="followed-bands">
             <div id="add-band" @click="searchView">

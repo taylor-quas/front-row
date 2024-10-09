@@ -1,6 +1,6 @@
 <template>
   <div id="inbox">
-    <h2>My Messages</h2>
+    <h2>Inbox</h2>
     <div id="filter">
       <div id="filter-box">
         <h4>Filter By Band</h4>

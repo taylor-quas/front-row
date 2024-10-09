@@ -21,10 +21,4 @@ export default {
 };
 </script>
 
-<!-- <style scoped>
 
-.band-page {
-    background-color: rgb(22, 22, 22);
-  }
-
-</style> -->
