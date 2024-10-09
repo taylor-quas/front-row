@@ -9,12 +9,12 @@
                 <option v-for="band in managedBands" :key="band.bandId" :value="band">{{ band.band.bandName }}</option>
             </select>
 
-            <!-- <input id="message-box" type="text" placeholder="Message" v-model="message.messageContent"> -->
             <textarea id="message-box" type="text" placeholder="Hey fans..." v-model="message.messageContent"
                 rows="5"></textarea>
 
             <label for="expiration-date">Expiration Date</label>
             <input type="date" id="expiration-date" name="expiration-date" v-model="expirationDate">
+            
             <label for="expiration-time">Expiration Time</label>
             <input type="time" id="expiration-time" name="expiration-time" v-model="expirationTime">
 

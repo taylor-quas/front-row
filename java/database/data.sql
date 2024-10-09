@@ -29,16 +29,16 @@ INSERT INTO bands (band_name, band_description, band_manager_id, band_hero_image
 --INSERT INTO bands (band_name, band_description, band_manager_id, band_hero_image) VALUES ('Brian Crain', 'Brian was born in Hollywood, California. He has been composing music as long as he can remember. Family members tell him that when he was very young he began whistling nearly all the time. When someone would ask what he was whistling, Brian would usually answer something like, "I don''t know. I just made it up."', '', '');
 --INSERT INTO bands (band_name, band_description, band_manager_id, band_hero_image) VALUES ('Fabrizio Paterlini', 'Paterlini began playing piano at six-years-old. From the first moment he stroked the keys his life irrevocably changed, music becoming “a choice made every day...explored in all its aspects.” And so music and his life’s path became, and remain, inextricably linked; while he progresses as a musician and composer, so his development as a human being runs parallel. Formal study in his chosen artistic endeavour came with five years at Campiani’s Academy, Mantua’s Academy of Arts, from where he graduated in Music Theory.', '', '');
 --
---INSERT INTO bands (band_name, band_description, band_manager_id, band_hero_image) VALUES ('Jim Croce', '', '', '');
---INSERT INTO bands (band_name, band_description, band_manager_id, band_hero_image) VALUES ('', '', '', '');
---INSERT INTO bands (band_name, band_description, band_manager_id, band_hero_image) VALUES ('', '', '', '');
---INSERT INTO bands (band_name, band_description, band_manager_id, band_hero_image) VALUES ('', '', '', '');
---INSERT INTO bands (band_name, band_description, band_manager_id, band_hero_image) VALUES ('', '', '', '');
---INSERT INTO bands (band_name, band_description, band_manager_id, band_hero_image) VALUES ('', '', '', '');
---INSERT INTO bands (band_name, band_description, band_manager_id, band_hero_image) VALUES ('', '', '', '');
---INSERT INTO bands (band_name, band_description, band_manager_id, band_hero_image) VALUES ('', '', '', '');
---INSERT INTO bands (band_name, band_description, band_manager_id, band_hero_image) VALUES ('', '', '', '');
---INSERT INTO bands (band_name, band_description, band_manager_id, band_hero_image) VALUES ('', '', '', '');
+--INSERT INTO bands (band_name, band_description, band_manager_id, band_hero_image) VALUES ('Jim Croce', '', '', 'https://res.cloudinary.com/dfxvcpj23/image/upload/v1728491288/image_b5mnwj.png');
+--INSERT INTO bands (band_name, band_description, band_manager_id, band_hero_image) VALUES ('', '', '', 'https://res.cloudinary.com/dfxvcpj23/image/upload/v1728491330/image_1_yqgij1.png');
+--INSERT INTO bands (band_name, band_description, band_manager_id, band_hero_image) VALUES ('', '', '', 'https://res.cloudinary.com/dfxvcpj23/image/upload/v1728491359/image_2_gcjuh2.png');
+--INSERT INTO bands (band_name, band_description, band_manager_id, band_hero_image) VALUES ('', '', '', 'https://res.cloudinary.com/dfxvcpj23/image/upload/v1728491376/image_3_wjmbrv.png');
+--INSERT INTO bands (band_name, band_description, band_manager_id, band_hero_image) VALUES ('', '', '', 'https://res.cloudinary.com/dfxvcpj23/image/upload/v1728491398/image_4_syi8nb.png');
+--INSERT INTO bands (band_name, band_description, band_manager_id, band_hero_image) VALUES ('', '', '', 'https://res.cloudinary.com/dfxvcpj23/image/upload/v1728491411/image_360_nesgmi.png');
+--INSERT INTO bands (band_name, band_description, band_manager_id, band_hero_image) VALUES ('', '', '', 'https://res.cloudinary.com/dfxvcpj23/image/upload/v1728491424/image_480_ogwtw0.png');
+--INSERT INTO bands (band_name, band_description, band_manager_id, band_hero_image) VALUES ('', '', '', 'https://res.cloudinary.com/dfxvcpj23/image/upload/v1728491442/image_480_ipqexz.png');
+--INSERT INTO bands (band_name, band_description, band_manager_id, band_hero_image) VALUES ('', '', '', 'https://res.cloudinary.com/dfxvcpj23/image/upload/v1728491450/image_720_lvcckr.png');
+--INSERT INTO bands (band_name, band_description, band_manager_id, band_hero_image) VALUES ('', '', '', 'https://res.cloudinary.com/dfxvcpj23/image/upload/v1728491456/image_720_qrtlpa.png');
 
 --Users following bands
 INSERT INTO user_band (user_id, band_id) VALUES (1, 3), (1, 5), (1, 1);

@@ -18,7 +18,11 @@
         <br>
         <p id="description">{{ band.band.bandDescription }}</p>
 
-        <button class="add-event-button" v-if="canEdit">Add Event</button>
+
+        <button class="add-event-button" v-if="canEdit" @click="toggleCreateEvent">Add Event</button>
+        <div v-if="showCreateEvent" id="new-event-form">
+          <CreateEvent></CreateEvent>
+        </div>
         <div id="events" v-if="bandEvents.length > 0">
           <h3>Upcoming Events</h3>
           <div id="event-component-list"> 
@@ -46,12 +50,14 @@ import GalleryImage from './GalleryImage.vue';
 import UserService from '../services/UserService';
 import ImageUpload from './ImageUpload.vue';
 import EventComponent from './EventComponent.vue';
+import CreateEvent from './CreateEvent.vue';
 
 export default {
   components: {
     GalleryImage,
     ImageUpload,
-    EventComponent
+    EventComponent,
+    CreateEvent
   },
   data() {
     return {
@@ -61,7 +67,8 @@ export default {
       BandService,
       canEdit: false,
       roleChecked: false,
-      bandEvents: []
+      bandEvents: [],
+      showCreateEvent: false
     }
   },
   mounted() {
@@ -139,6 +146,9 @@ export default {
         .catch(error => {
           console.error(error);
         });
+    },
+    toggleCreateEvent() {
+      this.showCreateEvent = !this.showCreateEvent;
     }
 
   }

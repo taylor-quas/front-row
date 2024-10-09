@@ -111,6 +111,8 @@ public class BandController {
         return eventDao.getEventsByEventHost(bandId);
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/create-event")
     public void createEvent(@RequestBody @Valid EventBandDto eventBandDto) {
         eventDao.createEvent(eventBandDto);
