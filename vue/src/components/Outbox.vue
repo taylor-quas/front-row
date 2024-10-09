@@ -2,7 +2,7 @@
     <div id="outbox">
         <div id="header">
             <h2 id="title">Sent Messages</h2>
-            <button id="new-message" @click="toggleNewMessage">NEW MESSAGE</button>
+            <button id="new-message" @click="toggleNewMessage">{{ showNewMessage ? 'CANCEL' : 'NEW MESSAGE' }}</button>
         </div>
         <div v-if="showNewMessage" id="new-message-form">
             <CreateMessage id="create-message" @message-sent="handleMessageSent" @close="toggleNewMessage"></CreateMessage>
