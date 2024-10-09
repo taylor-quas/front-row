@@ -75,7 +75,7 @@ export default {
 
 #new-message-form {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-content: center;
     justify-content: center;
     width: 100%;
