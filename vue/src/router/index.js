@@ -15,6 +15,7 @@ import ProfileView from '../views/ProfileView.vue';
 import EditBand from '../components/EditBand.vue';
 import AdminPanel from '../components/AdminPanel.vue';
 import OutboxView from '../views/OutboxView.vue';
+import EditView from '../views/EditView.vue';
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -76,7 +77,7 @@ const routes = [
   {
     path: '/:bandName/edit',
     name: 'edit',
-    component: EditBand,
+    component: EditView,
     meta: {
       requiresAuth: true
     }

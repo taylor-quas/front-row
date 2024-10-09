@@ -1,7 +1,7 @@
 <template>
     <div id="bands">
       <div id="managed-bands-container">
-        <h2>Managed Bands</h2>
+        <h2>My Bands</h2>
         
           <div id="managed-bands">
             <div id="add-band" @click="showCreateBand = true">
