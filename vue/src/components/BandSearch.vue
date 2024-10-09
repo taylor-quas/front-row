@@ -84,6 +84,16 @@ export default {
       } else if (this.selectedGenres && this.selectedGenres.length === 0) {
         filteredBands = [];
       }
+
+      filteredBands.sort((a, b) => {
+        const stripThe = name => name.toLowerCase().replace(/^the\s+/i, '');
+        const nameA = stripThe(a.band.bandName);
+        const nameB = stripThe(b.band.bandName);
+        if (nameA < nameB) return -1;
+        if (nameA > nameB) return 1;
+        return 0;
+      });
+
       this.filteredBands = filteredBands;
     }
   },
