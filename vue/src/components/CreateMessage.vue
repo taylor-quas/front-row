@@ -74,8 +74,6 @@ export default {
         },
 
         sendMessage() {
-            console.log('Selected Band: ', this.selectedBand);
-
             const currentTime = new Date().toISOString();
             this.message.messageTimeSent = currentTime;
 
@@ -83,8 +81,6 @@ export default {
             this.message.messageTimeExpiration = expirationDateTime;
 
             this.message.messageSender = this.selectedBand.band.bandId;
-
-            console.log('Message: ', this.message);
 
             MessageService.sendMessage(this.message).then(response => {
                 if (response.status === 201) {

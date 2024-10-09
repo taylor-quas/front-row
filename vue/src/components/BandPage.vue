@@ -22,7 +22,7 @@
           <button class="add-event-button" v-if="canEdit" @click="toggleCreateEvent">{{ showCreateEvent ? 'Cancel' :
         'Add Event' }}</button>
           <div v-if="showCreateEvent" id="new-event-form">
-            <CreateEvent></CreateEvent>
+            <CreateEvent @event-created="handleEventCreated"></CreateEvent>
           </div>
           <div id="events" v-if="bandEvents.length > 0">
             <h3>Upcoming Events</h3>
@@ -146,6 +146,11 @@ export default {
           this.bandEvents = response.data.filter(event => {
             const eventDate = new Date(event.event.eventTime);
             return eventDate > now;
+          })
+          .sort((a, b) => {
+            const dateA = new Date(a.event.eventTime);
+            const dateB = new Date(b.event.eventTime);
+            return dateA - dateB;
           });
         })
         .catch(error => {
@@ -154,6 +159,10 @@ export default {
     },
     toggleCreateEvent() {
       this.showCreateEvent = !this.showCreateEvent;
+    },
+    handleEventCreated(newEvent) {
+      this.fetchBandEvents();
+      this.showCreateEvent = false;
     }
 
   }
