@@ -2,7 +2,7 @@
   <div id="inbox">
     <h2>Inbox</h2>
     <div id="message-card" v-for="message in filteredMessages" :key="message.message.messageId">
-      <MiniMessageComponent :message="message" :isRead="checkIfMessageIsRead(message)"/>
+      <MiniMessageComponent :message="message" :isRead="checkIfMessageIsRead(message)" />
     </div>
   </div>
 </template>
@@ -19,6 +19,7 @@ export default {
   data() {
     return {
       messages: [],
+      followedBands: [],
       selectedBand: 'all',
       selectedSort: 'newest',
       pollInterval: null
@@ -26,19 +27,29 @@ export default {
   },
   computed: {
     filteredMessages() {
+
+      if (!this.followedBands.length || !this.messages.length) {
+        return [];
+      }
+
       const currentTime = new Date();
 
       return this.messages.filter(message => {
         const expirationTime = new Date(message.message.messageTimeExpiration);
         const notExpired = expirationTime > currentTime;
+        const isBandFollowed = this.followedBands.some(band => band.band.bandName === message.bandName);
+        const bandMatches = this.selectedBand === 'all' || message.bandName === this.selectedBand;
 
-        return notExpired;
+        return notExpired && bandMatches && isBandFollowed;
       });
     },
   },
   created() {
-    this.fetchInboxMessages();
-    this.fetchFollowedBands();
+    this.fetchFollowedBands().then(() => {
+      return this.fetchInboxMessages();
+    }).catch(error => {
+      console.error(error);
+    });
   },
   methods: {
     handleMarkAsRead(messageId) {
@@ -56,7 +67,7 @@ export default {
     },
 
     fetchInboxMessages() {
-      MessageService.getUserInbox().then(response => {
+      return MessageService.getUserInbox().then(response => {
         this.messages = response.data;
         console.log(response.data);
 
@@ -67,7 +78,7 @@ export default {
     },
 
     fetchFollowedBands() {
-      BandService.getFollowedBands().then(response => {
+      return BandService.getFollowedBands().then(response => {
         this.followedBands = response.data;
       })
         .catch(error => {

@@ -51,9 +51,10 @@ export default {
       return this.messages.filter(message => {
         const expirationTime = new Date(message.message.messageTimeExpiration);
         const notExpired = expirationTime > currentTime;
+        const isBandFollowed = this.followedBands.some(band => band.band.bandName === message.bandName);
         const bandMatches = this.selectedBand === 'all' || message.bandName === this.selectedBand;
 
-        return notExpired && bandMatches;
+        return notExpired && bandMatches && isBandFollowed;
       });
     },
     sortedMessages() {
