@@ -57,14 +57,14 @@ INSERT INTO images (band_id, image_link) VALUES (4, 'https://res.cloudinary.com/
 INSERT INTO images (band_id, image_link) VALUES (4, 'https://res.cloudinary.com/dhgcjy2pf/image/upload/v1727978064/download_t058lp.webp');
 
 --Messages
-INSERT INTO messages (message_content, message_time_sent, message_time_expiration, message_sender) VALUES ('Hello', '2024-10-01 13:12:00', '2024-10-14 13:12:00', 3);
-INSERT INTO messages (message_content, message_time_sent, message_time_expiration, message_sender) VALUES ('Cheerio, g-day mate,', '2024-10-01 13:12:00', '2024-10-31 13:12:00', 2);
-INSERT INTO messages (message_content, message_time_sent, message_time_expiration, message_sender) VALUES ('Howdy padner', '2024-10-01 13:12:00', '2024-10-11 13:12:00', 3);
+INSERT INTO messages (message_content, message_time_sent, message_time_expiration, message_sender) VALUES ('Paul is dead.', '2024-10-01 13:12:00', '2024-10-14 13:12:00', 3);
+INSERT INTO messages (message_content, message_time_sent, message_time_expiration, message_sender) VALUES ('Under my umbrella ella ella ey ey ey', '2024-10-01 13:12:00', '2024-10-31 13:12:00', 2);
+INSERT INTO messages (message_content, message_time_sent, message_time_expiration, message_sender) VALUES ('Paul is alive.', '2024-10-01 13:13:00', '2024-10-14 13:13:00', 3);
 INSERT INTO messages (message_content, message_time_sent, message_time_expiration, message_sender) VALUES ('This is an expired message. It should not be visible.', '2024-09-01 13:12:00', '2024-10-01 13:12:00', 3);
-INSERT INTO messages (message_content, message_time_sent, message_time_expiration, message_sender) VALUES ('Sup', '2024-10-02 13:12:00', '2024-10-16 13:12:00', 1);
-INSERT INTO messages (message_content, message_time_sent, message_time_expiration, message_sender) VALUES ('Sup', '2024-10-02 13:12:00', '2024-10-16 13:12:00', 4);
-INSERT INTO messages (message_content, message_time_sent, message_time_expiration, message_sender) VALUES ('Hey there', '2024-10-02 13:12:00', '2024-10-16 13:12:00', 5);
-INSERT INTO messages (message_content, message_time_sent, message_time_expiration, message_sender) VALUES ('You should probably leave', '2024-10-03 09:31:00', '2024-10-17 09:31:00', 6);
+INSERT INTO messages (message_content, message_time_sent, message_time_expiration, message_sender) VALUES ('I love Kendrick Lamar.', '2024-10-02 13:12:00', '2024-10-16 13:12:00', 1);
+INSERT INTO messages (message_content, message_time_sent, message_time_expiration, message_sender) VALUES ('Excited to see you in Miami (Oct 18-20), NOLA (Oct 25-27), and Indy (Nov 1-3)!', '2024-10-02 13:12:00', '2024-11-3 13:12:00', 4);
+INSERT INTO messages (message_content, message_time_sent, message_time_expiration, message_sender) VALUES ('Howdy.', '2024-10-02 13:12:00', '2024-10-16 13:12:00', 5);
+INSERT INTO messages (message_content, message_time_sent, message_time_expiration, message_sender) VALUES ('You should probably leave.', '2024-10-03 09:31:00', '2024-10-17 09:31:00', 6);
 INSERT INTO messages (message_content, message_time_sent, message_time_expiration, message_sender) VALUES ('I really messed it up this time, didn''t I, my dear?', '2024-10-03 13:35:00', '2024-10-17 13:35:00', 7);
 
 --Genres
