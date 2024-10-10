@@ -57,14 +57,14 @@ INSERT INTO images (band_id, image_link) VALUES (4, 'https://res.cloudinary.com/
 INSERT INTO images (band_id, image_link) VALUES (4, 'https://res.cloudinary.com/dhgcjy2pf/image/upload/v1727978064/download_t058lp.webp');
 
 --Messages
-INSERT INTO messages (message_content, message_time_sent, message_time_expiration, message_sender) VALUES ('Hello', '2024-10-01 13:12:00', '2024-10-14 13:12:00', 3);
-INSERT INTO messages (message_content, message_time_sent, message_time_expiration, message_sender) VALUES ('Cheerio, g-day mate,', '2024-10-01 13:12:00', '2024-10-31 13:12:00', 2);
-INSERT INTO messages (message_content, message_time_sent, message_time_expiration, message_sender) VALUES ('Howdy padner', '2024-10-01 13:12:00', '2024-10-11 13:12:00', 3);
+INSERT INTO messages (message_content, message_time_sent, message_time_expiration, message_sender) VALUES ('Paul is dead.', '2024-10-01 13:12:00', '2024-10-14 13:12:00', 3);
+INSERT INTO messages (message_content, message_time_sent, message_time_expiration, message_sender) VALUES ('Under my umbrella ella ella ey ey ey', '2024-10-01 13:12:00', '2024-10-31 13:12:00', 2);
+INSERT INTO messages (message_content, message_time_sent, message_time_expiration, message_sender) VALUES ('Paul is alive.', '2024-10-01 13:13:00', '2024-10-14 13:13:00', 3);
 INSERT INTO messages (message_content, message_time_sent, message_time_expiration, message_sender) VALUES ('This is an expired message. It should not be visible.', '2024-09-01 13:12:00', '2024-10-01 13:12:00', 3);
-INSERT INTO messages (message_content, message_time_sent, message_time_expiration, message_sender) VALUES ('Sup', '2024-10-02 13:12:00', '2024-10-16 13:12:00', 1);
-INSERT INTO messages (message_content, message_time_sent, message_time_expiration, message_sender) VALUES ('Sup', '2024-10-02 13:12:00', '2024-10-16 13:12:00', 4);
-INSERT INTO messages (message_content, message_time_sent, message_time_expiration, message_sender) VALUES ('Hey there', '2024-10-02 13:12:00', '2024-10-16 13:12:00', 5);
-INSERT INTO messages (message_content, message_time_sent, message_time_expiration, message_sender) VALUES ('You should probably leave', '2024-10-03 09:31:00', '2024-10-17 09:31:00', 6);
+INSERT INTO messages (message_content, message_time_sent, message_time_expiration, message_sender) VALUES ('I love Kendrick Lamar.', '2024-10-02 13:12:00', '2024-10-16 13:12:00', 1);
+INSERT INTO messages (message_content, message_time_sent, message_time_expiration, message_sender) VALUES ('Excited to see you in Miami (Oct 18-20), NOLA (Oct 25-27), and Indy (Nov 1-3)!', '2024-10-02 13:12:00', '2024-11-3 13:12:00', 4);
+INSERT INTO messages (message_content, message_time_sent, message_time_expiration, message_sender) VALUES ('Howdy.', '2024-10-02 13:12:00', '2024-10-16 13:12:00', 5);
+INSERT INTO messages (message_content, message_time_sent, message_time_expiration, message_sender) VALUES ('You should probably leave.', '2024-10-03 09:31:00', '2024-10-17 09:31:00', 6);
 INSERT INTO messages (message_content, message_time_sent, message_time_expiration, message_sender) VALUES ('I really messed it up this time, didn''t I, my dear?', '2024-10-03 13:35:00', '2024-10-17 13:35:00', 7);
 
 --Genres
@@ -112,6 +112,49 @@ INSERT INTO events (event_time, event_venue, event_address, event_host, event_na
 	VALUES ('2024-12-07T19:00:00','BC Place', 'Vancouver, BC, CA', 4, 'The Eras Tour');
 INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
 	VALUES ('2024-12-08T19:00:00','BC Place', 'Vancouver, BC, CA', 4, 'The Eras Tour');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-10-18T18:00:00','Bank of America Stadium', 'Charlotte, NC', 5, 'One Night At A Time Tour');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-10-19T18:00:00','Bank of America Stadium', 'Charlotte, NC', 5, 'One Night At A Time Tour');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-10-11T20:30:00','Bank of America Stadium', 'Austin, TX', 6, 'Austin City Limits Festival');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-12-07T17:45:00','Allegiant Stadium', 'Las Vegas, NV', 6, 'George Strait Tour');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-10-16T19:30:00','AO Arena', 'Manchester, GB', 6, 'All-American Road Show');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-10-17T18:30:00','OVO Hydro', 'Glasgow, GB', 6, 'All-American Road Show');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-10-20T18:30:00','3Arena', 'Dublin, IE', 6, 'All-American Road Show');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-10-22T19:30:00','Utilita Arena', 'Birmingham, GB', 6, 'All-American Road Show');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-10-23T18:30:00','The O2', 'London, GB', 6, 'All-American Road Show');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-10-24T18:30:00','The O2', 'London, GB', 6, 'All-American Road Show');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2025-03-07T18:30:00','Spark Arena', 'Auckland, NZ', 6, 'All-American Road Show');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2025-03-08T18:30:00','Spark Arena', 'Auckland, NZ', 6, 'All-American Road Show');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-10-10T20:00:00','LANXESS arena', 'Cologne, DE', 8, 'Melanie Martinez Trilogy Tour');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-10-11T20:00:00','Festhalle', 'Frankfurt am Main, DE', 8, 'Melanie Martinez Trilogy Tour');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-10-12T20:00:00','Barclays Arena', 'Hamburg, DE', 8, 'Melanie Martinez Trilogy Tour');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-10-16T19:00:00','O2 Arena', 'Praha 9, CZ', 8, 'Melanie Martinez Trilogy Tour');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-10-18T20:00:00','Unipol Arena', 'Casalecchio di Reno, IT', 8, 'Melanie Martinez Trilogy Tour');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-10-19T20:00:00','Forum', 'Assago, IT', 8, 'Melanie Martinez Trilogy Tour');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-10-19T20:00:00','Forum', 'Assago, IT', 8, 'Melanie Martinez Trilogy Tour');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-10-11T20:00:00','Majestic Theatre', 'Detroit, MI', 9, null);
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-10-13T20:00:00','Brooklyn Bowl', 'Nashville, TN', 9, '91.One WNXP Presents');
+
 
 
 --Match messages to users
