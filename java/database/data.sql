@@ -112,6 +112,49 @@ INSERT INTO events (event_time, event_venue, event_address, event_host, event_na
 	VALUES ('2024-12-07T19:00:00','BC Place', 'Vancouver, BC, CA', 4, 'The Eras Tour');
 INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
 	VALUES ('2024-12-08T19:00:00','BC Place', 'Vancouver, BC, CA', 4, 'The Eras Tour');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-10-18T18:00:00','Bank of America Stadium', 'Charlotte, NC', 5, 'One Night At A Time Tour');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-10-19T18:00:00','Bank of America Stadium', 'Charlotte, NC', 5, 'One Night At A Time Tour');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-10-11T20:30:00','Bank of America Stadium', 'Austin, TX', 6, 'Austin City Limits Festival');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-12-07T17:45:00','Allegiant Stadium', 'Las Vegas, NV', 6, 'George Strait Tour');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-10-16T19:30:00','AO Arena', 'Manchester, GB', 6, 'All-American Road Show');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-10-17T18:30:00','OVO Hydro', 'Glasgow, GB', 6, 'All-American Road Show');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-10-20T18:30:00','3Arena', 'Dublin, IE', 6, 'All-American Road Show');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-10-22T19:30:00','Utilita Arena', 'Birmingham, GB', 6, 'All-American Road Show');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-10-23T18:30:00','The O2', 'London, GB', 6, 'All-American Road Show');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-10-24T18:30:00','The O2', 'London, GB', 6, 'All-American Road Show');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2025-03-07T18:30:00','Spark Arena', 'Auckland, NZ', 6, 'All-American Road Show');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2025-03-08T18:30:00','Spark Arena', 'Auckland, NZ', 6, 'All-American Road Show');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-10-10T20:00:00','LANXESS arena', 'Cologne, DE', 8, 'Melanie Martinez Trilogy Tour');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-10-11T20:00:00','Festhalle', 'Frankfurt am Main, DE', 8, 'Melanie Martinez Trilogy Tour');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-10-12T20:00:00','Barclays Arena', 'Hamburg, DE', 8, 'Melanie Martinez Trilogy Tour');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-10-16T19:00:00','O2 Arena', 'Praha 9, CZ', 8, 'Melanie Martinez Trilogy Tour');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-10-18T20:00:00','Unipol Arena', 'Casalecchio di Reno, IT', 8, 'Melanie Martinez Trilogy Tour');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-10-19T20:00:00','Forum', 'Assago, IT', 8, 'Melanie Martinez Trilogy Tour');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-10-19T20:00:00','Forum', 'Assago, IT', 8, 'Melanie Martinez Trilogy Tour');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-10-11T20:00:00','Majestic Theatre', 'Detroit, MI', 9, null);
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-10-13T20:00:00','Brooklyn Bowl', 'Nashville, TN', 9, '91.One WNXP Presents');
+
 
 
 --Match messages to users
