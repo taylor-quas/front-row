@@ -43,7 +43,18 @@ export default {
         this.router.push('/search')
       }
       else this.router.push('/discover')
+    },
+    // NEW METHOD: Clear search query
+    clearSearchQuery() {
+      this.searchQuery = '';
     }
+  },
+  created() {
+    // NEW: Add navigation guard to clear search query before each route change
+    this.router.beforeEach((to, from, next) => {
+      this.clearSearchQuery();
+      next();
+    });
   }
 };
 
