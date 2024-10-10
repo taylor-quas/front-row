@@ -1,9 +1,9 @@
 <template>
   <div id="bg-image">
     <div id="anonymous-home">
-      <div style="display: flex; margin-top: 8vh; align-items: center;">
-        <div style="margin-right: 2vw;">
-          <img src="src/assets/logo-white.png" alt="Logo">
+      <div style="display: flex; margin-top: 6vh; align-items: center;">
+        <div style="margin-right: 2vw; width: 10vw;">
+          <img src="src/assets/logo-white.png" alt="Logo" style="width: 100%; height: auto;">
         </div>
         <div style="display: flex; flex-direction: column; align-items: flex-start;">
           <h1>FRONT ROW</h1>
@@ -39,7 +39,7 @@ export default {
 
 <style scoped>
   #bg-image {
-    background-image: linear-gradient(to bottom, #ffd90095, #ffffff00), url('src/assets/BR.png');
+    background-image: linear-gradient(to bottom, #000000, #ffffff00), url('src/assets/BR.png');
     background-position: center;
 
     display: flex; 
