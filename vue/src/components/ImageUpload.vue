@@ -41,6 +41,10 @@ export default {
             console.log(this.bandName)
             this.sendImageToServer(result.info.secure_url);
           }
+          if (!error && result && result.event === 'close') {
+          console.log("Widget closed");
+          window.location.reload();  // Refresh the page when the widget closes
+        }
         }
       );
       widget.open();
