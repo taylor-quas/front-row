@@ -102,9 +102,8 @@ export default {
 
     fetchInboxMessages() {
       MessageService.getUserInbox().then(response => {
-        console.log(response.data);
         this.messages = response.data;
-        
+
       })
         .catch(error => {
           console.error(error);

@@ -45,7 +45,7 @@ INSERT INTO bands (band_name, band_description, band_manager_id, band_hero_image
 
 
 --Users following bands
-INSERT INTO user_band (user_id, band_id) VALUES (1, 3), (1, 5), (1, 1);
+--INSERT INTO user_band (user_id, band_id) VALUES (1, 3), (1, 5), (1, 1);
 
 --Images
 INSERT INTO images (band_id, image_link) VALUES (4, 'https://res.cloudinary.com/dhgcjy2pf/image/upload/v1727978501/singer-Taylor-swift-2013_nbzrsl.webp');
@@ -86,10 +86,10 @@ INSERT INTO events (event_time, event_venue, event_address, event_host)
 	VALUES ('2024-10-20T20:00:00','Riverbend', 'Cincinnati, OH', 5);
 
 --Match messages to users
-INSERT INTO message_user (message_id, user_id, is_read)
-    SELECT messages.message_id, users.user_id, FALSE
-    FROM messages
-    JOIN user_band ON messages.message_sender = user_band.band_id
-    JOIN users ON user_band.user_id = users.user_id;
+--INSERT INTO message_user (message_id, user_id, is_read)
+--    SELECT messages.message_id, users.user_id, FALSE
+--    FROM messages
+--    JOIN user_band ON messages.message_sender = user_band.band_id
+--    JOIN users ON user_band.user_id = users.user_id;
 
 COMMIT TRANSACTION;

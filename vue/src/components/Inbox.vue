@@ -4,25 +4,25 @@
     <div id="filter">
       <div id="filter-box">
         <h4>Filter By Band</h4>
-      <select class="filterByBand" v-model="selectedBand">
-        <option value="all">All</option>
-        <option v-for="band in followedBands" :key="band.bandId" :value="band.band.bandName">{{band.band.bandName}}</option>
-      </select>
+        <select class="filterByBand" v-model="selectedBand">
+          <option value="all">All</option>
+          <option v-for="band in followedBands" :key="band.bandId" :value="band.band.bandName">{{ band.band.bandName }}
+          </option>
+        </select>
       </div>
 
       <div id="sort-box">
         <h4>Sort By</h4>
-      <select class="sort-by" v-model="selectedSort">
-        <option value="newest">Newest</option>
-        <option value="oldest">Oldest</option>
-        <option value="band-name">Band Name (A-Z)</option>
-        <option value="band-name-reverse">Band Name (Z-A)</option>
-      </select>
+        <select class="sort-by" v-model="selectedSort">
+          <option value="newest">Newest</option>
+          <option value="oldest">Oldest</option>
+          <option value="band-name">Band Name (A-Z)</option>
+          <option value="band-name-reverse">Band Name (Z-A)</option>
+        </select>
       </div>
-      
     </div>
     <div id="message-card" v-for="message in sortedMessages" :key="message.messageId">
-      <MessageComponent :message="message" :isRead="message.isRead" @markAsRead="handleMarkAsRead"/>
+      <MessageComponent :message="message" :isRead="message.isRead" @markAsRead="handleMarkAsRead" />
     </div>
   </div>
 </template>
@@ -36,128 +36,142 @@ export default {
   components: {
     MessageComponent
   },
-    data() {
-      return {
-        messages: [],
-        followedBands: [],
-        selectedBand: 'all',
-        selectedSort: localStorage.getItem('selectedSort') || 'newest'
-      };
+  data() {
+    return {
+      messages: [],
+      followedBands: [],
+      selectedBand: 'all',
+      selectedSort: localStorage.getItem('selectedSort') || 'newest'
+    };
+  },
+  computed: {
+    filteredMessages() {
+      const currentTime = new Date();
+
+      return this.messages.filter(message => {
+        const expirationTime = new Date(message.message.messageTimeExpiration);
+        const notExpired = expirationTime > currentTime;
+        const bandMatches = this.selectedBand === 'all' || message.bandName === this.selectedBand;
+
+        return notExpired && bandMatches;
+      });
     },
-    computed: {
-      filteredMessages() {
-        const currentTime = new Date();
+    sortedMessages() {
+      let sortedMessages = this.filteredMessages;
 
-        return this.messages.filter(message => {
-          const expirationTime = new Date(message.message.messageTimeExpiration);
-          const notExpired = expirationTime > currentTime;
-          const bandMatches = this.selectedBand === 'all' || message.bandName === this.selectedBand;
-
-          return notExpired && bandMatches;
-        });
-      },
-      sortedMessages() {
-        let sortedMessages = this.filteredMessages;
-
-        const removeThe = (name) => {
-          return name.trim().toLowerCase().startsWith('the ')
-            ? name.trim().slice(4).trim()
-            : name.trim();
-        }
-
-        if (this.selectedSort === 'newest') {
-          sortedMessages = sortedMessages.sort((a, b) => {
-            return new Date(b.message.messageTimeSent) - new Date(a.message.messageTimeSent);
-          });
-        } else if (this.selectedSort === 'oldest') {
-          sortedMessages = sortedMessages.sort((a, b) => {
-            return new Date(a.message.messageTimeSent) - new Date(b.message.messageTimeSent);
-          });
-        } else if (this.selectedSort === 'band-name') {
-          sortedMessages = sortedMessages.sort((a, b) => {
-            return removeThe(a.bandName).localeCompare(removeThe(b.bandName));
-          });
-        } else if (this.selectedSort === 'band-name-reverse') {
-          sortedMessages = sortedMessages.sort((a, b) => {
-            return removeThe(b.bandName).localeCompare(removeThe(a.bandName));
-          });
-        }
-
-        return sortedMessages;
-
+      const removeThe = (name) => {
+        return name.trim().toLowerCase().startsWith('the ')
+          ? name.trim().slice(4).trim()
+          : name.trim();
       }
-    },
-    created() {
-      this.fetchInboxMessages();
-      BandService.getFollowedBands().then(response => {
-            this.followedBands = response.data;
-        })
-        .catch(error => {
-            console.error(error);
+
+      if (this.selectedSort === 'newest') {
+        sortedMessages = sortedMessages.sort((a, b) => {
+          return new Date(b.message.messageTimeSent) - new Date(a.message.messageTimeSent);
         });
-
-    },
-    watch: {
-      followedBands() {
-        this.fetchInboxMessages();
-      },
-      selectedSort(newValue) {
-        localStorage.setItem('selectedSort', newValue);
-      }
-    },
-
-    methods: {
-      handleMarkAsRead(messageId) {
-        const message = this.messages.find(message => message.message.messageId === messageId);
-          if (message) {
-            message.isRead = true;
-            console.log(message);
-          }
-        MessageService.markAsRead(messageId).then(() => {
-          this.fetchInboxMessages();
-          console.log(message);
-        })
-        .catch(error => {
-          console.error(error);
+      } else if (this.selectedSort === 'oldest') {
+        sortedMessages = sortedMessages.sort((a, b) => {
+          return new Date(a.message.messageTimeSent) - new Date(b.message.messageTimeSent);
         });
-
-      },
-      markAllAsRead() {
-        const unreadMessages = this.messages.filter(message => !message.isRead);
-        const unreadMessageIds = unreadMessages.map(message => message.message.messageId);
-
-        if (unreadMessageIds.length > 0) {
-          MessageService.markAllAsRead(unreadMessageIds).then(() => {
-            unreadMessages.forEach(message => {
-              message.isRead = true;
-            });
-          })
-          .catch(error => {
-            console.error(error);
-          });
-        }
-      },
-
-      fetchInboxMessages() {
-        this.message = [];
-        MessageService.getUserInbox().then(response => {
-          console.log(response.data);
-          this.messages = response.data;
-        })
-        .catch(error => {
-          console.error(error);
+      } else if (this.selectedSort === 'band-name') {
+        sortedMessages = sortedMessages.sort((a, b) => {
+          return removeThe(a.bandName).localeCompare(removeThe(b.bandName));
+        });
+      } else if (this.selectedSort === 'band-name-reverse') {
+        sortedMessages = sortedMessages.sort((a, b) => {
+          return removeThe(b.bandName).localeCompare(removeThe(a.bandName));
         });
       }
 
-    },
-    beforeUnmount() {
-      this.markAllAsRead();
+      return sortedMessages;
+
     }
+  },
+  created() {
+    this.fetchInboxMessages();
+    BandService.getFollowedBands().then(response => {
+      this.followedBands = response.data;
+    })
+      .catch(error => {
+        console.error(error);
+      });
+
+  },
+  watch: {
+    followedBands() {
+      this.fetchInboxMessages();
+    },
+    selectedSort(newValue) {
+      localStorage.setItem('selectedSort', newValue);
+    }
+  },
+
+  methods: {
+    handleMarkAsRead(messageId) {
+      const message = this.messages.find(message => message.message.messageId === messageId);
+      if (message) {
+        message.isRead = true;
+      }
+      MessageService.markAsRead(messageId).then(() => {
+        this.fetchInboxMessages();
+        this.$emit('messages-updated');
+      })
+        .catch(error => {
+          console.error(error);
+        });
+
+    },
+    markAllAsRead() {
+
+      MessageService.markAllAsRead().then(() => {
+        this.messages.forEach(message => {
+          message.isRead = true;
+        });
+      })
+        .catch(error => {
+          console.error(error);
+        });
+
+      // const unreadMessages = this.messages.filter(message => !message.isRead);
+      // const unreadMessageIds = unreadMessages.map(message => message.message.messageId);
+
+      // if (unreadMessageIds.length > 0) {
+      //   MessageService.markAllAsRead(unreadMessageIds);
+      //   unreadMessages.forEach(message => {
+      //     message.isRead = true;
+      //   })
+      //     .catch(error =>{
+      //     console.error(error);
+      //   });
+
+      // MessageService.markAllAsRead(unreadMessageIds).then(() => {
+      //   unreadMessages.forEach(message => {
+      //     message.isRead = true;
+      //   });
+      // })
+      // .catch(error => {
+      //   console.error(error);
+      // });
+    },
+    fetchInboxMessages() {
+      // this.message = [];
+      MessageService.getUserInbox().then(response => {
+        console.log(response.data);
+        this.messages = response.data;
+      })
+        .catch(error => {
+          console.error(error);
+        });
+    },
+  },
+  beforeUnmount() {
+    this.markAllAsRead();
+  }
+
 }
 </script>
 
 <style scoped>
-
 #inbox {
   display: flex;
   flex-direction: column;
@@ -210,5 +224,4 @@ export default {
   flex-direction: column;
   align-items: center;
 }
-
 </style>
