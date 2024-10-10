@@ -3,7 +3,8 @@
         <div id="header">
             <h2 id="title">Sent Messages</h2>
             <div id="buttons">
-                <button id="new-message" @click="toggleNewMessage">{{ showNewMessage ? 'CANCEL' : 'NEW MESSAGE' }}</button>
+                <button id="new-message" @click="toggleNewMessage">{{ showNewMessage ? 'CANCEL' : 'NEW MESSAGE'
+                    }}</button>
             </div>
         </div>
         <div v-if="showNewMessage" id="new-message-form">
@@ -89,6 +90,7 @@ export default {
     align-content: center;
     width: 100%;
     padding: 5px;
+    align-self: flex-start;
 }
 
 #new-message,
@@ -126,5 +128,11 @@ export default {
     align-items: center;
     width: 100%;
     padding: 5px;
+}
+
+#title {
+    align-items: flex-start;
+    justify-content: flex-start;
+    
 }
 </style>

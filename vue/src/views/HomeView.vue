@@ -149,18 +149,21 @@ export default {
   flex-direction: column;
   margin: 5px;
   border-radius: 20px;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+  align-self: flex-start;
 }
 
 #managed-bands {
   grid-area: managed-bands;
   margin: 5px;
   border-radius: 20px;
+  padding: 10px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: flex-start;
+  align-self: flex-start;
 }
 
 #divider {
