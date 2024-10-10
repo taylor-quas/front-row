@@ -333,7 +333,7 @@ export default {
   align-items: center;
   color: white;
   text-align: center;
-  padding: 20px; /* Padding for better spacing around text */
+   /* Padding for better spacing around text */
 }
 
 /* .genres {

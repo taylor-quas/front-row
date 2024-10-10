@@ -88,7 +88,6 @@ button {
   cursor: pointer;            /* Pointer on hover */
   transition: background-color 0.3s ease; /* Smooth transition */
   margin-bottom: 1em;
-  margin-left: 1rem;
 }
 
 button:hover {
