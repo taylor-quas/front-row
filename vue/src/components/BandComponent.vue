@@ -30,7 +30,7 @@ export default {
             if(this.$store.state.token != ''){
                 this.$router.push({ path: `/${this.band.band.bandName}` })
             }
-            else this.$router.push('/login')
+            else this.$router.push('/register')
         }
     }
 }

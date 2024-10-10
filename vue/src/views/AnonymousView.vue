@@ -1,9 +1,14 @@
 <template>
   <div id="bg-image">
     <div id="anonymous-home">
-      <div>
-        <h1>FRONT ROW</h1>
-        <h2>IT'S WHERE YOU WANT TO BE</h2>
+      <div style="display: flex; margin-top: 8vh; align-items: center;">
+        <div style="margin-right: 2vw;">
+          <img src="src/assets/logo-white.png" alt="Logo">
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: flex-start;">
+          <h1>FRONT ROW</h1>
+          <h2 style="margin-top: -0.5em; ">IT'S WHERE YOU WANT TO BE</h2>
+        </div>
       </div>
       <div id="description">
         <p>Tailored to strengthen the engagement between bands and their fans.<br>Stay up to date on all your favorites.</p>
