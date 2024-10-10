@@ -88,7 +88,9 @@ export default {
     display: flex;
     flex-direction: column;
     align-content: center;
+    align-items: center;
     width: 100%;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     padding: 5px;
     align-self: flex-start;
 }

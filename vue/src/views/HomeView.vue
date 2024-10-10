@@ -137,9 +137,11 @@ export default {
   grid-area: followed-bands;
   margin: 5px;
   border-radius: 20px;
+  padding: 10px;
   display: flex;
   flex-wrap: wrap;
-  z-index: 1;
+  justify-self: center;
+  align-items: flex-start;
   align-self: flex-start;
 }
 
@@ -164,6 +166,7 @@ export default {
   justify-content: center;
   align-items: flex-start;
   align-self: flex-start;
+  justify-self: center;
 }
 
 #divider {

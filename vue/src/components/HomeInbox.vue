@@ -1,6 +1,8 @@
 <template>
   <div id="inbox">
-    <h2>Inbox</h2>
+    <div id="header">
+      <h2 id="title">Inbox</h2>
+    </div>
     <div id="message-card" v-for="message in filteredMessages" :key="message.message.messageId">
       <MiniMessageComponent :message="message" :isRead="checkIfMessageIsRead(message)" />
     </div>
@@ -106,10 +108,26 @@ export default {
   width: 100%;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   padding: 5px;
+  align-self: flex-start;
 }
 
 #message-card {
   width: 100%;
   padding: 5px;
+}
+
+#header {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 5px;
+}
+
+#title {
+  align-items: flex-start;
+  justify-content: flex-start;
+
 }
 </style>
