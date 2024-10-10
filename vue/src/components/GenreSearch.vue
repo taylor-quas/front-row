@@ -32,6 +32,10 @@ export default {
     customClass: {
       type: String,
       default: ''
+    },
+    initialSelectAll: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
@@ -39,14 +43,16 @@ export default {
       genres: [], 
       visibleGenres: [],
       selectedGenres: [],
-      selectAll: true, 
+      selectAll: this.initialSelectAll 
     };
   },
   methods: {
     fetchGenres() {
       BandService.getGenres().then(response => {
         this.genres = response.data;
-        this.selectedGenres = this.genres.map(genre => genre);
+        if (this.initialSelectAll) {
+          this.selectedGenres = this.genres.map(genre => genre);
+        }
         this.updateSelectedGenres();
       });
       GenreService.getGenresToManage().then(response => {
@@ -148,8 +154,6 @@ input[type="checkbox"]:hover {
   padding: 6px 10px; /* Spacing within each genre item */
   cursor: pointer;
   transition: background-color 0.3s, transform 0.2s;
-  flex: 0 1 calc(25% - 8px); /* Responsive four-column layout */
-  max-width: calc(25% - 8px); /* Adjust max-width for four columns */
   box-sizing: border-box;
 }
 
@@ -162,13 +166,38 @@ input[type="checkbox"]:hover {
   margin-right: 8px; /* Space between checkbox and label */
 }
 
-/* Media query for smaller screens */
+/* Media query for smaller screens (mobile) */
 @media (max-width: 768px) {
   .create-view .genre-list label {
-    flex: 0 1 calc(100% - 8px); /* Single-column layout on smaller screens */
+    flex: 0 1 calc(100% - 8px); /* Single-column layout */
     max-width: calc(100% - 8px);
   }
 }
+
+/* Media query for mid-sized screens (tablet) */
+@media (max-width: 1140px) and (min-width: 768px) {
+  .create-view .genre-list label {
+    flex: 0 1 calc(50% - 8px); /* Two-column layout */
+    max-width: calc(50% - 8px);
+  }
+}
+
+/* Media query for larger screens (desktop) */
+@media (max-width: 1470px) and (min-width: 1140px) {
+  .create-view .genre-list label {
+    flex: 0 1 calc(33% - 8px); /* Three-column layout */
+    max-width: calc(33% - 8px);
+  }
+}
+
+/* Media query for extra-large screens (desktop widescreen) */
+@media (min-width: 1470px) {
+  .create-view .genre-list label {
+    flex: 0 1 calc(25% - 8px); /* Four-column layout */
+    max-width: calc(25% - 8px); /* Adjust max-width for four columns */
+  }
+}
+
 
 .edit .genre-list {
   display: flex;

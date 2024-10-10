@@ -2,7 +2,7 @@
   <div class="band-view">
     <div v-if="band" class="page-setup">
       <button @click="cancel()" id="cancel-button">Back</button>
-      <h2>Edit {{ band?.band.bandName }} Fan Page</h2>
+      <h2>Edit {{ bandName }} Fan Page</h2>
       <form @submit.prevent="updateItem" class="edit-form">
         <label for="bandName" class="form-label">Band Name</label>
         <input 
@@ -10,7 +10,7 @@
           id="bandName"
           class="input-field" 
           :placeholder="band?.band.bandName" 
-          v-model="band.band.bandName" 
+          v-model="editedBand.band.bandName" 
         />
         
         <label for="bandDescription" class="form-label">Band Description</label>
@@ -18,7 +18,7 @@
           id="bandDescription"
           class="textarea-field"
           :placeholder="band.band.bandDescription" 
-          v-model="band.band.bandDescription">
+          v-model="editedBand.band.bandDescription">
         </textarea>
         
         <div class="image-section">
@@ -26,16 +26,21 @@
           <img :src="band.band.bandHeroImage" alt="Band Hero Image" class="hero-image" id="heroImage">
           <image-upload-vue 
             :admin="false" 
-            v-model="band.band.bandHeroImage">
+            v-model="editedBand.band.bandHeroImage">
           </image-upload-vue>
         </div>
         
-        <div class="genre-list">
+        <button id="show-genres" @click="toggleGenres">Edit Genres</button> <!-- Add button to toggle genre list/selection -->
+        <div class="genre-list" v-if="editGenres">
           <label class="form-label">Genres</label>
           <GenreSearch 
             class="edit" 
             @update:selectedGenres="updateSelectedGenres"
+            :initialSelectAll="false"
           />
+        </div>
+        <div v-else>
+          <br><br>
         </div>
         
         <button type="submit" class="save-button" @click="updateBand">Save</button>
@@ -60,10 +65,12 @@ export default {
   },
   data() {
     return {
-      band: '', 
+      band: '',
+      editedBand: '', 
       bandName: this.$route.params.bandName,
       BandService,
-      newImageUrl: ''
+      newImageUrl: '',
+      editGenres: false
     }
   },
   created() {
@@ -71,26 +78,43 @@ export default {
   },
   methods: {
     getBand() {
+      console.log(this.band);
+      console.log(this.editedBand);
       this.BandService.getBand(this.bandName)
         .then(response => {
           this.band = response.data;
+          this.editedBand = JSON.parse(JSON.stringify(this.band));
+
+        }).catch(error => {
+          console.error(error);
+        });
+    
+    },
+    setImage(data){
+      this.editedBand.band.bandHeroImage = data;
+    },
+    updateSelectedGenres(genres) {
+      this.editedBand.genreNames = genres;
+    },
+    updateBand(){
+      console.log(this.editedBand);
+      console.log(this.band);
+      this.band = this.editedBand;
+      BandService.updateBand(this.band.band.bandId, this.band)
+        .then(response => {
+          this.$router.push(`/${this.band.band.bandName}`)
         })
         .catch(error => {
           console.error(error);
         });
     },
-    setImage(data){
-      this.band.band.bandHeroImage = data;
-    },
-    updateSelectedGenres(genres) {
-      this.band.genreNames = genres;
-    },
-    updateBand(){
-      BandService.updateBand(this.band.band.bandId, this.band)
-      this.$router.push(`/${this.band.band.bandName}`)
-    },
     cancel() {
-      this.$router.push(`/${this.band.band.bandName}`)
+      console.log(this.band);
+      console.log(this.editedBand);
+      this.$router.push(`/${this.bandName}`)
+    },
+    toggleGenres() {
+      this.editGenres = !this.editGenres;
     }
   }
 }
@@ -179,6 +203,23 @@ h2 {
   cursor: pointer;
   font-size: 18px;
   transition: background-color 0.3s;
+}
+
+#show-genres {
+  padding: 10px 20px;
+  background-color: #999999;  /* Light grey */
+  color: white;               /* White text */
+  border: none;               /* Remove default border */
+  border-radius: 5px;         /* Rounded corners */
+  font-size: 16px;            /* Font size */
+  cursor: pointer;            /* Pointer on hover */
+  transition: background-color 0.3s ease; /* Smooth transition */
+  margin-bottom: 1em;
+  margin-left: 1rem;
+}
+
+#show-genres:hover {
+  background-color: #808080;  /* Darker light grey on hover */
 }
 
 .save-button:hover, #cancel-button:hover {
