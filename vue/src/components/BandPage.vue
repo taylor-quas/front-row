@@ -401,7 +401,7 @@ section h3 {
   line-height: normal;
 }
 
-.follow-button {
+.follow-button, .edit-button {
   padding: 10px 20px;
   background-color: #999999;
   color: white;
@@ -414,7 +414,7 @@ section h3 {
   font-family: Montserrat;
 }
 
-.edit-button {
+/* .edit-button {
   padding: 10px 20px;
   background-color: #999999;
   color: white;
@@ -425,7 +425,7 @@ section h3 {
   transition: background-color 0.3s ease;
   margin-bottom: 1em;
   margin-left: 1rem;
-}
+} */
 
 .add-event-button {
   padding: 10px 20px;
