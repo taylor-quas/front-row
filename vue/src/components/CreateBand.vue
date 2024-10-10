@@ -184,6 +184,8 @@ export default {
 
 textarea {
     width: auto;
+    white-space: pre-wrap; /* Preserve line breaks and spaces */
+    word-wrap: break-word; /* Ensure long words break and wrap correctly */
 }
 
 input, textarea {

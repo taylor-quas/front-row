@@ -82,6 +82,7 @@ export default {
       this.BandService.getBand(this.bandName)
         .then(response => {
           this.band = response.data;
+          console.log(this.band.band.bandDescription);
           if (this.band && this.band?.band?.bandId) {
             this.getIsFollowing(this.band.band.bandId);
             this.fetchBandEvents();
@@ -182,6 +183,7 @@ export default {
   max-width: 90%;            
   margin: 1em auto;
   text-align: justify;
+  white-space: pre-wrap;
 }
 
 .band-view {
