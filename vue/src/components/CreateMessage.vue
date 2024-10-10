@@ -117,6 +117,7 @@ export default {
             MessageService.sendMessage(this.message).then(response => {
                 if (response.status === 201) {
                     this.$emit('message-sent');
+                    window.location.reload(); 
                 }
             })
                 .catch(error => {
