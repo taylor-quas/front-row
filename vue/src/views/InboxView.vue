@@ -1,6 +1,6 @@
 <template>
   <div class="inbox">
-    <inbox />
+    <inbox ref="inboxComponent" />
   </div>
 </template>
 
@@ -10,6 +10,24 @@ import Inbox from '../components/Inbox.vue';
 export default {
   components: {
     Inbox
+  },
+  beforeRouteLeave(to, from, next) {
+    if (this.$refs.inboxComponent) {
+      this.$refs.inboxComponent.markAllAsRead()
+        .then(() => {
+          console.log('All messages marked as read');
+          next();
+        })
+        .catch(error => {
+          console.error('Failed to mark all messages as read', error);
+          next();
+        });
+    } else {
+      next();
+    }
+  },
+  mounted() {
+    console.log('InboxView mounted');
   }
 };
 </script>

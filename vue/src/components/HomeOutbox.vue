@@ -52,6 +52,7 @@ export default {
 
         handleMessageSent() {
             this.toggleNewMessage();
+            this.fetchSentMessages();
         },
 
         fetchSentMessages() {

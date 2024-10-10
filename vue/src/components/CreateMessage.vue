@@ -15,9 +15,13 @@
 
             <label for="expiration-date">Expiration Date</label>
             <input type="date" id="expiration-date" name="expiration-date" v-model="expirationDate">
-            
+
             <label for="expiration-time">Expiration Time</label>
             <input type="time" id="expiration-time" name="expiration-time" v-model="expirationTime">
+
+            <div v-if="errors.length" class="error-messages">
+                <p v-for="error in errors" :key="error">{{ error }}</p>
+            </div>
 
             <div>
                 <button @click="sendMessage()" id="send-button">SEND MESSAGE</button>
@@ -35,6 +39,7 @@ import MessageService from '../services/MessageService';
 export default {
     data() {
         return {
+            errors: [],
             managedBands: [],
             selectedBand: '',
             expirationDate: '',
@@ -73,7 +78,34 @@ export default {
             return today.toISOString().split('T')[0];
         },
 
+        checkForm() {
+            this.errors = [];
+
+            if(!this.selectedBand) {
+                this.errors.push('Band required.');
+            }
+            if(!this.message.messageContent.trim()) {
+                this.errors.push('Message required.');
+            }
+            if(!this.expirationDate) {
+                this.errors.push('Expiration date required.');
+            }
+            if(!this.expirationTime) {
+                this.errors.push('Expiration time required.');
+            }
+
+            return this.errors.length === 0;
+
+        },
+
         sendMessage() {
+            this.errors = [];
+
+            if(!this.checkForm()) {
+                console.log("Form is invalid, errors:", this.errors);
+                return;
+            }
+
             const currentTime = new Date().toISOString();
             this.message.messageTimeSent = currentTime;
 
@@ -91,6 +123,8 @@ export default {
                     console.error(error);
                 });
         },
+
+        
 
     }
 
@@ -143,7 +177,7 @@ label {
     min-width: 40%;
     border-radius: 10px;
     padding: 5px;
-    
+
 }
 
 #message-box {
@@ -233,5 +267,10 @@ button {
     /* Darker grey on hover */
     transform: translateY(-1px);
     /* Lift effect on hover */
+}
+
+.error-messages {
+    color: red;
+
 }
 </style>

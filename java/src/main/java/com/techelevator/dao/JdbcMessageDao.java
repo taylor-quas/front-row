@@ -31,9 +31,8 @@ public class JdbcMessageDao implements MessageDao {
         List<MessageBandDto> messages = new ArrayList<>();
         String sql = "SELECT DISTINCT m.message_id, message_content, message_time_sent, message_time_expiration, message_sender, mu.is_read " +
                 "FROM messages m " +
-                "JOIN user_band ub ON ub.band_id = m.message_sender " +
                 "JOIN message_user mu ON m.message_id = mu.message_id " +
-                "WHERE ub.user_id = ? " +
+                "WHERE mu.user_id = ? " +
                 "ORDER BY message_time_sent DESC;";
 
         long principalId = getUserIdByUsername(principal.getName());

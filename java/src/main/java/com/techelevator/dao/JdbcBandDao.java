@@ -197,7 +197,7 @@ public class JdbcBandDao implements BandDao {
     public void subscribe(long bandId, Principal principal) {
 
         String checkSql = "SELECT COUNT(*) FROM user_band " +
-                "WHERE user_id = ? AND band_id =?;";
+                "WHERE user_id = ? AND band_id = ?;";
 
         String sql = "INSERT INTO user_band (user_id, band_id) " +
                 "VALUES (?,?);";

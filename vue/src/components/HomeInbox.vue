@@ -1,8 +1,8 @@
 <template>
   <div id="inbox">
     <h2>Inbox</h2>
-    <div id="message-card" v-for="message in sortedMessages" :key="message.message.messageId">
-      <MiniMessageComponent :message="message" :isRead="message.isRead" @markAsRead="handleMarkAsRead" />
+    <div id="message-card" v-for="message in filteredMessages" :key="message.message.messageId">
+      <MiniMessageComponent :message="message" :isRead="checkIfMessageIsRead(message)"/>
     </div>
   </div>
 </template>
@@ -19,7 +19,6 @@ export default {
   data() {
     return {
       messages: [],
-      followedBands: [],
       selectedBand: 'all',
       selectedSort: 'newest',
       pollInterval: null
@@ -32,68 +31,24 @@ export default {
       return this.messages.filter(message => {
         const expirationTime = new Date(message.message.messageTimeExpiration);
         const notExpired = expirationTime > currentTime;
-        const bandMatches = this.selectedBand === 'all' || message.bandName === this.selectedBand;
 
-        return notExpired && bandMatches;
+        return notExpired;
       });
     },
-    sortedMessages() {
-      let sortedMessages = this.filteredMessages;
-
-      const removeThe = (name) => {
-        return name.trim().toLowerCase().startsWith('the ')
-          ? name.trim().slice(4).trim()
-          : name.trim();
-      }
-
-      if (this.selectedSort === 'newest') {
-        sortedMessages = sortedMessages.sort((a, b) => {
-          return new Date(b.message.messageTimeSent) - new Date(a.message.messageTimeSent);
-        });
-      } else if (this.selectedSort === 'oldest') {
-        sortedMessages = sortedMessages.sort((a, b) => {
-          return new Date(a.message.messageTimeSent) - new Date(b.message.messageTimeSent);
-        });
-      } else if (this.selectedSort === 'band-name') {
-        sortedMessages = sortedMessages.sort((a, b) => {
-          return removeThe(a.bandName).localeCompare(removeThe(b.bandName));
-        });
-      } else if (this.selectedSort === 'band-name-reverse') {
-        sortedMessages = sortedMessages.sort((a, b) => {
-          return removeThe(b.bandName).localeCompare(removeThe(a.bandName));
-        });
-      }
-
-      return sortedMessages;
-
-    }
   },
   created() {
     this.fetchInboxMessages();
-    // this.startPolling();
-    BandService.getFollowedBands().then(response => {
-      this.followedBands = response.data;
-    })
-      .catch(error => {
-        console.error(error);
-      });
-
+    this.fetchFollowedBands();
   },
-  // watch: {
-  //   followedBands() {
-  //     this.fetchInboxMessages();
-  //   }
-  // },
-  // beforeUnmount() {
-  //   this.stopPolling();
-  // },
   methods: {
     handleMarkAsRead(messageId) {
+      const messageIndex = this.messages.findIndex(message => message.message.messageId === messageId);
+      if (messageIndex !== -1) {
+        this.$set(this.messages, messageIndex, { ...this.messages[messageIndex], isRead: true });
+      }
       MessageService.markAsRead(messageId).then(() => {
-        const message = this.messages.find(message => message.message.messageId === messageId);
-        if (message) {
-          message.isRead = true;
-        }
+        this.fetchInboxMessages();
+        this.$emit('messages-updated');
       })
         .catch(error => {
           console.error(error);
@@ -103,6 +58,7 @@ export default {
     fetchInboxMessages() {
       MessageService.getUserInbox().then(response => {
         this.messages = response.data;
+        console.log(response.data);
 
       })
         .catch(error => {
@@ -110,15 +66,22 @@ export default {
         });
     },
 
-    // startPolling() {
-    //   this.pollInterval = setInterval(() => {
-    //     this.fetchInboxMessages();
-    //   }, 30000);
-    // },
+    fetchFollowedBands() {
+      BandService.getFollowedBands().then(response => {
+        this.followedBands = response.data;
+      })
+        .catch(error => {
+          console.error(error);
+        });
+    },
 
-    // stopPolling() {
-    //   clearInterval(this.pollInterval);
-    // }
+    handleMessageReceived() {
+      this.fetchInboxMessages();
+    },
+
+    checkIfMessageIsRead(targetMessage) {
+      return this.messages.some(message => message.message.messageId === targetMessage.message.messageId && message.isRead);
+    }
   }
 }
 </script>

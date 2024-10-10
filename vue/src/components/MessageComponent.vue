@@ -19,10 +19,6 @@ export default {
             type: Object,
             required: true
         },
-        band: {
-            type: Object,
-            required: true
-        },
         isRead: {
             type: Boolean,
             required: true

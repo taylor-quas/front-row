@@ -22,7 +22,7 @@
       </div>
     </div>
     <div id="message-card" v-for="message in sortedMessages" :key="message.messageId">
-      <MessageComponent :message="message" :isRead="message.isRead" @markAsRead="handleMarkAsRead" />
+      <MessageComponent :message="message" @markAsRead="handleMarkAsRead" :isRead="checkIfMessageIsRead(message)" />
     </div>
   </div>
 </template>
@@ -108,9 +108,9 @@ export default {
 
   methods: {
     handleMarkAsRead(messageId) {
-      const message = this.messages.find(message => message.message.messageId === messageId);
-      if (message) {
-        message.isRead = true;
+      const messageIndex = this.messages.findIndex(message => message.message.messageId === messageId);
+      if (messageIndex !== -1) {
+        this.$set(this.messages, messageIndex, { ...this.messages[messageIndex], isRead: true });
       }
       MessageService.markAsRead(messageId).then(() => {
         this.fetchInboxMessages();
@@ -123,38 +123,29 @@ export default {
     },
     markAllAsRead() {
 
-      MessageService.markAllAsRead().then(() => {
-        this.messages.forEach(message => {
-          message.isRead = true;
-        });
-      })
-        .catch(error => {
+      return new Promise((resolve, reject) => {
+        MessageService.markAllAsRead().then(() => {
+          this.messages.forEach(message => {
+            message.isRead = true;
+          });
+          resolve();
+        }).catch(error => {
           console.error(error);
+          reject(error);
         });
+      });
 
-      // const unreadMessages = this.messages.filter(message => !message.isRead);
-      // const unreadMessageIds = unreadMessages.map(message => message.message.messageId);
 
-      // if (unreadMessageIds.length > 0) {
-      //   MessageService.markAllAsRead(unreadMessageIds);
-      //   unreadMessages.forEach(message => {
-      //     message.isRead = true;
-      //   })
-      //     .catch(error =>{
-      //     console.error(error);
-      //   });
-
-      // MessageService.markAllAsRead(unreadMessageIds).then(() => {
-      //   unreadMessages.forEach(message => {
+      // MessageService.markAllAsRead().then(() => {
+      //   this.sortedMessages.forEach(message => {
       //     message.isRead = true;
       //   });
       // })
-      // .catch(error => {
-      //   console.error(error);
-      // });
+      //   .catch(error => {
+      //     console.error(error);
+      //   });
     },
     fetchInboxMessages() {
-      // this.message = [];
       MessageService.getUserInbox().then(response => {
         console.log(response.data);
         this.messages = response.data;
@@ -163,9 +154,18 @@ export default {
           console.error(error);
         });
     },
+    checkIfMessageIsRead(targetMessage) {
+      return this.messages.some(message => message.message.messageId === targetMessage.message.messageId && message.isRead);
+    }
   },
-  beforeUnmount() {
-    this.markAllAsRead();
+  beforeRouteLeave(to, from, next) {
+    this.markAllAsRead().then(() => {
+      console.log('All messages marked as read');
+      next();
+    }).catch(error => {
+      console.error('Failed to mark all messages as read', error);
+      next();
+    })
   }
 
 }
