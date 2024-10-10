@@ -76,14 +76,43 @@ INSERT INTO band_genre (band_id, genre_id) VALUES (1, 6), (2, 6), (2, 10), (3, 5
 (20, 4), (21, 4), (22, 10), (22, 4), (23, 7), (23, 10), (24, 5), (25, 11), (26, 4), (27, 6);
 
 --Events
-INSERT INTO events (event_time, event_venue, event_address, event_host)
-	VALUES ('2024-10-12T19:30:00','Bogarts', 'Cincinnati, OH', 1);
-INSERT INTO events (event_time, event_venue, event_address, event_host)
-	VALUES ('2024-10-15T20:00:00','Paycor Stadium', 'Cincinnati, OH', 4);
 INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
-	VALUES ('2024-10-22T20:00:00','Lucas Oil Stadium', 'Indianapolis, IN', 4, 'Eras Tour');
-INSERT INTO events (event_time, event_venue, event_address, event_host)
-	VALUES ('2024-10-20T20:00:00','Riverbend', 'Cincinnati, OH', 5);
+	VALUES ('2024-10-18T19:00:00','Hard Rock Stadium', 'Miami, FL', 4, 'The Eras Tour');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-10-19T19:00:00','Hard Rock Stadium', 'Miami, FL', 4, 'The Eras Tour');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+    VALUES ('2024-10-20T19:00:00','Hard Rock Stadium', 'Miami, FL', 4, 'The Eras Tour');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-10-25T19:00:00','Caesars Superdome', 'New Orleans, LA', 4, 'The Eras Tour');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-10-26T19:00:00','Caesars Superdome', 'New Orleans, LA', 4, 'The Eras Tour');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-10-27T19:00:00','Caesars Superdome', 'New Orleans, LA', 4, 'The Eras Tour');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-11-01T19:00:00','Lucas Oil Stadium', 'Indianapolis, IN', 4, 'The Eras Tour');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-11-02T19:00:00','Lucas Oil Stadium', 'Indianapolis, IN', 4, 'The Eras Tour');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-11-03T19:00:00','Lucas Oil Stadium', 'Indianapolis, IN', 4, 'The Eras Tour');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-11-14T19:00:00','Rogers Centre', 'Toronto, ON, CA', 4, 'The Eras Tour');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-11-15T19:00:00','Rogers Centre', 'Toronto, ON, CA', 4, 'The Eras Tour');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-11-16T19:00:00','Rogers Centre', 'Toronto, ON, CA', 4, 'The Eras Tour');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-11-21T19:00:00','Rogers Centre', 'Toronto, ON, CA', 4, 'The Eras Tour');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-11-22T19:00:00','Rogers Centre', 'Toronto, ON, CA', 4, 'The Eras Tour');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-11-23T19:00:00','Rogers Centre', 'Toronto, ON, CA', 4, 'The Eras Tour');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-12-06T19:00:00','BC Place', 'Vancouver, BC, CA', 4, 'The Eras Tour');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-12-07T19:00:00','BC Place', 'Vancouver, BC, CA', 4, 'The Eras Tour');
+INSERT INTO events (event_time, event_venue, event_address, event_host, event_name)
+	VALUES ('2024-12-08T19:00:00','BC Place', 'Vancouver, BC, CA', 4, 'The Eras Tour');
+
 
 --Match messages to users
 INSERT INTO message_user (message_id, user_id, is_read)

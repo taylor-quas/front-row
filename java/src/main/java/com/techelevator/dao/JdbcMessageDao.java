@@ -101,8 +101,6 @@ public class JdbcMessageDao implements MessageDao {
 
             addMessageToUsers(messageId, messageSender);
 
-//            template.update(sql, messageContent, messageTimeSent, messageTimeExpiration, messageSender);
-
         } catch (CannotGetJdbcConnectionException e) {
             System.out.println("Problem connecting");
         } catch (DataIntegrityViolationException e) {

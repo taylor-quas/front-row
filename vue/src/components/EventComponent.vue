@@ -1,40 +1,45 @@
 <template>
-    <div class="event-component">
-        <h3 id="month">{{ formatEventMonth(event.event.eventTime) || 'No time'}}</h3>
-        <h3 id="day">{{ formatEventDay(event.event.eventTime) || 'No time'}}</h3>
-        <h4 id="time">{{ formatEventTime(event.event.eventTime) || 'No time'}}</h4>
-        <h4 id="venue">{{ event.event.eventVenue}}</h4>
-        <p id="location">{{ event.event.eventAddress}}</p>
-        <p id="name">{{ event.event.eventName }}</p>
-    </div>
+  <div class="event-component">
+    <h3 id="month">{{ formatEventMonth(event.event.eventTime) || 'No time' }}</h3>
+    <h3 id="day">{{ formatEventDay(event.event.eventTime) || 'No time' }}</h3>
+    <h4 id="time">{{ formatEventTime(event.event.eventTime) || 'No time' }}</h4>
+    <h4 id="location">{{ event.event.eventAddress }}</h4>
+    <p id="venue">{{ event.event.eventVenue }}</p>
+    <p id="name">{{ event.event.eventName }}</p>
+  </div>
 </template>
 
 <script>
 export default {
-    props: {
-        event: {
-            type: Object,
-            required: true
-        }
-    },
-    methods: {
-        formatEventMonth(eventTime) {
-            return new Date(eventTime).toLocaleString('en-US', {
-                month: 'short', 
-            }).toUpperCase();
-        },
-        formatEventDay(eventTime) {
-            return new Date(eventTime).toLocaleString('en-US', { 
-                day: '2-digit', 
-            }).toUpperCase();
-        },
-        formatEventTime(eventTime) {
-            return new Date(eventTime).toLocaleString('en-US', {
-                hour: 'numeric', 
-                minute:'2-digit'
-            });
-        }
+  props: {
+    event: {
+      type: Object,
+      required: true
     }
+  },
+  methods: {
+    formatEventMonth(eventTime) {
+      return new Date(eventTime).toLocaleString('en-US', {
+        month: 'short',
+      }).toUpperCase();
+    },
+    formatEventDay(eventTime) {
+      return new Date(eventTime).toLocaleString('en-US', {
+        day: '2-digit',
+      }).toUpperCase();
+    },
+    formatEventTime(eventTime) {
+      const date = new Date(eventTime);
+      const weekday = date.toLocaleString('en-US', {
+        weekday: 'short'
+      }).toUpperCase();
+      const time = date.toLocaleString('en-US', {
+        hour: 'numeric',
+        minute: '2-digit'
+      });
+      return `${weekday} | ${time}`;
+    }
+  }
 
 }
 </script>
@@ -71,10 +76,10 @@ p {
   color: #666;
 }
 
-.event-component:hover {
+/* .event-component:hover {
   transform: scale(1.05);
   transition: transform 0.2s ease;
-}
+} */
 
 #month {
   font-weight: bold;
@@ -88,8 +93,10 @@ p {
   margin-bottom: 0.2em
 }
 
-#time, #venue, #location, #name {
+#time,
+#venue,
+#location,
+#name {
   margin: 0.1em;
 }
-
 </style>
